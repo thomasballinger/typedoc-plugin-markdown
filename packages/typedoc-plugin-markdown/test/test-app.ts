@@ -1,13 +1,15 @@
-import * as fs from 'fs';
 import * as path from 'path';
 
-import * as Handlebars from 'handlebars';
 import * as tmp from 'tmp';
 import {
   Application,
   DeclarationReflection,
+  PageEvent,
   ProjectReflection,
+  Reflection,
   Renderer,
+  RendererEvent,
+  SignatureReflection,
   TSConfigReader,
   TypeDocReader,
   UrlMapping,
@@ -15,7 +17,6 @@ import {
 
 import { load } from '../src/index';
 import { MarkdownTheme } from '../src/theme';
-import { formatContents } from '../src/utils';
 
 tmp.setGracefulCleanup();
 
@@ -27,65 +28,6 @@ export class TestApp {
   outDir: string;
   tmpobj: tmp.DirResult;
   entryPoints: string[];
-
-  static handlebarsOptionsStub = {
-    fn: () => true,
-    inverse: () => false,
-    hash: {},
-  };
-
-  static compileTemplate(template: Handlebars.TemplateDelegate, context: any) {
-    return formatContents(
-      template(context, {
-        allowProtoMethodsByDefault: true,
-        allowProtoPropertiesByDefault: true,
-      }),
-    );
-  }
-
-  static compileHelper(
-    helper: Handlebars.HelperDelegate,
-    context: any,
-    args?: any,
-  ) {
-    return formatContents(helper.call(context, args));
-  }
-
-  static getTemplate(name: string) {
-    const templateDir = path.resolve(
-      __dirname,
-      '..',
-      'dist',
-      'resources',
-      'templates',
-    );
-    const hbs = fs.readFileSync(templateDir + '/' + name + '.hbs');
-    return Handlebars.compile(hbs.toString());
-  }
-
-  static getPartial(name: string) {
-    const partialDir = path.resolve(
-      __dirname,
-      '..',
-      'dist',
-      'resources',
-      'partials',
-    );
-    const hbs = fs.readFileSync(partialDir + '/' + name + '.hbs');
-    return Handlebars.compile(hbs.toString());
-  }
-
-  static stubPartials(partials: string[]) {
-    partials.forEach((partial) => {
-      Handlebars.registerPartial(partial, `[partial: ${partial}]`);
-    });
-  }
-
-  static stubHelpers(helpers: string[]) {
-    helpers.forEach((helper) => {
-      Handlebars.registerHelper(helper, () => `[helper: ${helper}]`);
-    });
-  }
 
   static getExpectedUrls(urlMappings: UrlMapping[]) {
     const expectedUrls = [];
@@ -109,7 +51,8 @@ export class TestApp {
           path.join(__dirname, './stubs/src/' + inputFile),
         )
       : ['./test/stubs/src'];
-    load(this.app);
+    //load(this.app);
+
     this.app.options.addReader(new TypeDocReader());
     this.app.options.addReader(new TSConfigReader());
   }
@@ -126,8 +69,13 @@ export class TestApp {
     this.renderer = this.app.renderer;
     this.tmpobj = tmp.dirSync();
 
+    this.app.renderer.render = render;
     await this.app.generateDocs(this.project, this.tmpobj.name);
     this.theme = this.app.renderer.theme as MarkdownTheme;
+  }
+
+  getRenderContext() {
+    return this.theme.getRenderContext();
   }
 
   findModule(name: string) {
@@ -141,6 +89,31 @@ export class TestApp {
   }
 
   findReflection(name: string) {
-    return this.project.findReflectionByName(name) as DeclarationReflection;
+    return this.project.findReflectionByName(name) as any;
   }
+}
+
+export async function render(
+  project: ProjectReflection,
+  outputDirectory: string,
+) {
+  if (!this.prepareTheme()) {
+    return;
+  }
+  const output = new RendererEvent(
+    RendererEvent.BEGIN,
+    outputDirectory,
+    project,
+  );
+  output.urls = this.theme!.getUrls(project);
+  this.trigger(output);
+  if (!output.isDefaultPrevented) {
+    output?.urls?.forEach((mapping: UrlMapping) => {
+      const page = output.createPageEvent(mapping);
+      this.trigger(PageEvent.BEGIN, page);
+      this.trigger(PageEvent.END, page);
+    });
+    this.trigger(RendererEvent.END, output);
+  }
+  this.theme = void 0;
 }

@@ -1,4 +1,4 @@
-import { getPluginOptions } from '../../dist/options';
+import { getPluginOptions } from '../../src/plugins/options';
 import { PluginOptions } from '../../src/types';
 
 describe(`Options:`, () => {

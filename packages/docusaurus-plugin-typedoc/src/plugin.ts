@@ -1,10 +1,11 @@
 import { LoadContext } from '@docusaurus/types';
 import * as path from 'path';
 import { Application } from 'typedoc';
-import { load } from 'typedoc-plugin-markdown';
-import { getPluginOptions } from './options';
-import { bootstrap, removeDir } from './render';
-
+import { load as loadTypeDocPlugin } from 'typedoc-plugin-markdown';
+import { loadCategories } from './plugins/categories';
+import { loadFrontMatter } from './plugins/front-matter';
+import { getPluginOptions, loadTypeDocOptions } from './plugins/options';
+import { removeDir, render } from './render';
 import { DocusaurusTheme } from './theme';
 import { PluginOptions } from './types';
 
@@ -33,9 +34,17 @@ export default function pluginDocusaurus(
 
         app.renderer.defineTheme('docusaurus', DocusaurusTheme);
 
-        load(app);
+        app.renderer.render = render;
 
-        bootstrap(app, options);
+        loadTypeDocPlugin(app);
+
+        loadTypeDocOptions(app);
+
+        app.bootstrap(options);
+
+        loadFrontMatter(app);
+
+        loadCategories(app);
 
         const project = app.convert();
 

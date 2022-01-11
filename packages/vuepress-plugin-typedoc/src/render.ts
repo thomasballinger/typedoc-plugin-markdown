@@ -22,6 +22,7 @@ export async function render(
 
     this.trigger(RendererEvent.END, output);
   }
+  this.theme = void 0;
 }
 
 export function removeDir(path: string) {

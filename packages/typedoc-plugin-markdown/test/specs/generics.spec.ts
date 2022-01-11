@@ -1,76 +1,74 @@
-import * as Handlebars from 'handlebars';
-import { SignatureReflection } from 'typedoc';
+import { PageEvent, SignatureReflection } from 'typedoc';
+import { MarkdownThemeContext } from '../../src';
+import { formatContents } from '../../src/utils/format';
 
 import { TestApp } from '../test-app';
 
 describe(`Generics:`, () => {
   let testApp: TestApp;
-  let partial: Handlebars.TemplateDelegate;
-  let declarationPartial: Handlebars.TemplateDelegate;
-  let reflectionTemplate: Handlebars.TemplateDelegate;
+  let context: MarkdownThemeContext;
 
-  beforeAll(() => {
-    partial = TestApp.getPartial('member.signature');
-    declarationPartial = TestApp.getPartial('member.declaration');
-  });
-
-  beforeEach(async () => {
+  beforeAll(async () => {
     testApp = new TestApp(['generics.ts']);
     await testApp.bootstrap();
-    TestApp.stubPartials([
-      'comment',
-      'member.signature',
-      'members',
-      'member.sources',
-    ]);
-    TestApp.stubHelpers(['toc', 'breadcrumbs', 'hierarchy', 'returns']);
-    reflectionTemplate = TestApp.getTemplate('reflection');
+    context = testApp.getRenderContext();
+    jest.spyOn(context, 'tocPartial').mockReturnValue('[toc]');
+    jest.spyOn(context, 'breadcrumbsPartial').mockReturnValue('[breadcrumbs]');
+    jest.spyOn(context, 'sourcesPartial').mockReturnValue('[sources]');
+    jest.spyOn(context, 'hierarchyPartial').mockReturnValue('[hierarchy]');
+    jest.spyOn(context, 'groupsPartial').mockReturnValue('[groups]');
+    jest.spyOn(context, 'urlTo').mockReturnValue('[urlTo]');
   });
 
   test(`should compile class with type params`, () => {
     expect(
-      TestApp.compileTemplate(reflectionTemplate, {
-        model: testApp.findReflection('ClassWithTypeParams'),
-        project: testApp.project,
-      }),
+      formatContents(
+        context.reflectionTemplate({
+          model: testApp.findReflection('ClassWithTypeParams'),
+          project: testApp.project,
+        } as PageEvent<any>),
+      ),
     ).toMatchSnapshot();
   });
 
   test(`should compile function with a simple type param'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithTypeParam')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signatureMemberPartial(
+          (testApp.findReflection('functionWithTypeParam') as any)
+            .signatures[0] as SignatureReflection,
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile function with complex type params'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithTypeParams')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signatureMemberPartial(
+          (testApp.findReflection('functionWithTypeParams') as any)
+            .signatures[0] as SignatureReflection,
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile type with nested generics'`, () => {
     expect(
-      TestApp.compileTemplate(
-        declarationPartial,
-        testApp.findReflection('nestedGenerics'),
+      formatContents(
+        context.signatureMemberPartial(
+          testApp.findReflection('nestedGenerics') as any,
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile generics with defaults'`, () => {
     expect(
-      TestApp.compileTemplate(
-        declarationPartial,
-        testApp.findReflection('genericsWithDefaults')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signatureMemberPartial(
+          testApp.findReflection('genericsWithDefaults') as any,
+        ),
       ),
     ).toMatchSnapshot();
   });

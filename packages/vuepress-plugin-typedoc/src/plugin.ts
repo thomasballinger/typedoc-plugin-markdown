@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 import { Application, ProjectReflection } from 'typedoc';
-import { load } from 'typedoc-plugin-markdown';
+import { load, NavigationPlugin } from 'typedoc-plugin-markdown';
 import { removeDir, render } from './render';
 import { addOptions, getOptions } from './options';
 
@@ -10,6 +10,7 @@ import { PluginOptions } from './types';
 
 let app: Application;
 let project: ProjectReflection | undefined;
+let sidebar: any;
 
 export const typedocPlugin = (opts: PluginOptions, ctx: any) => {
   const options = getOptions(opts);
@@ -26,9 +27,18 @@ export const typedocPlugin = (opts: PluginOptions, ctx: any) => {
 
       load(app);
 
+      NavigationPlugin.load(app);
+
       addOptions(app);
 
       app.renderer.render = render;
+
+      app.renderer.on(
+        NavigationPlugin.NAVIGATION_GENERATED,
+        (navigation: NavigationPlugin.NavigationItem) => {
+          sidebar = getSidebarJson(navigation, options);
+        },
+      );
 
       app.bootstrap(options);
 
@@ -50,14 +60,8 @@ export const typedocPlugin = (opts: PluginOptions, ctx: any) => {
       if (!app || !options.sidebar) {
         return;
       }
-      const theme = app.renderer.theme as any;
-      const navigation = theme.getNavigation(project);
-
       const sidebarJson = JSON.stringify({
-        [`/${path.relative(process.cwd(), options.out)}/`]: getSidebarJson(
-          navigation,
-          options,
-        ),
+        [`/${path.relative(process.cwd(), options.out)}/`]: sidebar,
       });
       return {
         name: 'typedoc-sidebar',

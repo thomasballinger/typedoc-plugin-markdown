@@ -32,9 +32,6 @@ export const commentsWithHTML = true;
  *
  * [[include:class-example.md]]
  *
- * This is an example of handlebars include
- *
- * [[include:class-example.hbs]]
  */
 export const commentsWithIncludes = true;
 

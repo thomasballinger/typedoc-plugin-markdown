@@ -1,5 +1,6 @@
-import * as Handlebars from 'handlebars';
 import { Reflection } from 'typedoc';
+import { MarkdownThemeContext } from '../../src';
+import { formatContents } from '../../src/utils/format';
 
 import { TestApp } from '../test-app';
 
@@ -9,36 +10,42 @@ describe(`TOC:`, () => {
 
   describe(`(default)`, () => {
     let testApp: TestApp;
+    let context: MarkdownThemeContext;
     beforeAll(async () => {
       testApp = new TestApp(['breadcrumbs.ts']);
       await testApp.bootstrap();
+      context = testApp.getRenderContext();
       moduleReflection = testApp.project.children[0];
       classReflection = testApp.project.findReflectionByName('Breadcrumbs');
     });
 
     test(`should display toc for module'`, () => {
       expect(
-        TestApp.compileHelper(Handlebars.helpers.toc, moduleReflection),
+        formatContents(context.tocPartial(moduleReflection as any)),
       ).toMatchSnapshot();
     });
 
     test(`should display toc for class'`, () => {
       expect(
-        TestApp.compileHelper(Handlebars.helpers.toc, classReflection),
+        formatContents(context.tocPartial(classReflection as any)),
       ).toMatchSnapshot();
     });
   });
   describe(`(hideInPageToc)`, () => {
     let testApp: TestApp;
+    let context: MarkdownThemeContext;
     beforeAll(async () => {
       testApp = new TestApp(['breadcrumbs.ts']);
       await testApp.bootstrap({ hideInPageTOC: true });
+      context = testApp.getRenderContext();
       moduleReflection = testApp.project.children[0];
       classReflection = testApp.project.findReflectionByName('Breadcrumbs');
     });
 
     test(`should not display toc for class'`, () => {
-      expect(Handlebars.helpers.toc.call(classReflection)).toBeNull();
+      expect(
+        formatContents(context.tocPartial(classReflection as any)).trim(),
+      ).toEqual('');
     });
   });
 });

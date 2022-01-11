@@ -1,87 +1,117 @@
-import * as Handlebars from 'handlebars';
+import { PageEvent } from 'typedoc';
+import { MarkdownThemeContext } from '../../src';
+import { formatContents } from '../../src/utils/format';
 
 import { TestApp } from '../test-app';
 
 describe(`Reflections:`, () => {
-  let reflectionTemplate: Handlebars.TemplateDelegate;
-
   describe(`(header)`, () => {
     let testApp: TestApp;
+    let context: MarkdownThemeContext;
     beforeEach(async () => {
       testApp = new TestApp(['reflections.ts']);
+
       await testApp.bootstrap({
         hideBreadcrumbs: false,
         hidePageTitle: true,
       });
-      TestApp.stubPartials(['comment', 'member.signature', 'members']);
-      TestApp.stubHelpers(['toc', 'breadcrumbs', 'hierarchy']);
-      reflectionTemplate = TestApp.getTemplate('reflection');
+      context = testApp.getRenderContext();
+      jest
+        .spyOn(context, 'breadcrumbsPartial')
+        .mockReturnValue('[breadcrumbs]');
+      jest.spyOn(context, 'tocPartial').mockReturnValue('[toc]');
+      jest
+        .spyOn(context, 'signatureMemberPartial')
+        .mockReturnValue('[signature]');
+      jest.spyOn(context, 'sourcesPartial').mockReturnValue('[sources]');
+      jest.spyOn(context, 'groupsPartial').mockReturnValue('[groups]');
     });
     test(`should compile template with breadcrumbs and without title`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.project.children[0],
-          project: testApp.project,
-        }),
+        formatContents(
+          context.reflectionTemplate({
+            model: testApp.project.children[0],
+            project: testApp.project,
+          } as any),
+        ),
       ).toMatchSnapshot();
     });
   });
 
   describe(`(template)`, () => {
     let testApp: TestApp;
+    let context: MarkdownThemeContext;
+
     beforeEach(async () => {
       testApp = new TestApp(['reflections.ts']);
       await testApp.bootstrap({
         hideBreadcrumbs: true,
         hidePageTitle: false,
       });
-      TestApp.stubPartials(['index', 'comment', 'member.signature', 'members']);
-      TestApp.stubHelpers(['breadcrumbs', 'hierarchy']);
-      reflectionTemplate = TestApp.getTemplate('reflection');
+      context = testApp.getRenderContext();
+      jest
+        .spyOn(context, 'breadcrumbsPartial')
+        .mockReturnValue('[breadcrumbs]');
+      jest.spyOn(context, 'tocPartial').mockReturnValue('[toc]');
+      jest
+        .spyOn(context, 'signatureMemberPartial')
+        .mockReturnValue('[signature]');
+      jest.spyOn(context, 'sourcesPartial').mockReturnValue('[sources]');
+      jest.spyOn(context, 'groupsPartial').mockReturnValue('[groups]');
     });
 
     test(`should compile module with breadcrumbs and project title`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.project.children[0],
-          project: testApp.project,
-        }),
+        formatContents(
+          context.reflectionTemplate({
+            model: testApp.project.children[0],
+            project: testApp.project,
+          } as any),
+        ),
       ).toMatchSnapshot();
     });
 
     test(`should compile a callable reflection`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.findReflection('CallableReflection'),
-          project: testApp.project,
-        }),
+        formatContents(
+          context.reflectionTemplate({
+            model: testApp.findReflection('CallableReflection'),
+            project: testApp.project,
+          } as any),
+        ),
       ).toMatchSnapshot();
     });
 
     test(`should compile an indexable reflection`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.findReflection('IndexableReflection'),
-          project: testApp.project,
-        }),
+        formatContents(
+          context.reflectionTemplate({
+            model: testApp.findReflection('IndexableReflection'),
+            project: testApp.project,
+          } as any),
+        ),
       ).toMatchSnapshot();
     });
 
     test(`should compile implemented class`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.findReflection('ImplementedClass'),
-          project: testApp.project,
-        }),
+        formatContents(
+          context.reflectionTemplate({
+            model: testApp.findReflection('ImplementedClass'),
+            project: testApp.project,
+          } as any),
+        ),
       ).toMatchSnapshot();
     });
 
     test(`should compile Enum`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.findReflection('EnumReflection'),
-          project: testApp.project,
-        }),
+        formatContents(
+          context.reflectionTemplate({
+            model: testApp.findReflection('EnumReflection'),
+            project: testApp.project,
+          } as any),
+        ),
       ).toMatchSnapshot();
     });
   });

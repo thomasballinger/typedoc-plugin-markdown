@@ -1,27 +1,27 @@
-import * as Handlebars from 'handlebars';
-
+import { MarkdownThemeContext } from '../../src';
+import { formatContents } from '../../src/utils/format';
 import { TestApp } from '../test-app';
 
 describe(`Hierarchy:`, () => {
   let testApp: TestApp;
-  let helper: Handlebars.HelperDelegate;
+  let context: MarkdownThemeContext;
 
   beforeAll(async () => {
     testApp = new TestApp(['hierarchy.ts']);
     await testApp.bootstrap();
-    helper = Handlebars.helpers.hierarchy;
+    context = testApp.getRenderContext();
   });
   test(`should compile type hierarchy`, () => {
-    const reflection = testApp.findReflection('ParentClass');
+    const reflection = testApp.findReflection('ParentClass') as any;
     expect(
-      TestApp.compileHelper(helper, reflection.typeHierarchy, 0),
+      formatContents(context.hierarchyPartial(reflection.typeHierarchy, 0)),
     ).toMatchSnapshot();
   });
 
   test(`should compile nested type hierarchy`, () => {
-    const reflection = testApp.findReflection('ChildClassA');
+    const reflection = testApp.findReflection('ChildClassA') as any;
     expect(
-      TestApp.compileHelper(helper, reflection.typeHierarchy, 0),
+      formatContents(context.hierarchyPartial(reflection.typeHierarchy, 0)),
     ).toMatchSnapshot();
   });
 });

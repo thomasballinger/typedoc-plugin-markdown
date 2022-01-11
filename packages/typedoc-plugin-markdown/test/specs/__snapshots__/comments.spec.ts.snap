@@ -38,10 +38,6 @@ exports[`Comments: should convert comments with includes' 1`] = `
 This is a simple example on how to use include.
 
 ![My image alt text](../media/logo.png)
-
-This is an example of handlebars include
-
-This is a simple example on a handlebars file.
 "
 `;
 

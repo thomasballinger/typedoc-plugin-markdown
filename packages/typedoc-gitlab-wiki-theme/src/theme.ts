@@ -1,60 +1,28 @@
-import * as fs from 'fs';
-
-import { Renderer, DeclarationReflection, RendererEvent } from 'typedoc';
+import { Renderer, DeclarationReflection } from 'typedoc';
 import { MarkdownTheme } from 'typedoc-plugin-markdown';
+import { loadSidebar } from './sidebar';
+import { GitlabWikiThemeContext } from './theme-context';
+import { GitlabWikiThemeOptionsReader } from './options-reader';
 
 export class GitlabWikiTheme extends MarkdownTheme {
-  constructor(renderer: Renderer) {
-    super(renderer);
-
-    this.entryDocument = 'home.md';
-    this.hideBreadcrumbs = true;
-    this.hidePageTitle = true;
-
-    this.listenTo(this.owner, {
-      [RendererEvent.END]: this.onGitLabRendererEnd,
-    });
+  private _contextCache?: GitlabWikiThemeContext;
+  override getRenderContext() {
+    if (!this._contextCache) {
+      this._contextCache = new GitlabWikiThemeContext(
+        this,
+        this.application.options,
+      );
+    }
+    return this._contextCache;
   }
 
-  getRelativeUrl(url: string) {
-    const relativeUrl = super
-      .getRelativeUrl(url)
-      .replace(/(.*).md/, '$1')
-      .replace(/ /g, '-');
-    return relativeUrl.startsWith('..') ? relativeUrl : './' + relativeUrl;
+  constructor(renderer: Renderer) {
+    super(renderer);
+    this.application.options.addReader(new GitlabWikiThemeOptionsReader());
+    loadSidebar(this.application);
   }
 
   toUrl(mapping: any, reflection: DeclarationReflection) {
     return `${mapping.directory}/${reflection.getFullName()}.md`;
-  }
-
-  onGitLabRendererEnd(renderer: RendererEvent) {
-    const parseUrl = (url: string) => url.replace(/(.*).md/, '$1');
-    const navigation = this.getNavigation(renderer.project);
-    const navJson: string[] = [`## ${renderer.project.name}\n`];
-    navigation.children?.forEach((navItem) => {
-      if (navItem.isLabel) {
-        navJson.push(`\n### ${navItem.title}\n`);
-        navItem.children?.forEach((navItemChild) => {
-          const longTitle = navItemChild.title.split('.');
-          const shortTitle = longTitle[longTitle.length - 1];
-          navJson.push(
-            `- [${shortTitle}](${parseUrl(encodeURI(navItemChild.url))})`,
-          );
-        });
-      } else {
-        const title =
-          navItem.url === this.entryDocument ? 'Home' : navItem.title;
-        navJson.push(`- [${title}](${parseUrl(navItem.url)})`);
-      }
-    });
-    fs.writeFileSync(
-      renderer.outputDirectory + '/_sidebar.md',
-      navJson.join('\n'),
-    );
-  }
-
-  get globalsFile() {
-    return this.entryPoints.length > 1 ? 'Modules.md' : 'Exports.md';
   }
 }

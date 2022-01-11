@@ -3,21 +3,21 @@
 exports[`Declarations: should compile a const with default value 1`] = `
 "• **stringConstWithDefaultValue**: \`\`\\"hello\\"\`\`
 
-[partial: member.sources]
+[sources]
 "
 `;
 
 exports[`Declarations: should compile a let with default value 1`] = `
 "• **stringLetWithDefaultValue**: \`string\` = \`'hello'\`
 
-[partial: member.sources]
+[sources]
 "
 `;
 
 exports[`Declarations: should compile an undefined declaration 1`] = `
 "• **undefinedNumberDeclaration**: \`number\`
 
-[partial: member.sources]
+[sources]
 "
 `;
 
@@ -44,7 +44,7 @@ exports[`Declarations: should compile any function type 1`] = `
 
 \`A\`
 
-[partial: member.sources]
+[sources]
 "
 `;
 
@@ -72,28 +72,28 @@ exports[`Declarations: should compile callable declaration 1`] = `
 | \`arg1\` | \`string\` |
 | \`arg2\` | \`number\` |
 
-[partial: member.sources]
+[sources]
 "
 `;
 
 exports[`Declarations: should compile declaration with double underscores in name and value 1`] = `
 "• **\\\\_\\\\_DOUBLE\\\\_UNDERSCORES\\\\_DECLARATION\\\\_\\\\_**: typeof [\`__DOUBLE_UNDERSCORES_DECLARATION__\`](../modules.md#__double_underscores_declaration__)
 
-[partial: member.sources]
+[sources]
 "
 `;
 
 exports[`Declarations: should compile enum delcaration 1`] = `
 "• **Down** = \`\\"DOWN\\"\`
 
-[partial: member.sources]
+[sources]
 "
 `;
 
 exports[`Declarations: should compile function declaration 1`] = `
 "• **functionDeclaration**: (\`someArg\`: \`number\`) => \`boolean\`
 
-[partial: member.sources]
+[sources]
 "
 `;
 
@@ -110,7 +110,7 @@ exports[`Declarations: should compile indexable declaration 1`] = `
 | :------ | :------ |
 | \`arg1\` | \`string\` |
 
-[partial: member.sources]
+[sources]
 "
 `;
 
@@ -133,7 +133,7 @@ Comments
 | \`Prop2\` | \`\`\\"Prop2\\"\`\` |
 | \`Prop3\` | \`\`\\"Prop3\\"\`\` |
 
-[partial: member.sources]
+[sources]
 "
 `;
 
@@ -159,7 +159,7 @@ exports[`Declarations: should compile object literal declaration 1`] = `
 | \`valueY\` | () => \`string\` |
 | \`valueZ\` | \`string\` |
 
-[partial: member.sources]
+[sources]
 "
 `;
 
@@ -179,6 +179,6 @@ exports[`Declarations: should compile type literal declaration 1`] = `
 | \`valueY\` | () => \`string\` | - |
 | \`valueZ\` | \`string\` | Comment for valueZ |
 
-[partial: member.sources]
+[sources]
 "
 `;

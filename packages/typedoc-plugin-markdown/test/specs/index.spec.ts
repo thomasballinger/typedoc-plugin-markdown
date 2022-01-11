@@ -1,24 +1,28 @@
-import * as Handlebars from 'handlebars';
+import { MarkdownThemeContext } from '../../src';
+import { formatContents } from '../../src/utils/format';
 
 import { TestApp } from '../test-app';
 
 describe(`Index:`, () => {
   let testApp: TestApp;
-  let indexTemplate: Handlebars.TemplateDelegate;
+  let context: MarkdownThemeContext;
 
   beforeAll(async () => {
     testApp = new TestApp(['reflections.ts']);
     await testApp.bootstrap();
-    indexTemplate = TestApp.getTemplate('index');
-    TestApp.stubHelpers(['breadcrumbs']);
+    context = testApp.getRenderContext();
+    jest.spyOn(context, 'breadcrumbsPartial').mockReturnValue('[breadcrumbs]');
+    jest.spyOn(context, 'tocPartial').mockReturnValue('[toc]');
   });
 
   test(`should compile readme`, () => {
     expect(
-      TestApp.compileTemplate(indexTemplate, {
-        model: testApp.project,
-        project: testApp.project,
-      }),
+      formatContents(
+        context.indexTemplate({
+          model: testApp.project,
+          project: testApp.project,
+        } as any),
+      ),
     ).toMatchSnapshot();
   });
 });

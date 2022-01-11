@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Generics: should compile class with type params 1`] = `
-"[helper: breadcrumbs]
+"[breadcrumbs]
 
 # Class: ClassWithTypeParams<T, V\\\\>
 
-[partial: comment]
+Comments for typeParams
 
 ## Type parameters
 
@@ -14,68 +14,62 @@ exports[`Generics: should compile class with type params 1`] = `
 | \`T\` | Some type param |
 | \`V\` | Some other type param |
 
-[helper: toc]
+[toc]
 
-[partial: members]
+[groups]
 "
 `;
 
 exports[`Generics: should compile function with a simple type param' 1`] = `
 "▸ \`Const\` **functionWithTypeParam**<\`A\`\\\\>(): \`boolean\`
 
-[partial: comment]
-
-##### Type parameters
+#### Type parameters
 
 | Name |
 | :------ |
 | \`A\` |
 
-##### Returns
+#### Returns
 
 \`boolean\`
+
+[sources]
 "
 `;
 
 exports[`Generics: should compile function with complex type params' 1`] = `
 "▸ \`Const\` **functionWithTypeParams**<\`A\`, \`B\`, \`C\`\\\\>(): \`boolean\`
 
-[partial: comment]
-
-##### Type parameters
+#### Type parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| \`A\` | extends [\`ClassWithTypeParams\`](ClassWithTypeParams.md)<\`string\`, \`number\`, \`A\`\\\\> | Comment for type \`A\` |
+| \`A\` | extends [\`ClassWithTypeParams\`]([urlTo])<\`string\`, \`number\`, \`A\`\\\\> | Comment for type \`A\` |
 | \`B\` | \`string\` \\\\| \`boolean\` | Comment for type \`B\` |
 | \`C\` | \`string\` | - |
 
-##### Returns
+#### Returns
 
 \`boolean\`
+
+[sources]
 "
 `;
 
 exports[`Generics: should compile generics with defaults' 1`] = `
-"▸ **genericsWithDefaults**: \`void\`
+"• **genericsWithDefaults**()
 
-[partial: comment]
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| \`Type\` | extends \`boolean\` = \`boolean\` |
-
-[partial: member.sources]
+[sources]
 "
 `;
 
 exports[`Generics: should compile type with nested generics' 1`] = `
-"Ƭ **nestedGenerics**: [\`Generic1\`](../modules.md#generic1)<[\`Generic2\`](../modules.md#generic2)<[\`Generic3\`](../modules.md#generic3)<\`string\`\\\\>\\\\>\\\\>
+"Ƭ **nestedGenerics**(): [\`Generic1\`]([urlTo])<[\`Generic2\`]([urlTo])<[\`Generic3\`]([urlTo])<\`string\`\\\\>\\\\>\\\\>
 
-[partial: comment]
+#### Returns
 
-[partial: member.sources]
+[\`Generic1\`]([urlTo])<[\`Generic2\`]([urlTo])<[\`Generic3\`]([urlTo])<\`string\`\\\\>\\\\>\\\\>
+
+[sources]
 "
 `;

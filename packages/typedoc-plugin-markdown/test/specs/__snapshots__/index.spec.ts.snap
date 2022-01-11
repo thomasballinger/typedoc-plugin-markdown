@@ -1,14 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Index: should compile readme 1`] = `
-"[helper: breadcrumbs]
+"[breadcrumbs]
 
-# MY README
+# Project: typedoc-plugin-markdown
 
-> Some block quote
-
-<!-- some comments -->
-
-Some text
+[toc]
 "
 `;
