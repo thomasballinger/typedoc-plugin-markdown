@@ -1,19 +1,19 @@
 import * as fs from 'fs';
-import * as path from 'path';
-
 import * as Handlebars from 'handlebars';
+import * as path from 'path';
 import * as tmp from 'tmp';
 import {
   Application,
   DeclarationReflection,
+  PageEvent,
   ProjectReflection,
   Renderer,
+  RendererEvent,
   TSConfigReader,
   TypeDocReader,
   UrlMapping,
 } from 'typedoc';
-
-import { load } from '../src/index';
+import { load } from '../src';
 import { MarkdownTheme } from '../src/theme';
 import { formatContents } from '../src/utils';
 
@@ -101,7 +101,6 @@ export class TestApp {
     });
     return expectedUrls;
   }
-
   constructor(entryPoints?: string[]) {
     this.app = new Application();
     this.entryPoints = entryPoints
@@ -110,6 +109,7 @@ export class TestApp {
         )
       : ['./test/stubs/src'];
     load(this.app);
+
     this.app.options.addReader(new TypeDocReader());
     this.app.options.addReader(new TSConfigReader());
   }
@@ -126,8 +126,13 @@ export class TestApp {
     this.renderer = this.app.renderer;
     this.tmpobj = tmp.dirSync();
 
+    this.app.renderer.render = render;
     await this.app.generateDocs(this.project, this.tmpobj.name);
     this.theme = this.app.renderer.theme as MarkdownTheme;
+  }
+
+  getRenderContext() {
+    return this.theme.getRenderContext();
   }
 
   findModule(name: string) {
@@ -142,5 +147,26 @@ export class TestApp {
 
   findReflection(name: string) {
     return this.project.findReflectionByName(name) as DeclarationReflection;
+  }
+}
+
+async function render(project: ProjectReflection, outputDirectory: string) {
+  if (!this.prepareTheme()) {
+    return;
+  }
+  const output = new RendererEvent(
+    RendererEvent.BEGIN,
+    outputDirectory,
+    project,
+  );
+  output.urls = this.theme!.getUrls(project);
+  this.trigger(output);
+  if (!output.isDefaultPrevented) {
+    output?.urls?.forEach((mapping: UrlMapping) => {
+      const page = output.createPageEvent(mapping);
+      this.trigger(PageEvent.BEGIN, page);
+      this.trigger(PageEvent.END, page);
+    });
+    this.trigger(RendererEvent.END, output);
   }
 }

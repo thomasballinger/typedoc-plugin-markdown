@@ -1,6 +1,3 @@
-import * as fs from 'fs';
-import * as Handlebars from 'handlebars';
-import * as path from 'path';
 import attemptExternalResolution from './resources/helpers/attemptExternalResolution';
 import breadcrumbsHelper from './resources/helpers/breadcrumbs';
 import commentHelper from './resources/helpers/comment';
@@ -28,32 +25,6 @@ import typeHelper from './resources/helpers/type';
 import typeAndParentHelper from './resources/helpers/type-and-parent';
 import typeParameterTableHelper from './resources/helpers/type-parameter-table';
 import { MarkdownTheme } from './theme';
-
-const TEMPLATE_PATH = path.join(__dirname, 'resources', 'templates');
-
-export const indexTemplate = Handlebars.compile(
-  fs.readFileSync(path.join(TEMPLATE_PATH, 'index.hbs')).toString(),
-);
-
-export const reflectionTemplate = Handlebars.compile(
-  fs.readFileSync(path.join(TEMPLATE_PATH, 'reflection.hbs')).toString(),
-);
-
-export const reflectionMemberTemplate = Handlebars.compile(
-  fs.readFileSync(path.join(TEMPLATE_PATH, 'reflection.member.hbs')).toString(),
-);
-
-export function registerPartials() {
-  const partialsFolder = path.join(__dirname, 'resources', 'partials');
-  const partialFiles = fs.readdirSync(partialsFolder);
-  partialFiles.forEach((partialFile) => {
-    const partialName = path.basename(partialFile, '.hbs');
-    const partialContent = fs
-      .readFileSync(partialsFolder + '/' + partialFile)
-      .toString();
-    Handlebars.registerPartial(partialName, partialContent);
-  });
-}
 
 export function registerHelpers(theme: MarkdownTheme) {
   attemptExternalResolution(theme);

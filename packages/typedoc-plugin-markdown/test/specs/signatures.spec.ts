@@ -1,196 +1,197 @@
-import * as Handlebars from 'handlebars';
-import { SignatureReflection } from 'typedoc';
-
+import { MarkdownThemeContext } from '../../src';
+import { formatContents } from '../../src/utils/format';
 import { TestApp } from '../test-app';
 
 describe(`Signatures:`, () => {
   let testApp: TestApp;
-  let partial: Handlebars.TemplateDelegate;
-  let reflectionTemplate: Handlebars.TemplateDelegate;
+  let context: MarkdownThemeContext;
 
   beforeAll(async () => {
     testApp = new TestApp(['signatures.ts']);
     await testApp.bootstrap();
-    TestApp.stubPartials(['member.sources']);
-    partial = TestApp.getPartial('member.signature');
-    reflectionTemplate = TestApp.getTemplate('reflection');
+    context = testApp.getRenderContext();
+    jest.spyOn(context, 'sourcesPartial').mockReturnValue('[sources]');
   });
 
   test(`should compile callable signature'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('CallableSignature').signatures[0],
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('CallableSignature').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile signature with a flag'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('privateFunction')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('privateFunction').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile signature with params'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithParameters')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithParameters').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile function that returns an object'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionReturningAnObject')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionReturningAnObject').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile a promise that returns an object'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('promiseReturningAnObject')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('promiseReturningAnObject').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile a promise that returns a symbol'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('promiseReturningASymbol')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('promiseReturningASymbol').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile function that returns a function'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionReturningAFunction')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionReturningAFunction').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile signature with rest params'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithRest')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithRest').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile signature with optional params'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithOptionalParam')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithOptionalParam').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile signature with union types'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithUnionTypes')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithUnionTypes').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile signature with default values'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithDefaults')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithDefaults').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile signature with @return comments'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsInReturn')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('commentsInReturn').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile named parameters'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithNamedParams')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithNamedParams').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile named parameters with comments'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithNamedParamsAndComments')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithNamedParamsAndComments')
+            .signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile pipes in params and comments'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithPipesInParamsAndComments')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithPipesInParamsAndComments')
+            .signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile function with reference type'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithReferenceType')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithReferenceType').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile function with nested typen params'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('functionWithNestedParams')
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('functionWithNestedParams').signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile class with constructor'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('ClassWithConstructor').children[0]
-          .signatures[0] as SignatureReflection,
+      formatContents(
+        context.signaturePartial(
+          testApp.findReflection('ClassWithConstructor').children[0]
+            .signatures[0],
+        ),
       ),
     ).toMatchSnapshot();
   });

@@ -5,7 +5,7 @@ exports[`Reflections: (header) should compile template with breadcrumbs and with
 
 [helper: toc]
 
-[partial: members]
+[groups]
 "
 `;
 
@@ -21,7 +21,7 @@ exports[`Reflections: (template) should compile Enum 1`] = `
 - [Right](../enums/EnumReflection.md#right)
 - [Up](../enums/EnumReflection.md#up)
 
-[partial: members]
+[groups]
 "
 `;
 
@@ -32,9 +32,7 @@ exports[`Reflections: (template) should compile a callable reflection 1`] = `
 
 ### CallableReflection
 
-[partial: member.signature]
-
-[partial: members]
+[signature]
 "
 `;
 
@@ -44,10 +42,6 @@ exports[`Reflections: (template) should compile an indexable reflection 1`] = `
 ## Indexable
 
 ▪ [index: \`number\`]: \`string\`
-
-[partial: comment]
-
-[partial: members]
 "
 `;
 
@@ -64,7 +58,7 @@ exports[`Reflections: (template) should compile implemented class 1`] = `
 
 - [constructor](../classes/ImplementedClass.md#constructor)
 
-[partial: members]
+[groups]
 "
 `;
 
@@ -80,6 +74,6 @@ exports[`Reflections: (template) should compile module with breadcrumbs and proj
 - [Right](../enums/EnumReflection.md#right)
 - [Up](../enums/EnumReflection.md#up)
 
-[partial: members]
+[groups]
 "
 `;

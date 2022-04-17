@@ -1,96 +1,25 @@
-import * as Handlebars from 'handlebars';
-
+import { MarkdownThemeContext } from '../../src';
+import { formatContents } from '../../src/utils/format';
 import { TestApp } from '../test-app';
 
 describe(`Members:`, () => {
   let testApp: TestApp;
-  let membersPartial: Handlebars.TemplateDelegate;
-  let memberPartial: Handlebars.TemplateDelegate;
+  let context: MarkdownThemeContext;
+
   beforeAll(async () => {
     testApp = new TestApp(['members.ts']);
     await testApp.bootstrap();
-
-    TestApp.stubPartials(['member', 'index', 'member.sources']);
-    TestApp.stubHelpers(['relativeURL']);
-    membersPartial = TestApp.getPartial('members');
-    memberPartial = TestApp.getPartial('member');
+    context = testApp.getRenderContext();
+    jest.spyOn(context, 'sourcesPartial').mockReturnValue('[sources]');
   });
 
   describe(`(members)`, () => {
-    test(`should compile module members'`, () => {
-      expect(
-        TestApp.compileTemplate(membersPartial, testApp.findModule('members')),
-      ).toMatchSnapshot();
-    });
-
     test(`should compile class members'`, () => {
       expect(
-        TestApp.compileTemplate(
-          membersPartial,
-          testApp.findReflection('ClassWithAccessorMembers'),
-        ),
-      ).toMatchSnapshot();
-    });
-  });
-
-  describe(`(member)`, () => {
-    test(`should compile declaration members'`, () => {
-      expect(
-        TestApp.compileTemplate(
-          memberPartial,
-          testApp.findReflection('declarationMember'),
-        ),
-      ).toMatchSnapshot();
-    });
-
-    test(`should compile a signature members'`, () => {
-      expect(
-        TestApp.compileTemplate(
-          memberPartial,
-          testApp.findReflection('signatureMember'),
-        ),
-      ).toMatchSnapshot();
-    });
-
-    test(`should compile members with getter'`, () => {
-      expect(
-        TestApp.compileTemplate(
-          memberPartial,
-          testApp
-            .findReflection('ClassWithAccessorMembers')
-            .findReflectionByName('getter'),
-        ),
-      ).toMatchSnapshot();
-    });
-
-    test(`should compile members with setter'`, () => {
-      expect(
-        TestApp.compileTemplate(
-          memberPartial,
-          testApp
-            .findReflection('ClassWithAccessorMembers')
-            .findReflectionByName('setter'),
-        ),
-      ).toMatchSnapshot();
-    });
-  });
-
-  describe(`(with hideMembersSymbol)`, () => {
-    beforeAll(async () => {
-      testApp = new TestApp(['members.ts']);
-      await testApp.bootstrap({
-        hideMembersSymbol: true
-      });
-      TestApp.stubPartials(['member', 'member.sources']);
-
-      memberPartial = TestApp.getPartial('member');
-    });
-
-    test(`should compile members without special symbols`, () => {
-      expect(
-        TestApp.compileTemplate(
-          memberPartial,
-          testApp.findReflection('signatureMember'),
+        formatContents(
+          context.groupsPartial(
+            (testApp.findReflection('ClassWithAccessorMembers') as any).groups,
+          ),
         ),
       ).toMatchSnapshot();
     });
