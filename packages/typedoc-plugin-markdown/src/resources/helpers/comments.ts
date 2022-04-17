@@ -2,31 +2,34 @@ import * as Handlebars from 'handlebars';
 import { Comment } from 'typedoc';
 
 export default function () {
-  Handlebars.registerHelper('comments', function (this: Comment) {
+  Handlebars.registerHelper('comments', function (comment: Comment) {
     const md: string[] = [];
 
-    if (this.shortText) {
-      md.push(Handlebars.helpers.comment.call(this.shortText));
-    }
+    if (comment?.hasVisibleComponent()) {
+      if (comment.shortText) {
+        md.push(Handlebars.helpers.comment.call(comment.shortText));
+      }
 
-    if (this.text) {
-      md.push(Handlebars.helpers.comment.call(this.text));
-    }
+      if (comment.text) {
+        md.push(Handlebars.helpers.comment.call(comment.text));
+      }
 
-    if (this.tags) {
-      const tags = this.tags.map(
-        (tag) =>
-          `**\`${tag.tagName}\`**${
-            tag.text
-              ? Handlebars.helpers.comment.call(
-                  (tag.text.startsWith('\n') ? '' : ' ') + tag.text,
-                )
-              : ''
-          }`,
-      );
-      md.push(tags.join('\n\n'));
-    }
+      if (comment.tags) {
+        const tags = comment.tags.map(
+          (tag) =>
+            `**\`${tag.tagName}\`**${
+              tag.text
+                ? Handlebars.helpers.comment.call(
+                    (tag.text.startsWith('\n') ? '' : ' ') + tag.text,
+                  )
+                : ''
+            }`,
+        );
+        md.push(tags.join('\n\n'));
+      }
 
-    return md.join('\n\n');
+      return md.join('\n\n');
+    }
+    return '';
   });
 }

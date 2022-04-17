@@ -64,9 +64,10 @@ export default function () {
           const comments = getComments(property);
           if (comments) {
             row.push(
-              stripLineBreaks(
-                Handlebars.helpers.comments.call(comments),
-              ).replace(/\|/g, '\\|'),
+              stripLineBreaks(Handlebars.helpers.comments(comments)).replace(
+                /\|/g,
+                '\\|',
+              ),
             );
           } else {
             row.push('-');

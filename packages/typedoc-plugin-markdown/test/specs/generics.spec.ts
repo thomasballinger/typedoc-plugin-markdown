@@ -1,6 +1,5 @@
 import * as Handlebars from 'handlebars';
 import { SignatureReflection } from 'typedoc';
-
 import { TestApp } from '../test-app';
 
 describe(`Generics:`, () => {
@@ -17,12 +16,7 @@ describe(`Generics:`, () => {
   beforeEach(async () => {
     testApp = new TestApp(['generics.ts']);
     await testApp.bootstrap();
-    TestApp.stubPartials([
-      'comment',
-      'member.signature',
-      'members',
-      'member.sources',
-    ]);
+    TestApp.stubPartials(['member.signature', 'members', 'member.sources']);
     TestApp.stubHelpers(['toc', 'breadcrumbs', 'hierarchy', 'returns']);
     reflectionTemplate = TestApp.getTemplate('reflection');
   });

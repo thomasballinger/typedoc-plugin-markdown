@@ -1,8 +1,8 @@
-import * as Handlebars from 'handlebars';
-import { MarkdownTheme } from '../../theme';
-import * as path from 'path';
 import * as fs from 'fs';
+import * as Handlebars from 'handlebars';
+import * as path from 'path';
 import { Reflection } from 'typedoc';
+import { MarkdownTheme } from '../../theme';
 
 const URL_PREFIX = /^(http|ftp)s?:\/\//;
 const BRACKETS = /\[\[([^\]]+)\]\]/g;

@@ -1,69 +1,61 @@
 import * as Handlebars from 'handlebars';
-
 import { TestApp } from '../test-app';
 
 describe(`Comments:`, () => {
   let testApp: TestApp;
-  let partial: Handlebars.TemplateDelegate;
+
   beforeAll(async () => {
     testApp = new TestApp(['comments.ts']);
     await testApp.bootstrap({
       includes: './test/stubs/inc',
       media: './test/stubs/media',
     });
-    partial = TestApp.getPartial('comment');
   });
 
   test(`should build @link references'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentWithDocLinks'),
+      Handlebars.helpers.comments(
+        testApp.findReflection('commentWithDocLinks').comment,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should convert symbols brackets to symbol links'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithSymbolLinks'),
+      Handlebars.helpers.comments(
+        testApp.findReflection('commentsWithSymbolLinks').comment,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should convert comments with fenced block'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithFencedBlock'),
+      Handlebars.helpers.comments(
+        testApp.findReflection('commentsWithFencedBlock').comment,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should convert comments with includes'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithIncludes'),
+      Handlebars.helpers.comments(
+        testApp.findReflection('commentsWithIncludes').comment,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should convert comments with tags'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithTags'),
+      Handlebars.helpers.comments(
+        testApp.findReflection('commentsWithTags').comment,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should allow html in comments'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithHTML'),
+      Handlebars.helpers.comments(
+        testApp.findReflection('commentsWithHTML').comment,
       ),
     ).toMatchSnapshot();
   });

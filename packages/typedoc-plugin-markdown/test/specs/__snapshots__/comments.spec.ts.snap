@@ -7,6 +7,7 @@ You can write <strong>HTML</strong> tags directly in comments
 <ul>
 <li>List item</li>
 </ul>
+
 "
 `;
 
@@ -16,6 +17,8 @@ Also, check out [Google](https://www.google.com) and
 [GitHub](https://github.com).
 
 Taken from [JsDoc](http://usejsdoc.org/tags-inline-link.html).
+
+
 "
 `;
 
@@ -29,6 +32,8 @@ someFunction()
 \`\`\`js
 anotherFunction()
 \`\`\`
+
+
 "
 `;
 
@@ -39,9 +44,12 @@ This is a simple example on how to use include.
 
 ![My image alt text](../media/logo.png)
 
+
 This is an example of handlebars include
 
 This is a simple example on a handlebars file.
+
+
 "
 `;
 
@@ -52,6 +60,7 @@ exports[`Comments: should convert comments with tags' 1`] = `
 Tag description on new line
 
 - Tag description on another line
+
 
 **\`deprecated\`**
 Another tag description
@@ -64,5 +73,7 @@ exports[`Comments: should convert symbols brackets to symbol links' 1`] = `
 - Link to an external reflection: [CommentClass](CommentClass.md)
 - Link to an internal reflection: [commentsInReturn](../modules.md#commentsinreturn)
 - Link to an undefined reflection: [[VOID]]
+
+
 "
 `;

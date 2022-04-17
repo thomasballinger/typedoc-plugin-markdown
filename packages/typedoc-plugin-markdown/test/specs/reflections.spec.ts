@@ -1,5 +1,4 @@
 import * as Handlebars from 'handlebars';
-
 import { TestApp } from '../test-app';
 
 describe(`Reflections:`, () => {
@@ -13,7 +12,7 @@ describe(`Reflections:`, () => {
         hideBreadcrumbs: false,
         hidePageTitle: true,
       });
-      TestApp.stubPartials(['comment', 'member.signature', 'members']);
+      TestApp.stubPartials(['member.signature', 'members']);
       TestApp.stubHelpers(['toc', 'breadcrumbs', 'hierarchy']);
       reflectionTemplate = TestApp.getTemplate('reflection');
     });
@@ -35,7 +34,7 @@ describe(`Reflections:`, () => {
         hideBreadcrumbs: true,
         hidePageTitle: false,
       });
-      TestApp.stubPartials(['index', 'comment', 'member.signature', 'members']);
+      TestApp.stubPartials(['index', 'member.signature', 'members']);
       TestApp.stubHelpers(['breadcrumbs', 'hierarchy']);
       reflectionTemplate = TestApp.getTemplate('reflection');
     });
