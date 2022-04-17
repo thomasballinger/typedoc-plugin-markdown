@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { Options, ReferenceType, Reflection } from 'typedoc';
 import { MarkdownTheme } from '.';
+import { declarationTitlePartial } from './resources/partials/declaration-title.partial';
 import { declarationPartial } from './resources/partials/declaration.partial';
 import { groupsPartial } from './resources/partials/groups.partial';
 import { memberPartial } from './resources/partials/member.partial';
@@ -16,6 +17,7 @@ export interface TypedocPluginMarkdownOptions {
   hideBreadcrumbs: boolean;
   hideInPageTOC: boolean;
   hidePageTitle: boolean;
+  hideMembersSymbol: boolean;
   entryDocument: string;
   entryPoints: string[];
   includes: string;
@@ -79,6 +81,7 @@ export class MarkdownThemeContext {
   // partials
   groupsPartial = bind(groupsPartial, this);
   memberPartial = bind(memberPartial, this);
+  declarationTitlePartial = bind(declarationTitlePartial, this);
   declarationPartial = bind(declarationPartial, this);
   signaturePartial = bind(signaturePartial, this);
   referencePartial = bind(referencePartial, this);

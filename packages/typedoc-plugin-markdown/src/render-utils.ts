@@ -2,7 +2,6 @@ import attemptExternalResolution from './resources/helpers/attemptExternalResolu
 import breadcrumbsHelper from './resources/helpers/breadcrumbs';
 import commentHelper from './resources/helpers/comment';
 import commentsHelper from './resources/helpers/comments';
-import declarationTitleHelper from './resources/helpers/declaration-title';
 import hierarchyHelper from './resources/helpers/hierarchy';
 import indexSignatureTitleHelper from './resources/helpers/index-signature-title';
 import parameterTableHelper from './resources/helpers/parameter-table';
@@ -23,7 +22,6 @@ export function registerHelpers(theme: MarkdownTheme) {
   breadcrumbsHelper(theme);
   commentHelper(theme);
   commentsHelper();
-  declarationTitleHelper(theme);
   hierarchyHelper();
   indexSignatureTitleHelper();
   parameterTableHelper();

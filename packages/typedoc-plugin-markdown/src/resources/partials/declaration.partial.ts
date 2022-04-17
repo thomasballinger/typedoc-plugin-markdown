@@ -12,7 +12,7 @@ export const declarationPartial = (
   const typeDeclaration = (model.type as any)
     ?.declaration as DeclarationReflection;
 
-  md.push(Handlebars.helpers.declarationTitle.call(model));
+  md.push(context.declarationTitlePartial(model));
 
   if (model.comment) {
     md.push(Handlebars.helpers.comments(model.comment));
