@@ -10,7 +10,7 @@ export const reflectionTemplate = (
   const md: string[] = [];
 
   if (!context.options.hideBreadcrumbs) {
-    md.push(Handlebars.helpers.breadcrumbs.call(props));
+    md.push(context.breadcrumbsPartial(props));
   }
 
   if (!context.options.hidePageTitle) {

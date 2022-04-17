@@ -9,7 +9,7 @@ export const readmeTemplate = (
   const md: string[] = [];
 
   if (!context.options.hideBreadcrumbs) {
-    md.push(Handlebars.helpers.breadcrumbs.call(props));
+    md.push(context.breadcrumbsPartial(props));
   }
 
   if (props.model.readme) {

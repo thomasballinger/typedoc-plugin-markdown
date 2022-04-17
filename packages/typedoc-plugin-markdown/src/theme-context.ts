@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { Options, ReferenceType, Reflection } from 'typedoc';
 import { MarkdownTheme } from '.';
+import { breadcrumbsPartial } from './resources/partials/breadcrumbs.partial';
 import { declarationTitlePartial } from './resources/partials/declaration-title.partial';
 import { declarationPartial } from './resources/partials/declaration.partial';
 import { groupsPartial } from './resources/partials/groups.partial';
@@ -79,6 +80,7 @@ export class MarkdownThemeContext {
   memberTemplate = bind(memberTemplate, this);
 
   // partials
+  breadcrumbsPartial = bind(breadcrumbsPartial, this);
   groupsPartial = bind(groupsPartial, this);
   memberPartial = bind(memberPartial, this);
   declarationTitlePartial = bind(declarationTitlePartial, this);

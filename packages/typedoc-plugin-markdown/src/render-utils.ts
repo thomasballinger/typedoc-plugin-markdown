@@ -1,5 +1,4 @@
 import attemptExternalResolution from './resources/helpers/attemptExternalResolution';
-import breadcrumbsHelper from './resources/helpers/breadcrumbs';
 import commentHelper from './resources/helpers/comment';
 import commentsHelper from './resources/helpers/comments';
 import hierarchyHelper from './resources/helpers/hierarchy';
@@ -19,7 +18,6 @@ import { MarkdownTheme } from './theme';
 
 export function registerHelpers(theme: MarkdownTheme) {
   attemptExternalResolution(theme);
-  breadcrumbsHelper(theme);
   commentHelper(theme);
   commentsHelper();
   hierarchyHelper();
