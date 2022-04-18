@@ -54,9 +54,7 @@ export const reflectionTemplate = (
 
   if (props.model.indexSignature) {
     md.push(heading(2, 'Indexable'));
-    md.push(
-      Handlebars.helpers.indexSignatureTitle.call(props.model.indexSignature),
-    );
+    md.push(context.indexSignatureTitlePartial(props.model.indexSignature));
   }
 
   md.push(context.tocPartial(props.model));

@@ -25,11 +25,7 @@ export const declarationPartial = (
 
   if (typeDeclaration?.indexSignature) {
     md.push(heading(4, 'Index signature'));
-    md.push(
-      Handlebars.helpers.indexSignatureTitle.call(
-        typeDeclaration.indexSignature,
-      ),
-    );
+    md.push(context.indexSignatureTitlePartial(typeDeclaration.indexSignature));
   }
 
   if (typeDeclaration?.signatures) {
