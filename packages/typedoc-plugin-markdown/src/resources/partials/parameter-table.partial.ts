@@ -1,8 +1,6 @@
-import * as Handlebars from 'handlebars';
 import { ParameterReflection, ReflectionKind } from 'typedoc';
 import { MarkdownThemeContext } from '../../theme-context';
 import { stripLineBreaks } from '../../utils';
-import { getReflectionType } from '../helpers/type';
 
 export function parameterTablePartial(
   context: MarkdownThemeContext,
@@ -60,8 +58,8 @@ export function parameterTablePartial(
 
       row.push(
         parameter.type
-          ? Handlebars.helpers.type.call(parameter.type, 'object')
-          : getReflectionType(parameter, 'object'),
+          ? context.typePartial(parameter.type, 'object')
+          : context.typePartial(parameter.signatures),
       );
 
       if (showDefaults) {

@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { SignatureReflection } from 'typedoc';
 import { ArrayType, ReferenceType } from 'typedoc/dist/lib/models/types';
 import { MarkdownThemeContext } from '../../theme-context';
@@ -9,7 +8,7 @@ export function typeAndParentPartial(
   props: ArrayType | ReferenceType,
 ) {
   const getUrl = (name: string, url: string) =>
-    `[${name}](${Handlebars.helpers.relativeURL(url)})`;
+    `[${name}](${context.relativeURL(url)})`;
   if (props) {
     if ('elementType' in props) {
       return context.typeAndParentPartial(props.elementType) + '[]';

@@ -38,7 +38,7 @@ export const reflectionTemplate = (
     md.push(
       unorderedList(
         props.model.implementedTypes.map((implementedType) =>
-          Handlebars.helpers.type.call(implementedType),
+          context.typePartial(implementedType),
         ),
       ),
     );

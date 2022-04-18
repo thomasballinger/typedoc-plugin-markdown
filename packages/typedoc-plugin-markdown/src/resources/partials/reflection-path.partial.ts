@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { ReflectionKind } from 'typedoc';
 import { MarkdownThemeContext } from '../../theme-context';
 
@@ -12,15 +11,13 @@ export function reflectionPathPartial(
       if (props.model.parent && props.model.parent.parent) {
         if (props.model.parent.parent.parent) {
           title.push(
-            `[${
-              props.model.parent.parent.name
-            }](${Handlebars.helpers.relativeURL(
+            `[${props.model.parent.parent.name}](${context.relativeURL(
               props.model?.parent?.parent.url,
             )})`,
           );
         }
         title.push(
-          `[${props.model.parent.name}](${Handlebars.helpers.relativeURL(
+          `[${props.model.parent.name}](${context.relativeURL(
             props.model.parent.url,
           )})`,
         );

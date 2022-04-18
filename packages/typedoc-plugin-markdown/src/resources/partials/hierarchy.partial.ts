@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { DeclarationHierarchy } from 'typedoc/dist/lib/models';
 import { MarkdownThemeContext } from '../../theme-context';
 import { spaces } from '../../utils';
@@ -14,7 +13,7 @@ export function hierarchyPartial(
     if (props.isTarget) {
       md.push(`${symbol} **\`${hierarchyType}\`**`);
     } else {
-      md.push(`${symbol} ${Handlebars.helpers.type.call(hierarchyType)}`);
+      md.push(`${symbol} ${context.typePartial(hierarchyType)}`);
     }
   });
   if (props.next) {

@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { DeclarationReflection, ReflectionType } from 'typedoc';
 import { MarkdownThemeContext } from '../../theme-context';
 import { escapeChars, stripLineBreaks } from '../../utils';
@@ -55,9 +54,7 @@ export function propertyTablePartial(
         : `\`${getName(property)}\``;
     nameCol.push(name);
     row.push(nameCol.join(' '));
-    row.push(
-      Handlebars.helpers.type.call(propertyType).replace(/(?<!\\)\|/g, '\\|'),
-    );
+    row.push(context.typePartial(propertyType).replace(/(?<!\\)\|/g, '\\|'));
 
     if (hasComments) {
       const comments = getComments(property);

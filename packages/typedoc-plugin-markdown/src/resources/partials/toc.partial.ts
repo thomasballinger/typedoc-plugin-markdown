@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import {
   DeclarationReflection,
   ProjectReflection,
@@ -22,9 +21,7 @@ export function tocPartial(
   function pushGroup(group: ReflectionGroup, md: string[]) {
     const children = group.children.map(
       (child) =>
-        `- [${escapeChars(child.name)}](${Handlebars.helpers.relativeURL(
-          child.url,
-        )})`,
+        `- [${escapeChars(child.name)}](${context.relativeURL(child.url)})`,
     );
     md.push(children.join('\n'));
   }

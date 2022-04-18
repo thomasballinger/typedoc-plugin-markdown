@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import * as Handlebars from 'handlebars';
 import * as path from 'path';
 import { Reflection } from 'typedoc';
 import { MarkdownThemeContext } from '../../theme-context';
@@ -58,9 +57,7 @@ export function commentPartial(context: MarkdownThemeContext, text: string) {
     }
 
     if (targetReflection && targetReflection.url) {
-      return `[${caption}](${Handlebars.helpers.relativeURL(
-        targetReflection.url,
-      )})`;
+      return `[${caption}](${context.relativeURL(targetReflection.url)})`;
     } else {
       return original;
     }
@@ -104,7 +101,7 @@ export function commentPartial(context: MarkdownThemeContext, text: string) {
   if (media) {
     text = text.replace(MEDIA_PATTERN, (match: string, mediaPath: string) => {
       if (fs.existsSync(path.join(media!, mediaPath))) {
-        return Handlebars.helpers.relativeURL('media') + '/' + mediaPath;
+        return context.relativeURL('media') + '/' + mediaPath;
       } else {
         return match;
       }

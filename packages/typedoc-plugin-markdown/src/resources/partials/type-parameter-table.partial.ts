@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { TypeParameterReflection } from 'typedoc';
 import { MarkdownThemeContext } from '../../theme-context';
 import { stripLineBreaks } from '../../utils';
@@ -37,14 +36,14 @@ export function typeParameterTablePartial(
         }
         if (parameter.type) {
           typeCol.push(
-            `extends ${Handlebars.helpers.type.call(parameter.type, 'object')}`,
+            `extends ${context.typePartial(parameter.type, 'object')}`,
           );
         }
         if (parameter.default) {
           if (parameter.type) {
             typeCol.push(' = ');
           }
-          typeCol.push(Handlebars.helpers.type.call(parameter.default));
+          typeCol.push(context.typePartial(parameter.default));
         }
         row.push(typeCol.join(''));
       }

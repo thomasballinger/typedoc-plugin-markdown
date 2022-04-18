@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import {
   DeclarationReflection,
   LiteralType,
@@ -27,7 +26,7 @@ export function declarationTitlePartial(
     }
     return (
       ': ' +
-      Handlebars.helpers.type.call(
+      context.typePartial(
         reflectionType ? reflectionType : reflection,
         'object',
       )

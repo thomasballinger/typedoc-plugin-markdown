@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import {
   DeclarationReflection,
   ReflectionKind,
@@ -37,7 +36,7 @@ export const signaturePartial = (
   if (props.type && !props.parent?.kindOf(ReflectionKind.Constructor)) {
     if (props.type) {
       md.push(heading(nested ? 5 : 4, 'Returns'));
-      md.push(Handlebars.helpers.type.call(props.type, 'all'));
+      md.push(context.typePartial(props.type, 'all'));
       if (props.comment?.returns) {
         md.push(context.commentPartial(props.comment.returns));
       }

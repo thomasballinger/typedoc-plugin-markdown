@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { ContainerReflection, PageEvent } from 'typedoc';
 import { MarkdownThemeContext } from '../../theme-context';
 import { escapeChars } from '../../utils';
@@ -20,31 +19,28 @@ export function breadcrumbsPartial(
   breadcrumbs.push(
     props.url === entryDocument
       ? project.name
-      : `[${project.name}](${Handlebars.helpers.relativeURL(entryDocument)})`,
+      : `[${project.name}](${context.relativeURL(entryDocument)})`,
   );
   if (hasReadmeFile) {
     breadcrumbs.push(
       props.url === project.url
         ? globalsName
-        : `[${globalsName}](${Handlebars.helpers.relativeURL('modules.md')})`,
+        : `[${globalsName}](${context.relativeURL('modules.md')})`,
     );
+  }
+  function breadcrumb(page: PageEvent, model: any, md: string[]) {
+    if (model && model.parent) {
+      breadcrumb(page, model.parent, md);
+      if (model.url) {
+        md.push(
+          page.url === model.url
+            ? `${escapeChars(model.name)}`
+            : `[${escapeChars(model.name)}](${context.relativeURL(model.url)})`,
+        );
+      }
+    }
+    return md.join(' / ');
   }
   const breadcrumbsOut = breadcrumb(props, props.model, breadcrumbs);
   return breadcrumbsOut;
-}
-
-function breadcrumb(page: PageEvent, model: any, md: string[]) {
-  if (model && model.parent) {
-    breadcrumb(page, model.parent, md);
-    if (model.url) {
-      md.push(
-        page.url === model.url
-          ? `${escapeChars(model.name)}`
-          : `[${escapeChars(model.name)}](${Handlebars.helpers.relativeURL(
-              model.url,
-            )})`,
-      );
-    }
-  }
-  return md.join(' / ');
 }

@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import {
   ParameterReflection,
   ReflectionKind,
@@ -39,7 +38,7 @@ export function signatureTitlePartial(
   md.push(`(${getParameters(props.parameters)})`);
 
   if (props.type && !props.parent?.kindOf(ReflectionKind.Constructor)) {
-    md.push(`: ${Handlebars.helpers.type.call(props.type, 'object')}`);
+    md.push(`: ${context.typePartial(props.type, 'object')}`);
   }
   return md.join('') + (standalone ? '\n' : '');
 }
