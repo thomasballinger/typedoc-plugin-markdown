@@ -1,6 +1,3 @@
-import * as Handlebars from 'handlebars';
-import { PageEvent } from 'typedoc/dist/lib/output/events';
-
 export interface FrontMatterVars {
   [key: string]: string | number | boolean;
 }
@@ -14,14 +11,6 @@ export const prependYAML = (contents: string, vars: FrontMatterVars) => {
   return contents
     .replace(/^/, toYAML(vars) + '\n\n')
     .replace(/[\r\n]{3,}/g, '\n\n');
-};
-
-/**
- * Returns the page title as rendered in the document h1(# title)
- * @param page
- */
-export const getPageTitle = (page: PageEvent) => {
-  return Handlebars.helpers.reflectionTitle.call(page, false);
 };
 
 /**
