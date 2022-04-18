@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { PageEvent, ProjectReflection } from 'typedoc';
 import { MarkdownThemeContext } from '../..';
 import { heading } from '../../utils/elements';
@@ -14,7 +13,7 @@ export const indexTemplate = (
   }
 
   if (!context.options.hidePageTitle) {
-    md.push(heading(1, Handlebars.helpers.reflectionTitle.call(props, true)));
+    md.push(heading(1, context.reflectionTitlePartial(props, true)));
   }
 
   md.push(context.reflectionPathPartial(props.model));

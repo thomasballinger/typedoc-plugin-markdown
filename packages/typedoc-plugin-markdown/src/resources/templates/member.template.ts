@@ -13,7 +13,7 @@ export const memberTemplate = (
   }
 
   if (!context.options.hidePageTitle) {
-    md.push(heading(1, Handlebars.helpers.reflectionTitle.call(props, true)));
+    md.push(heading(1, context.reflectionTitlePartial(props, true)));
   }
 
   md.push(context.reflectionPathPartial(props.model));

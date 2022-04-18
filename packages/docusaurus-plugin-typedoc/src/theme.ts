@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import {
   BindOption,
   DeclarationReflection,
@@ -7,17 +9,13 @@ import {
   RendererEvent,
   UrlMapping,
 } from 'typedoc';
-import * as fs from 'fs';
-import { MarkdownTheme } from 'typedoc-plugin-markdown/dist/theme';
 import { getKindPlural } from 'typedoc-plugin-markdown/dist/groups';
-import * as path from 'path';
-
-import { FrontMatter, SidebarOptions } from './types';
+import { MarkdownTheme } from 'typedoc-plugin-markdown/dist/theme';
 import {
   FrontMatterVars,
-  getPageTitle,
   prependYAML,
 } from 'typedoc-plugin-markdown/dist/utils/front-matter';
+import { FrontMatter, SidebarOptions } from './types';
 
 const CATEGORY_POSITION = {
   [ReflectionKind.Module]: 1,
@@ -169,7 +167,9 @@ export class DocusaurusTheme extends MarkdownTheme {
     if (page.url === this.entryDocument && page.url !== page.project.url) {
       return readmeTitle;
     }
-    return getPageTitle(page);
+    return (this.application.renderer.theme as DocusaurusTheme)
+      ?.getRenderContext()
+      .reflectionTitlePartial(page, false);
   }
 
   getSlug() {

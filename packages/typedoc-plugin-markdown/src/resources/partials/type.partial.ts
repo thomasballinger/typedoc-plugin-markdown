@@ -182,7 +182,7 @@ export function typePartial(
     return functions.join('');
   }
 
-  function getReferenceType(model: ReferenceType, emphasis) {
+  function getReferenceType(model: ReferenceType, emphasis: boolean) {
     const externalUrl = context.attemptExternalResolution(model);
     if (model.reflection || (model.name && model.typeArguments)) {
       const reflection: string[] = [];

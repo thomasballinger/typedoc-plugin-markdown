@@ -12,7 +12,6 @@ import {
 } from 'typedoc';
 import { getKindPlural } from './groups';
 import { NavigationItem } from './navigation-item';
-import { registerHelpers } from './render-utils';
 import { MarkdownThemeContext } from './theme-context';
 import { formatContents } from './utils';
 
@@ -96,8 +95,6 @@ export class MarkdownTheme extends Theme {
       [RendererEvent.BEGIN]: this.onBeginRenderer,
       [PageEvent.BEGIN]: this.onBeginPage,
     });
-
-    registerHelpers(this);
   }
 
   render(page: PageEvent<Reflection>): string {

@@ -14,6 +14,7 @@ import { parameterTablePartial } from './resources/partials/parameter-table.part
 import { propertyTablePartial } from './resources/partials/property-table.partial';
 import { referencePartial } from './resources/partials/reference.partial';
 import { reflectionPathPartial } from './resources/partials/reflection-path.partial';
+import { reflectionTitlePartial } from './resources/partials/reflection-title.partial';
 import { signatureTitlePartial } from './resources/partials/signature-title.partial';
 import { signaturePartial } from './resources/partials/signature.partial';
 import { sourcesPartial } from './resources/partials/sources.partial';
@@ -105,6 +106,7 @@ export class MarkdownThemeContext {
   propertyTablePartial = bind(propertyTablePartial, this);
   referencePartial = bind(referencePartial, this);
   reflectionPathPartial = bind(reflectionPathPartial, this);
+  reflectionTitlePartial = bind(reflectionTitlePartial, this);
   signaturePartial = bind(signaturePartial, this);
   signatureTitlePartial = bind(signatureTitlePartial, this);
   sourcesPartial = bind(sourcesPartial, this);
