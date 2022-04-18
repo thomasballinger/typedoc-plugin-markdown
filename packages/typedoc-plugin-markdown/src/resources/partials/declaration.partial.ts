@@ -20,7 +20,7 @@ export const declarationPartial = (
 
   if (model.typeParameters) {
     md.push(heading(4, 'Type parameters'));
-    md.push(Handlebars.helpers.typeParameterTable.call(model.typeParameters));
+    md.push(context.typeParameterTablePartial(model.typeParameters));
   }
 
   if (typeDeclaration?.indexSignature) {

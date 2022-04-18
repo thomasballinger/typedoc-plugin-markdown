@@ -10,7 +10,6 @@ import reflectionTitleHelper from './resources/helpers/reflection-title';
 import relativeUrlHelper from './resources/helpers/relative-url';
 import typeHelper from './resources/helpers/type';
 import typeAndParentHelper from './resources/helpers/type-and-parent';
-import typeParameterTableHelper from './resources/helpers/type-parameter-table';
 import { MarkdownTheme } from './theme';
 
 export function registerHelpers(theme: MarkdownTheme) {
@@ -26,5 +25,4 @@ export function registerHelpers(theme: MarkdownTheme) {
   relativeUrlHelper(theme);
   typeHelper();
   typeAndParentHelper();
-  typeParameterTableHelper();
 }

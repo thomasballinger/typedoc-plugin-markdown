@@ -25,9 +25,7 @@ export const reflectionTemplate = (
 
   if (props.model.typeParameters) {
     md.push(heading(2, 'Type parameters'));
-    md.push(
-      Handlebars.helpers.typeParameterTable.call(props.model.typeParameters),
-    );
+    md.push(context.typeParameterTablePartial(props.model.typeParameters));
   }
 
   if (props.model.typeHierarchy && props.model.typeHierarchy.next) {

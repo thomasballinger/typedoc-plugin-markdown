@@ -12,6 +12,7 @@ import { signatureTitlePartial } from './resources/partials/signature-title.part
 import { signaturePartial } from './resources/partials/signature.partial';
 import { sourcesPartial } from './resources/partials/sources.partial';
 import { tocPartial } from './resources/partials/toc.partial';
+import { typeParameterTablePartial } from './resources/partials/type-parameter-table.partial';
 import { indexTemplate } from './resources/templates/index.template';
 import { memberTemplate } from './resources/templates/member.template';
 import { readmeTemplate } from './resources/templates/readme.template';
@@ -94,4 +95,5 @@ export class MarkdownThemeContext {
   signatureTitlePartial = bind(signatureTitlePartial, this);
   sourcesPartial = bind(sourcesPartial, this);
   tocPartial = bind(tocPartial, this);
+  typeParameterTablePartial = bind(typeParameterTablePartial, this);
 }

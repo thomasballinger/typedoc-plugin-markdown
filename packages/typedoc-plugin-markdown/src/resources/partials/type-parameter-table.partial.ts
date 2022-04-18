@@ -1,14 +1,13 @@
 import * as Handlebars from 'handlebars';
 import { TypeParameterReflection } from 'typedoc';
+import { MarkdownThemeContext } from '../../theme-context';
 import { stripLineBreaks } from '../../utils';
 
-export default function () {
-  Handlebars.registerHelper(
-    'typeParameterTable',
-    function (this: TypeParameterReflection[]) {
-      return table(this);
-    },
-  );
+export function typeParameterTablePartial(
+  context: MarkdownThemeContext,
+  props: TypeParameterReflection[],
+) {
+  return table(props);
 }
 
 function table(parameters: any) {

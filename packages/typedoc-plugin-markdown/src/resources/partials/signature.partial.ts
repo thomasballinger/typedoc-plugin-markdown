@@ -26,7 +26,7 @@ export const signaturePartial = (
 
   if (props.typeParameters?.length) {
     md.push(heading(nested ? 5 : 4, 'Type parameters'));
-    md.push(Handlebars.helpers.typeParameterTable.call(props.typeParameters));
+    md.push(context.typeParameterTablePartial(props.typeParameters));
   }
 
   if (props.parameters?.length) {
