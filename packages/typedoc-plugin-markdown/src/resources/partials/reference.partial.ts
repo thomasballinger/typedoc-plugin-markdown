@@ -1,10 +1,11 @@
+import * as Handlebars from 'handlebars';
 import { ReferenceReflection } from 'typedoc';
 import { MarkdownThemeContext } from '../../theme-context';
 
-export const referencePartial = (
+export function referencePartial(
   context: MarkdownThemeContext,
   props: ReferenceReflection,
-) => {
+) {
   const referenced = props.tryGetTargetReflectionDeep();
 
   if (!referenced) {
@@ -12,10 +13,12 @@ export const referencePartial = (
   }
 
   if (props.name === referenced.name) {
-    return `Re-exports [${referenced.name}](${context.urlTo(referenced)})`;
+    return `Re-exports [${referenced.name}](${Handlebars.helpers.relativeURL(
+      referenced.url,
+    )})`;
   }
 
-  return `Renames and re-exports [${referenced.name}](${context.urlTo(
-    referenced,
-  )})`;
-};
+  return `Renames and re-exports [${
+    referenced.name
+  }](${Handlebars.helpers.relativeURL(referenced.url)})`;
+}
