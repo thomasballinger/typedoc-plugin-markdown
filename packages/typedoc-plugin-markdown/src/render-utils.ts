@@ -1,7 +1,6 @@
 import attemptExternalResolution from './resources/helpers/attemptExternalResolution';
 import commentHelper from './resources/helpers/comment';
 import commentsHelper from './resources/helpers/comments';
-import parameterTableHelper from './resources/helpers/parameter-table';
 import reflectionTitleHelper from './resources/helpers/reflection-title';
 import relativeUrlHelper from './resources/helpers/relative-url';
 import typeHelper from './resources/helpers/type';
@@ -11,7 +10,6 @@ export function registerHelpers(theme: MarkdownTheme) {
   attemptExternalResolution(theme);
   commentHelper(theme);
   commentsHelper();
-  parameterTableHelper();
   reflectionTitleHelper(theme);
   relativeUrlHelper(theme);
   typeHelper();

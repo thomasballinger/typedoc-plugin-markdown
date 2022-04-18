@@ -1,39 +1,37 @@
 import * as Handlebars from 'handlebars';
 import { ParameterReflection, ReflectionKind } from 'typedoc';
+import { MarkdownThemeContext } from '../../theme-context';
 import { stripLineBreaks } from '../../utils';
-import { getReflectionType } from './type';
+import { getReflectionType } from '../helpers/type';
 
-export default function () {
-  Handlebars.registerHelper(
-    'parameterTable',
+export function parameterTablePartial(
+  context: MarkdownThemeContext,
+  props: ParameterReflection[],
+) {
+  const flattenParams = (current: any) => {
+    return current.type?.declaration?.children?.reduce(
+      (acc: any, child: any) => {
+        const childObj = {
+          ...child,
+          name: `${current.name}.${child.name}`,
+        };
+        return parseParams(childObj, acc);
+      },
+      [],
+    );
+  };
 
-    function (this: ParameterReflection[]) {
-      const flattenParams = (current: any) => {
-        return current.type?.declaration?.children?.reduce(
-          (acc: any, child: any) => {
-            const childObj = {
-              ...child,
-              name: `${current.name}.${child.name}`,
-            };
-            return parseParams(childObj, acc);
-          },
-          [],
-        );
-      };
+  const parseParams = (current: any, acc: any) => {
+    const shouldFlatten =
+      current.type?.declaration?.kind === ReflectionKind.TypeLiteral &&
+      current.type?.declaration?.children;
+    return shouldFlatten
+      ? [...acc, current, ...flattenParams(current)]
+      : [...acc, current];
+  };
 
-      const parseParams = (current: any, acc: any) => {
-        const shouldFlatten =
-          current.type?.declaration?.kind === ReflectionKind.TypeLiteral &&
-          current.type?.declaration?.children;
-        return shouldFlatten
-          ? [...acc, current, ...flattenParams(current)]
-          : [...acc, current];
-      };
-
-      return table(
-        this.reduce((acc: any, current: any) => parseParams(current, acc), []),
-      );
-    },
+  return table(
+    props.reduce((acc: any, current: any) => parseParams(current, acc), []),
   );
 }
 

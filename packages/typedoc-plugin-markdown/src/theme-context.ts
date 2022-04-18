@@ -8,6 +8,7 @@ import { groupsPartial } from './resources/partials/groups.partial';
 import { hierarchyPartial } from './resources/partials/hierarchy.partial';
 import { indexSignatureTitlePartial } from './resources/partials/index-signature-title.partial';
 import { memberPartial } from './resources/partials/member.partial';
+import { parameterTablePartial } from './resources/partials/parameter-table.partial';
 import { propertyTablePartial } from './resources/partials/property-table.partial';
 import { referencePartial } from './resources/partials/reference.partial';
 import { reflectionPathPartial } from './resources/partials/reflection-path.partial';
@@ -95,6 +96,7 @@ export class MarkdownThemeContext {
   hierarchyPartial = bind(hierarchyPartial, this);
   indexSignatureTitlePartial = bind(indexSignatureTitlePartial, this);
   memberPartial = bind(memberPartial, this);
+  parameterTablePartial = bind(parameterTablePartial, this);
   propertyTablePartial = bind(propertyTablePartial, this);
   referencePartial = bind(referencePartial, this);
   reflectionPathPartial = bind(reflectionPathPartial, this);
