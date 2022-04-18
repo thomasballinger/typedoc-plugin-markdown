@@ -30,7 +30,7 @@ export const reflectionTemplate = (
 
   if (props.model.typeHierarchy && props.model.typeHierarchy.next) {
     md.push(heading(2, 'Hierarchy'));
-    md.push(Handlebars.helpers.hierarchy.call(props.model.typeHierarchy, 0));
+    md.push(context.hierarchyPartial(props.model.typeHierarchy, 0));
   }
 
   if (props.model.implementedTypes) {

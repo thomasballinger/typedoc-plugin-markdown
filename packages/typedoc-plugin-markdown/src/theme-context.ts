@@ -5,6 +5,7 @@ import { breadcrumbsPartial } from './resources/partials/breadcrumbs.partial';
 import { declarationTitlePartial } from './resources/partials/declaration-title.partial';
 import { declarationPartial } from './resources/partials/declaration.partial';
 import { groupsPartial } from './resources/partials/groups.partial';
+import { hierarchyPartial } from './resources/partials/hierarchy.partial';
 import { indexSignatureTitlePartial } from './resources/partials/index-signature-title.partial';
 import { memberPartial } from './resources/partials/member.partial';
 import { propertyTablePartial } from './resources/partials/property-table.partial';
@@ -91,6 +92,7 @@ export class MarkdownThemeContext {
   declarationTitlePartial = bind(declarationTitlePartial, this);
   declarationPartial = bind(declarationPartial, this);
   groupsPartial = bind(groupsPartial, this);
+  hierarchyPartial = bind(hierarchyPartial, this);
   indexSignatureTitlePartial = bind(indexSignatureTitlePartial, this);
   memberPartial = bind(memberPartial, this);
   propertyTablePartial = bind(propertyTablePartial, this);
