@@ -4,7 +4,6 @@ import commentsHelper from './resources/helpers/comments';
 import hierarchyHelper from './resources/helpers/hierarchy';
 import indexSignatureTitleHelper from './resources/helpers/index-signature-title';
 import parameterTableHelper from './resources/helpers/parameter-table';
-import reflectionPathHelper from './resources/helpers/reflection-path';
 import reflectionTitleHelper from './resources/helpers/reflection-title';
 import relativeUrlHelper from './resources/helpers/relative-url';
 import typeHelper from './resources/helpers/type';
@@ -17,7 +16,6 @@ export function registerHelpers(theme: MarkdownTheme) {
   hierarchyHelper();
   indexSignatureTitleHelper();
   parameterTableHelper();
-  reflectionPathHelper();
   reflectionTitleHelper(theme);
   relativeUrlHelper(theme);
   typeHelper();
