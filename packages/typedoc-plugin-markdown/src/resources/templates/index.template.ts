@@ -23,7 +23,7 @@ export const indexTemplate = (
     md.push(Handlebars.helpers.comments(props.model.comment));
   }
 
-  md.push(Handlebars.helpers.toc.call(props.model));
+  md.push(context.tocPartial(props.model));
 
   return md.join('\n\n');
 };

@@ -11,6 +11,7 @@ import { referencePartial } from './resources/partials/reference.partial';
 import { signatureTitlePartial } from './resources/partials/signature-title.partial';
 import { signaturePartial } from './resources/partials/signature.partial';
 import { sourcesPartial } from './resources/partials/sources.partial';
+import { tocPartial } from './resources/partials/toc.partial';
 import { indexTemplate } from './resources/templates/index.template';
 import { memberTemplate } from './resources/templates/member.template';
 import { readmeTemplate } from './resources/templates/readme.template';
@@ -83,13 +84,14 @@ export class MarkdownThemeContext {
 
   // partials
   breadcrumbsPartial = bind(breadcrumbsPartial, this);
-  groupsPartial = bind(groupsPartial, this);
-  memberPartial = bind(memberPartial, this);
   declarationTitlePartial = bind(declarationTitlePartial, this);
   declarationPartial = bind(declarationPartial, this);
+  groupsPartial = bind(groupsPartial, this);
+  memberPartial = bind(memberPartial, this);
+  propertyTablePartial = bind(propertyTablePartial, this);
+  referencePartial = bind(referencePartial, this);
   signaturePartial = bind(signaturePartial, this);
   signatureTitlePartial = bind(signatureTitlePartial, this);
-  referencePartial = bind(referencePartial, this);
   sourcesPartial = bind(sourcesPartial, this);
-  propertyTablePartial = bind(propertyTablePartial, this);
+  tocPartial = bind(tocPartial, this);
 }

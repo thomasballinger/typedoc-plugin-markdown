@@ -3,7 +3,14 @@
 exports[`Reflections: (header) should compile template with breadcrumbs and without title 1`] = `
 "[breadcrumbs]
 
-[helper: toc]
+## Table of contents
+
+### Enumeration members
+
+- [Down](../enums/EnumReflection.md#down)
+- [Left](../enums/EnumReflection.md#left)
+- [Right](../enums/EnumReflection.md#right)
+- [Up](../enums/EnumReflection.md#up)
 
 [groups]
 "

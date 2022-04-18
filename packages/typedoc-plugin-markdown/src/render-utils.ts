@@ -8,7 +8,6 @@ import referenceMember from './resources/helpers/reference-member';
 import reflectionPathHelper from './resources/helpers/reflection-path';
 import reflectionTitleHelper from './resources/helpers/reflection-title';
 import relativeUrlHelper from './resources/helpers/relative-url';
-import tocHelper from './resources/helpers/toc';
 import typeHelper from './resources/helpers/type';
 import typeAndParentHelper from './resources/helpers/type-and-parent';
 import typeParameterTableHelper from './resources/helpers/type-parameter-table';
@@ -25,7 +24,6 @@ export function registerHelpers(theme: MarkdownTheme) {
   reflectionPathHelper();
   reflectionTitleHelper(theme);
   relativeUrlHelper(theme);
-  tocHelper(theme);
   typeHelper();
   typeAndParentHelper();
   typeParameterTableHelper();

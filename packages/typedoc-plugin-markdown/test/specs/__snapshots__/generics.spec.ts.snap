@@ -14,7 +14,16 @@ Comments for typeParams
 | \`T\` | Some type param |
 | \`V\` | Some other type param |
 
-[helper: toc]
+## Table of contents
+
+### Constructors
+
+- [constructor](ClassWithTypeParams.md#constructor)
+
+### Properties
+
+- [propT](ClassWithTypeParams.md#propt)
+- [propV](ClassWithTypeParams.md#propv)
 
 [groups]
 "

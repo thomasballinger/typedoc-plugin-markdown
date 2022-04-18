@@ -61,7 +61,7 @@ export const reflectionTemplate = (
     );
   }
 
-  md.push(Handlebars.helpers.toc.call(props.model));
+  md.push(context.tocPartial(props.model));
 
   if (props.model.groups) {
     md.push(context.groupsPartial(props.model.groups));
