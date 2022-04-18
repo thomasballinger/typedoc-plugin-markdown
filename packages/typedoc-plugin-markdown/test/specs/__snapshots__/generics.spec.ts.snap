@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Generics: should compile class with type params 1`] = `
-"[helper: breadcrumbs]
+"[breadcrumbs]
 
 # Class: ClassWithTypeParams<T, V\\\\>
 

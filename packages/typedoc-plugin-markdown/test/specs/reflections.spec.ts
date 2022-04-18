@@ -14,8 +14,10 @@ describe(`Reflections:`, () => {
         hidePageTitle: true,
       });
       context = testApp.getRenderContext();
-      TestApp.stubHelpers(['toc', 'breadcrumbs', 'hierarchy']);
-
+      TestApp.stubHelpers(['toc', 'hierarchy']);
+      jest
+        .spyOn(context, 'breadcrumbsPartial')
+        .mockReturnValue('[breadcrumbs]');
       jest.spyOn(context, 'sourcesPartial').mockReturnValue('[sources]');
       jest.spyOn(context, 'groupsPartial').mockReturnValue('[groups]');
     });
