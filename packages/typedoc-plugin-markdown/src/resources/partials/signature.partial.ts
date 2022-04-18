@@ -18,7 +18,7 @@ export const signaturePartial = (
   const typeDeclaration = (props.type as any)
     ?.declaration as DeclarationReflection;
 
-  md.push(Handlebars.helpers.signatureTitle.call(props, accessor));
+  md.push(context.signatureTitlePartial(props, accessor));
 
   if (props.comment) {
     md.push(Handlebars.helpers.comments(props.comment));
@@ -50,7 +50,7 @@ export const signaturePartial = (
     }
 
     if (typeDeclaration?.children) {
-      md.push(Handlebars.helpers.propertyTable.call(typeDeclaration.children));
+      md.push(context.propertyTablePartial(typeDeclaration.children));
     }
   }
 

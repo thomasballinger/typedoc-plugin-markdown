@@ -6,7 +6,9 @@ import { declarationTitlePartial } from './resources/partials/declaration-title.
 import { declarationPartial } from './resources/partials/declaration.partial';
 import { groupsPartial } from './resources/partials/groups.partial';
 import { memberPartial } from './resources/partials/member.partial';
+import { propertyTablePartial } from './resources/partials/property-table.partial';
 import { referencePartial } from './resources/partials/reference.partial';
+import { signatureTitlePartial } from './resources/partials/signature-title.partial';
 import { signaturePartial } from './resources/partials/signature.partial';
 import { sourcesPartial } from './resources/partials/sources.partial';
 import { indexTemplate } from './resources/templates/index.template';
@@ -86,6 +88,8 @@ export class MarkdownThemeContext {
   declarationTitlePartial = bind(declarationTitlePartial, this);
   declarationPartial = bind(declarationPartial, this);
   signaturePartial = bind(signaturePartial, this);
+  signatureTitlePartial = bind(signatureTitlePartial, this);
   referencePartial = bind(referencePartial, this);
   sourcesPartial = bind(sourcesPartial, this);
+  propertyTablePartial = bind(propertyTablePartial, this);
 }

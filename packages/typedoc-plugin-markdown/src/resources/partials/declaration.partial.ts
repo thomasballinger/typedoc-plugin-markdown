@@ -46,7 +46,7 @@ export const declarationPartial = (
 
   if (typeDeclaration?.children) {
     md.push(heading(4, 'Type declaration'));
-    md.push(Handlebars.helpers.propertyTable.call(typeDeclaration.children));
+    md.push(context.propertyTablePartial(typeDeclaration.children));
   }
 
   md.push(context.sourcesPartial(model));

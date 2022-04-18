@@ -11,8 +11,9 @@ describe(`Generics:`, () => {
     testApp = new TestApp(['generics.ts']);
     await testApp.bootstrap();
     context = testApp.getRenderContext();
-    TestApp.stubHelpers(['toc', 'breadcrumbs', 'hierarchy', 'returns']);
+    TestApp.stubHelpers(['toc', 'hierarchy', 'returns']);
     jest.spyOn(context, 'sourcesPartial').mockReturnValue('[sources]');
+    jest.spyOn(context, 'breadcrumbsPartial').mockReturnValue('[breadcrumbs]');
     jest.spyOn(context, 'groupsPartial').mockReturnValue('[groups]');
     jest.spyOn(context, 'urlTo').mockReturnValue('[urlTo]');
   });
