@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { DeclarationReflection } from 'typedoc';
 import { MarkdownThemeContext } from '../..';
 import { heading } from '../../utils/elements';
@@ -15,7 +14,7 @@ export const declarationPartial = (
   md.push(context.declarationTitlePartial(model));
 
   if (model.comment) {
-    md.push(Handlebars.helpers.comments(model.comment));
+    md.push(context.commentsPartial(model.comment));
   }
 
   if (model.typeParameters) {

@@ -63,7 +63,7 @@ export function propertyTablePartial(
       const comments = getComments(property);
       if (comments) {
         row.push(
-          stripLineBreaks(Handlebars.helpers.comments(comments)).replace(
+          stripLineBreaks(context.commentsPartial(comments)).replace(
             /\|/g,
             '\\|',
           ),

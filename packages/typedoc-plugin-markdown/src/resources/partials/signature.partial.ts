@@ -21,7 +21,7 @@ export const signaturePartial = (
   md.push(context.signatureTitlePartial(props, accessor));
 
   if (props.comment) {
-    md.push(Handlebars.helpers.comments(props.comment));
+    md.push(context.commentsPartial(props.comment));
   }
 
   if (props.typeParameters?.length) {
@@ -39,7 +39,7 @@ export const signaturePartial = (
       md.push(heading(nested ? 5 : 4, 'Returns'));
       md.push(Handlebars.helpers.type.call(props.type, 'all'));
       if (props.comment?.returns) {
-        md.push(Handlebars.helpers.comment.call(props.comment.returns));
+        md.push(context.commentPartial(props.comment.returns));
       }
     }
 
