@@ -8,7 +8,6 @@ import reflectionPathHelper from './resources/helpers/reflection-path';
 import reflectionTitleHelper from './resources/helpers/reflection-title';
 import relativeUrlHelper from './resources/helpers/relative-url';
 import typeHelper from './resources/helpers/type';
-import typeAndParentHelper from './resources/helpers/type-and-parent';
 import { MarkdownTheme } from './theme';
 
 export function registerHelpers(theme: MarkdownTheme) {
@@ -22,5 +21,4 @@ export function registerHelpers(theme: MarkdownTheme) {
   reflectionTitleHelper(theme);
   relativeUrlHelper(theme);
   typeHelper();
-  typeAndParentHelper();
 }

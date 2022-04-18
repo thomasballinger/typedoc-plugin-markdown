@@ -1,4 +1,3 @@
-import * as Handlebars from 'handlebars';
 import { DeclarationReflection, SignatureReflection } from 'typedoc';
 import { MarkdownThemeContext } from '../..';
 import { heading, link } from '../../utils/elements';
@@ -11,17 +10,17 @@ export const sourcesPartial = (
 
   if (model.implementationOf) {
     md.push(heading(4, 'Implementation of'));
-    md.push(Handlebars.helpers.typeAndParent.call(model.implementationOf));
+    md.push(context.typeAndParentPartial(model.implementationOf));
   }
 
   if (model.inheritedFrom) {
     md.push(heading(4, 'Inherited from'));
-    md.push(Handlebars.helpers.typeAndParent.call(model.inheritedFrom));
+    md.push(context.typeAndParentPartial(model.inheritedFrom));
   }
 
   if (model.overwrites) {
     md.push(heading(4, 'Overrides'));
-    md.push(Handlebars.helpers.typeAndParent.call(model.overwrites));
+    md.push(context.typeAndParentPartial(model.overwrites));
   }
 
   if (model.sources) {
