@@ -1,5 +1,5 @@
 import { ReflectionKind } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
+import { MarkdownThemeContext } from '../../theme.context';
 
 export function reflectionPathPartial(
   context: MarkdownThemeContext,

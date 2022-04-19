@@ -19,7 +19,7 @@ export const reflectionTemplate = (
   md.push(context.reflectionPathPartial(props.model));
 
   if (props.model.comment) {
-    md.push(context.commentsPartial(props.model.comment));
+    md.push(context.commentPartial(props.model.comment));
   }
 
   if (props.model.typeParameters) {
@@ -29,7 +29,7 @@ export const reflectionTemplate = (
 
   if (props.model.typeHierarchy && props.model.typeHierarchy.next) {
     md.push(heading(2, 'Hierarchy'));
-    md.push(context.hierarchyPartial(props.model.typeHierarchy, 0));
+    md.push(context.hierarchyPartial(props.model.typeHierarchy));
   }
 
   if (props.model.implementedTypes) {

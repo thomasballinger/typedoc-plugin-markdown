@@ -12,7 +12,7 @@ export const readmeTemplate = (
   }
 
   if (props.model.readme) {
-    md.push(context.commentPartial(props.model.readme));
+    md.push(props.model.readme);
   }
   return md.join('\n\n');
 };

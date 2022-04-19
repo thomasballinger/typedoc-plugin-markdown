@@ -14,7 +14,7 @@ export const declarationPartial = (
   md.push(context.declarationTitlePartial(model));
 
   if (model.comment) {
-    md.push(context.commentsPartial(model.comment));
+    md.push(context.commentPartial(model.comment));
   }
 
   if (model.typeParameters) {

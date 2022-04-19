@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["../src"],
+  "includeVersion": true,
+  "tsconfig": "../tsconfig.json",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "categoryOrder": ["Options", "Templates", "Partials", "*"]
+}

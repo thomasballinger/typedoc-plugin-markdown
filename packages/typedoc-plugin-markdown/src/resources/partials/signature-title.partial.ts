@@ -3,20 +3,14 @@ import {
   ReflectionKind,
   SignatureReflection,
 } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
-import { memberSymbol } from '../../utils';
+import { MarkdownThemeContext } from '../../theme.context';
 
 export function signatureTitlePartial(
   context: MarkdownThemeContext,
   props: SignatureReflection,
   accessor?: string,
-  standalone = true,
 ) {
   const md: string[] = [];
-
-  if (standalone && !context.options.hideMembersSymbol) {
-    md.push(`${memberSymbol(props)} `);
-  }
 
   if (props.parent && props.parent.flags?.length > 0) {
     md.push(props.parent.flags.map((flag) => `\`${flag}\``).join(' ') + ' ');
@@ -35,29 +29,27 @@ export function signatureTitlePartial(
         .join(', ')}\\>`,
     );
   }
+
+  const getParameters = (parameters: ParameterReflection[] = []) => {
+    return parameters
+      .map((param) => {
+        const paramsmd: string[] = [];
+        if (param.flags.isRest) {
+          paramsmd.push('...');
+        }
+        const paramItem = `\`${param.name}${
+          param.flags.isOptional || param.defaultValue ? '?' : ''
+        }\`: ${context.typePartial(param.type, 'all')}`;
+        paramsmd.push(paramItem);
+        return paramsmd.join('');
+      })
+      .join(', ');
+  };
+
   md.push(`(${getParameters(props.parameters)})`);
 
   if (props.type && !props.parent?.kindOf(ReflectionKind.Constructor)) {
     md.push(`: ${context.typePartial(props.type, 'object')}`);
   }
-  return md.join('') + (standalone ? '\n' : '');
+  return md.join('');
 }
-
-const getParameters = (
-  parameters: ParameterReflection[] = [],
-  backticks = true,
-) => {
-  return parameters
-    .map((param) => {
-      const paramsmd: string[] = [];
-      if (param.flags.isRest) {
-        paramsmd.push('...');
-      }
-      const paramItem = `${param.name}${
-        param.flags.isOptional || param.defaultValue ? '?' : ''
-      }`;
-      paramsmd.push(backticks ? `\`${paramItem}\`` : paramItem);
-      return paramsmd.join('');
-    })
-    .join(', ');
-};

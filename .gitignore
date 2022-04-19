@@ -3,13 +3,14 @@
 # compiled output
 dist
 tmp
-/out
+out
 /test/fixtures
 .nyc_output/
 html
 samples
 demo
 fixtures
+
 
 # dependencies
 node_modules

@@ -1,27 +1,29 @@
 import { DeclarationHierarchy } from 'typedoc/dist/lib/models';
-import { MarkdownThemeContext } from '../../theme-context';
-import { spaces } from '../../utils';
+import { MarkdownThemeContext } from '../../theme.context';
 
 export function hierarchyPartial(
   context: MarkdownThemeContext,
   props: DeclarationHierarchy,
-  level: number,
 ) {
-  const md: string[] = [];
-  const symbol = level > 0 ? getSymbol(level) : '-';
-  props.types.forEach((hierarchyType) => {
-    if (props.isTarget) {
-      md.push(`${symbol} **\`${hierarchyType}\`**`);
-    } else {
-      md.push(`${symbol} ${context.typePartial(hierarchyType)}`);
-    }
-  });
+  let level = 0;
+  const getHierarchy = (props: DeclarationHierarchy) => {
+    return props.types.map((hierarchyType) => {
+      level = level + 1;
+      return (
+        getSymbol(level) +
+        (props.isTarget
+          ? `**\`${hierarchyType}\`**`
+          : context.typePartial(hierarchyType))
+      );
+    });
+  };
+  let md = getHierarchy(props);
   if (props.next) {
-    md.push(context.hierarchyPartial(props.next, level + 1));
+    md = [...md, ...getHierarchy(props.next)];
   }
-  return md.join('\n\n');
+  return md.join('\n');
 }
 
 function getSymbol(level: number) {
-  return spaces(2) + [...Array(level)].map(() => '↳').join('');
+  return `${[...Array(level - 1)].map(() => '  ').join('')}- `;
 }

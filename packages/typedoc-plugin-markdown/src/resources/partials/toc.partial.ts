@@ -3,8 +3,8 @@ import {
   ProjectReflection,
   ReflectionGroup,
 } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
-import { escapeChars } from '../../utils';
+import { MarkdownThemeContext } from '../../theme.context';
+import { escapeChars } from '../../utils/format';
 
 export function tocPartial(
   context: MarkdownThemeContext,

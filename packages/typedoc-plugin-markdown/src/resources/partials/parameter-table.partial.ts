@@ -1,6 +1,6 @@
 import { ParameterReflection, ReflectionKind } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
-import { stripLineBreaks } from '../../utils';
+import { MarkdownThemeContext } from '../../theme.context';
+import { stripLineBreaks } from '../../utils/format';
 
 export function parameterTablePartial(
   context: MarkdownThemeContext,
@@ -68,7 +68,7 @@ export function parameterTablePartial(
       if (hasComments) {
         if (parameter.comment) {
           row.push(
-            stripLineBreaks(context.commentsPartial(parameter.comment)).replace(
+            stripLineBreaks(context.commentPartial(parameter.comment)).replace(
               /\|/g,
               '\\|',
             ),

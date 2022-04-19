@@ -1,6 +1,6 @@
 import { DeclarationReflection, ReflectionType } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
-import { escapeChars, stripLineBreaks } from '../../utils';
+import { MarkdownThemeContext } from '../../theme.context';
+import { escapeChars, stripLineBreaks } from '../../utils/format';
 
 export function propertyTablePartial(
   context: MarkdownThemeContext,
@@ -60,7 +60,7 @@ export function propertyTablePartial(
       const comments = getComments(property);
       if (comments) {
         row.push(
-          stripLineBreaks(context.commentsPartial(comments)).replace(
+          stripLineBreaks(context.commentPartial(comments)).replace(
             /\|/g,
             '\\|',
           ),
@@ -78,13 +78,9 @@ export function propertyTablePartial(
       md.push('...');
     }
     if (property.getSignature) {
-      md.push(
-        context.signatureTitlePartial(property.getSignature, 'get', false),
-      );
+      md.push(context.signatureTitlePartial(property.getSignature, 'get'));
     } else if (property.setSignature) {
-      md.push(
-        context.signatureTitlePartial(property.setSignature, 'set', false),
-      );
+      md.push(context.signatureTitlePartial(property.setSignature, 'set'));
     } else {
       md.push(property.name);
     }

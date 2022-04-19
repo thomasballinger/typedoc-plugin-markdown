@@ -1,5 +1,5 @@
 import { SignatureReflection } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
+import { MarkdownThemeContext } from '../../theme.context';
 
 export function indexSignatureTitlePartial(
   context: MarkdownThemeContext,

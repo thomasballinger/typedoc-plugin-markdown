@@ -17,10 +17,10 @@ import {
   UnionType,
   UnknownType,
 } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
-import { escapeChars } from '../../utils';
+import { MarkdownThemeContext } from '../../theme.context';
+import { escapeChars } from '../../utils/format';
 
-type Collapse = 'object' | 'function' | 'all' | 'none';
+export type Collapse = 'object' | 'function' | 'all' | 'none';
 
 export function typePartial(
   context: MarkdownThemeContext,

@@ -5,19 +5,18 @@ import {
   ReflectionKind,
   ReflectionType,
 } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
+import { MarkdownThemeContext } from '../../theme.context';
 import {
   escapeChars,
-  memberSymbol,
   stripComments,
   stripLineBreaks,
-} from '../../utils';
+} from '../../utils/format';
 
 export function declarationTitlePartial(
   context: MarkdownThemeContext,
   props: ParameterReflection | DeclarationReflection,
 ) {
-  const md = context.options.hideMembersSymbol ? [] : [memberSymbol(props)];
+  const md: string[] = [];
 
   function getType(reflection: ParameterReflection | DeclarationReflection) {
     const reflectionType = reflection.type as ReflectionType;

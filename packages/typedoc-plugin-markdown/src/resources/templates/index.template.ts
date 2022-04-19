@@ -19,7 +19,7 @@ export const indexTemplate = (
   md.push(context.reflectionPathPartial(props.model));
 
   if (props.model.comment) {
-    md.push(context.commentsPartial(props.model.comment));
+    md.push(context.commentPartial(props.model.comment));
   }
 
   md.push(context.tocPartial(props.model));

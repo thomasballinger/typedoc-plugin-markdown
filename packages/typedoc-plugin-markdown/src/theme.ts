@@ -6,133 +6,150 @@ import {
   Reflection,
   ReflectionKind,
   Renderer,
-  RendererEvent,
   Theme,
   UrlMapping,
 } from 'typedoc';
-import { getKindPlural } from './groups';
-import { NavigationItem } from './navigation-item';
-import { MarkdownThemeContext } from './theme-context';
-import { formatContents } from './utils';
+import { load as loadCommentsPlugin } from './plugins/comments';
+import { MarkdownThemeContext } from './theme.context';
+import { TemplateMapping } from './theme.model';
+import { formatContents } from './utils/format';
 
+/**
+ * Class that inherits the base TypeDoc {@link https://typedoc.org/api/classes/Theme.html Theme} Class.
+ * The theme is responsible for providing context templates mappings to pages.
+ */
 export class MarkdownTheme extends Theme {
-  allReflectionsHaveOwnDocument!: boolean;
-  entryDocument: string;
-  entryPoints!: string[];
-  filenameSeparator!: string;
-  hideBreadcrumbs!: boolean;
-  hideInPageTOC!: boolean;
-  hidePageTitle!: boolean;
-  hideMembersSymbol!: boolean;
-  includes!: string;
-  indexTitle!: string;
-  mediaDirectory!: string;
-  namedAnchors!: boolean;
-  readme!: string;
-  out!: string;
-  publicPath!: string;
-  preserveAnchorCasing!: boolean;
+  private location: string;
+  private anchorMap: Record<string, string[]> = {};
+  private renderContext?: MarkdownThemeContext;
 
-  project?: ProjectReflection;
-  reflection?: DeclarationReflection;
-  location!: string;
-  anchorMap: Record<string, string[]> = {};
-
+  /**
+   * Regular expression used for external url matching.
+   */
   static URL_PREFIX = /^(http|ftp)s?:\/\//;
 
-  private _renderContext?: MarkdownThemeContext;
-
-  getRenderContext() {
-    if (!this._renderContext) {
-      this._renderContext = new MarkdownThemeContext(
-        this,
-        this.application.options,
-      );
-    }
-    return this._renderContext;
-  }
-
-  indexTemplate = (pageEvent: PageEvent<ProjectReflection>) => {
-    return this.getRenderContext().indexTemplate(pageEvent);
-  };
-
-  readmeTemplate = (pageEvent: PageEvent<ProjectReflection>) => {
-    return this.getRenderContext().readmeTemplate(pageEvent);
-  };
-
-  reflectionTemplate = (pageEvent: PageEvent<DeclarationReflection>) => {
-    return this.getRenderContext().reflectionTemplate(pageEvent);
-  };
-
-  reflectionMemberTemplate = (pageEvent: PageEvent<DeclarationReflection>) => {
-    return this.getRenderContext().memberTemplate(pageEvent);
-  };
-
+  /**
+   * Creates a new instance of MarkdownTheme.
+   * @param renderer The renderer the theme is attached to.
+   */
   constructor(renderer: Renderer) {
     super(renderer);
 
-    // prettier-ignore
-    this.allReflectionsHaveOwnDocument = this.getOption('allReflectionsHaveOwnDocument',) as boolean;
-    this.entryDocument = this.getOption('entryDocument') as string;
-    this.entryPoints = this.getOption('entryPoints') as string[];
-    this.filenameSeparator = this.getOption('filenameSeparator') as string;
-    this.hideBreadcrumbs = this.getOption('hideBreadcrumbs') as boolean;
-    this.hideInPageTOC = this.getOption('hideInPageTOC') as boolean;
-    this.hidePageTitle = this.getOption('hidePageTitle') as boolean;
-    this.hideMembersSymbol = this.getOption('hideMembersSymbol') as boolean;
-    this.includes = this.getOption('includes') as string;
-    this.indexTitle = this.getOption('indexTitle') as string;
-    this.mediaDirectory = this.getOption('media') as string;
-    this.namedAnchors = this.getOption('namedAnchors') as boolean;
-    this.readme = this.getOption('readme') as string;
-    this.out = this.getOption('out') as string;
-    this.publicPath = this.getOption('publicPath') as string;
-    this.preserveAnchorCasing = this.getOption(
-      'preserveAnchorCasing',
-    ) as boolean;
+    loadCommentsPlugin(this.application);
 
     this.listenTo(this.owner, {
-      [RendererEvent.BEGIN]: this.onBeginRenderer,
       [PageEvent.BEGIN]: this.onBeginPage,
     });
   }
 
+  /**
+   * Returns the associated render context.
+   * @returns
+   */
+  getRenderContext() {
+    if (!this.renderContext) {
+      this.renderContext = new MarkdownThemeContext(
+        this,
+        this.application.options,
+      );
+    }
+    return this.renderContext;
+  }
+
+  /**
+   * Abstract method that renders the provided page to a string.
+   */
   render(page: PageEvent<Reflection>): string {
     return formatContents(page.template(page) as string);
   }
 
-  getOption(key: string) {
-    return this.application.options.getValue(key);
-  }
-
+  /**
+   * Abstract method used to map the models of the given project to the desired output files.
+   *
+   * @param project The project whose urls should be generated.
+   * @returns A list of mappings defining which models should be rendered to which files.
+   */
   getUrls(project: ProjectReflection) {
     const urls: UrlMapping[] = [];
-    const noReadmeFile = this.readme.endsWith('none');
+
+    const modulesFile = 'modules.md';
+
+    const entryDocument = this.application.options.getValue(
+      'entryDocument',
+    ) as string;
+    const readme = this.application.options.getValue('readme') as string;
+    const noReadmeFile = readme.endsWith('none');
+
     if (noReadmeFile) {
-      project.url = this.entryDocument;
-      urls.push(
-        new UrlMapping(this.entryDocument, project, this.indexTemplate),
-      );
+      project.url = entryDocument;
+      urls.push(new UrlMapping(entryDocument, project, this.indexTemplate));
     } else {
-      project.url = this.globalsFile;
-      urls.push(new UrlMapping(this.globalsFile, project, this.indexTemplate));
-      urls.push(
-        new UrlMapping(this.entryDocument, project, this.readmeTemplate),
-      );
+      project.url = modulesFile;
+      urls.push(new UrlMapping(modulesFile, project, this.indexTemplate));
+      urls.push(new UrlMapping(entryDocument, project, this.readmeTemplate));
     }
+
     project.children?.forEach((child: Reflection) => {
       if (child instanceof DeclarationReflection) {
         this.buildUrls(child as DeclarationReflection, urls);
       }
     });
+
     return urls;
   }
 
-  buildUrls(
+  /**
+   * Convert a given mapping and reflection to a url string.
+   * @param mapping
+   * @param reflection
+   * @returns
+   */
+  toUrl(mapping: any, reflection: DeclarationReflection) {
+    return mapping.directory + '/' + this.getUrl(reflection) + '.md';
+  }
+
+  /**
+   * Convert a given anchor to an anchor reference.
+   * @param anchor
+   * @returns
+   */
+  toAnchorRef(anchor: string) {
+    return anchor;
+  }
+
+  /**
+   * Transform the given absolute url path into a relative path.
+   *
+   * @param url  The path to transform.
+   * @returns A path relative to the document currently processed.
+   */
+  getRelativeUrl(url: string | undefined) {
+    const publicPath = this.application.options.getValue('publicPath');
+    if (!url) {
+      return '';
+    }
+
+    if (MarkdownTheme.URL_PREFIX.test(url)) {
+      return url;
+    }
+
+    if (publicPath) {
+      return publicPath + url;
+    }
+
+    const relative = path.relative(
+      path.dirname(this.location),
+      path.dirname(url),
+    );
+
+    return path.join(relative, path.basename(url)).replace(/\\/g, '/');
+  }
+
+  private buildUrls(
     reflection: DeclarationReflection,
     urls: UrlMapping[],
   ): UrlMapping[] {
-    const mapping = this.mappings.find((mapping) =>
+    const mapping = this.mappings().find((mapping) =>
       reflection.kindOf(mapping.kind),
     );
     if (mapping) {
@@ -156,31 +173,32 @@ export class MarkdownTheme extends Theme {
     return urls;
   }
 
-  toUrl(mapping: any, reflection: DeclarationReflection) {
-    return mapping.directory + '/' + this.getUrl(reflection) + '.md';
-  }
-
-  getUrl(reflection: Reflection, relative?: Reflection): string {
+  private getUrl(reflection: Reflection, relative?: Reflection): string {
     let url = reflection.getAlias();
+    const filenameSeparator = this.application.options.getValue(
+      'filenameSeparator',
+    ) as string;
 
     if (
       reflection.parent &&
       reflection.parent !== relative &&
       !(reflection.parent instanceof ProjectReflection)
     ) {
-      url =
-        this.getUrl(reflection.parent, relative) + this.filenameSeparator + url;
+      url = this.getUrl(reflection.parent, relative) + filenameSeparator + url;
     }
 
     return url.replace(/^_/, '');
   }
 
-  applyAnchorUrl(reflection: Reflection, container: Reflection) {
+  private applyAnchorUrl(reflection: Reflection, container: Reflection) {
+    const preserveAnchorCasing = this.application.options.getValue(
+      'preserveAnchorCasing',
+    ) as boolean;
     if (
       container.url &&
       (!reflection.url || !MarkdownTheme.URL_PREFIX.test(reflection.url))
     ) {
-      const reflectionId = this.preserveAnchorCasing
+      const reflectionId = preserveAnchorCasing
         ? reflection.name
         : reflection.name.toLowerCase();
 
@@ -207,86 +225,15 @@ export class MarkdownTheme extends Theme {
     });
   }
 
-  toAnchorRef(reflectionId: string) {
-    return reflectionId;
-  }
+  /**
+   * Maps given reflections to a template.
+   * @returns A list of template mappings.
+   */
 
-  getRelativeUrl(absolute: string) {
-    if (MarkdownTheme.URL_PREFIX.test(absolute)) {
-      return absolute;
-    } else {
-      const relative = path.relative(
-        path.dirname(this.location),
-        path.dirname(absolute),
-      );
-      return path.join(relative, path.basename(absolute)).replace(/\\/g, '/');
-    }
-  }
-
-  getNavigation(project: ProjectReflection) {
-    const urls = this.getUrls(project);
-
-    const getUrlMapping = (name) => {
-      if (!name) {
-        return '';
-      }
-      return urls.find((url) => url.model.name === name);
-    };
-
-    const createNavigationItem = (
-      title: string,
-      url: string | undefined,
-      isLabel: boolean,
-      children: NavigationItem[] = [],
-    ) => {
-      const navigationItem = new NavigationItem(title, url);
-      navigationItem.isLabel = isLabel;
-      navigationItem.children = children;
-      const { reflection, parent, ...filteredNavigationItem } = navigationItem;
-      return filteredNavigationItem as NavigationItem;
-    };
-    const navigation = createNavigationItem(project.name, undefined, false);
-    const hasReadme = !this.readme.endsWith('none');
-    if (hasReadme) {
-      navigation.children?.push(
-        createNavigationItem('Readme', this.entryDocument, false),
-      );
-    }
-    if (this.entryPoints.length === 1) {
-      navigation.children?.push(
-        createNavigationItem(
-          'Exports',
-          hasReadme ? this.globalsFile : this.entryDocument,
-          false,
-        ),
-      );
-    }
-    this.mappings.forEach((mapping) => {
-      const kind = mapping.kind[0];
-      const items = project.getReflectionsByKind(kind);
-      if (items.length > 0) {
-        const children = items
-          .map((item) =>
-            createNavigationItem(
-              item.getFullName(),
-              (getUrlMapping(item.name) as any)?.url as string,
-              true,
-            ),
-          )
-          .sort((a, b) => (a.title > b.title ? 1 : -1));
-        const group = createNavigationItem(
-          getKindPlural(kind),
-          undefined,
-          true,
-          children,
-        );
-        navigation.children?.push(group);
-      }
-    });
-    return navigation;
-  }
-
-  get mappings() {
+  mappings(): TemplateMapping[] {
+    const allReflectionsHaveOwnDocument = this.application.options.getValue(
+      'allReflectionsHaveOwnDocument',
+    ) as boolean;
     return [
       {
         kind: [ReflectionKind.Module],
@@ -318,7 +265,7 @@ export class MarkdownTheme extends Theme {
         directory: 'interfaces',
         template: this.reflectionTemplate,
       },
-      ...(this.allReflectionsHaveOwnDocument
+      ...(allReflectionsHaveOwnDocument
         ? [
             {
               kind: [ReflectionKind.TypeAlias],
@@ -343,27 +290,27 @@ export class MarkdownTheme extends Theme {
     ];
   }
 
-  /**
-   * Triggered before the renderer starts rendering a project.
-   *
-   * @param event  An event object describing the current render operation.
-   */
-  protected onBeginRenderer(event: RendererEvent) {
-    this.project = event.project;
-  }
+  protected indexTemplate = (pageEvent: PageEvent<ProjectReflection>) => {
+    return this.getRenderContext().indexTemplate(pageEvent);
+  };
 
-  /**
-   * Triggered before a document will be rendered.
-   *
-   * @param page  An event object describing the current render operation.
-   */
+  protected readmeTemplate = (pageEvent: PageEvent<ProjectReflection>) => {
+    return this.getRenderContext().readmeTemplate(pageEvent);
+  };
+
+  protected reflectionTemplate = (
+    pageEvent: PageEvent<DeclarationReflection>,
+  ) => {
+    return this.getRenderContext().reflectionTemplate(pageEvent);
+  };
+
+  protected reflectionMemberTemplate = (
+    pageEvent: PageEvent<DeclarationReflection>,
+  ) => {
+    return this.getRenderContext().memberTemplate(pageEvent);
+  };
+
   protected onBeginPage(page: PageEvent) {
     this.location = page.url;
-    this.reflection =
-      page.model instanceof DeclarationReflection ? page.model : undefined;
-  }
-
-  get globalsFile() {
-    return 'modules.md';
   }
 }

@@ -1,5 +1,5 @@
 import { ReferenceReflection } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme-context';
+import { MarkdownThemeContext } from '../../theme.context';
 
 export function referencePartial(
   context: MarkdownThemeContext,
