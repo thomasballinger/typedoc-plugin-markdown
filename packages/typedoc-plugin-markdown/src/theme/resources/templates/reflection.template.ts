@@ -1,6 +1,6 @@
 import { DeclarationReflection, PageEvent } from 'typedoc';
 import { MarkdownThemeContext } from '../..';
-import { heading, unorderedList } from '../../utils/elements';
+import { heading, unorderedList } from '../../../utils/elements';
 
 export const reflectionTemplate = (
   context: MarkdownThemeContext,

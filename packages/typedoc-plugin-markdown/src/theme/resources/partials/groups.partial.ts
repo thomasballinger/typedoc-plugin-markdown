@@ -4,7 +4,7 @@ import {
   ReflectionGroup,
 } from 'typedoc';
 import { MarkdownThemeContext } from '../..';
-import { heading, horizontalRule } from '../../utils/elements';
+import { heading, horizontalRule } from '../../../utils/elements';
 
 export const groupsPartial = (
   context: MarkdownThemeContext,
@@ -18,7 +18,7 @@ export const groupsPartial = (
         group.categories
           ?.filter((category) => !category.allChildrenHaveOwnDocument())
           .forEach((category) => {
-            md.push(heading(2, `${group.title} ${category.title}`));
+            md.push(heading(2, `${group.title}: ${category.title}`));
             md.push(getMembers(category));
           });
       } else {

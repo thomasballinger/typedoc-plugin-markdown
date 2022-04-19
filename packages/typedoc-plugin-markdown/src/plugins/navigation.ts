@@ -6,7 +6,7 @@ import {
   ReflectionKind,
   RendererEvent,
 } from 'typedoc';
-import { MarkdownTheme } from '..';
+import { MarkdownTheme } from '../theme';
 
 export const NAVIGATION_GENERATED = 'navigation-generated';
 

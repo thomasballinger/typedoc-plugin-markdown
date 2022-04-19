@@ -1,8 +1,8 @@
 import { ReferenceReflection } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function referencePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: ReferenceReflection,
 ) {
   const referenced = props.tryGetTargetReflectionDeep();

@@ -3,10 +3,10 @@ import {
   ReflectionKind,
   SignatureReflection,
 } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function signatureTitlePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: SignatureReflection,
   accessor?: string,
 ) {

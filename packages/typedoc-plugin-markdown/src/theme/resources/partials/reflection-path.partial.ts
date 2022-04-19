@@ -1,8 +1,8 @@
 import { ReflectionKind } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function reflectionPathPartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: any,
 ) {
   if (props.model) {

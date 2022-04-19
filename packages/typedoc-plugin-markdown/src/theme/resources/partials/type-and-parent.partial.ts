@@ -1,10 +1,10 @@
 import { SignatureReflection } from 'typedoc';
 import { ArrayType, ReferenceType } from 'typedoc/dist/lib/models/types';
-import { MarkdownThemeContext } from '../../theme.context';
-import { escapeChars } from '../../utils/format';
+import { escapeChars } from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function typeAndParentPartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: ArrayType | ReferenceType,
 ) {
   const getUrl = (name: string, url: string) =>

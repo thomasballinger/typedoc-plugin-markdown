@@ -9,10 +9,10 @@ import {
   Theme,
   UrlMapping,
 } from 'typedoc';
-import { load as loadCommentsPlugin } from './plugins/comments';
-import { MarkdownThemeContext } from './theme.context';
+import { formatContents } from '../utils/format';
+import { MarkdownThemeRenderContext } from './theme.context';
 import { TemplateMapping } from './theme.model';
-import { formatContents } from './utils/format';
+import { load as loadCommentsPlugin } from './_plugins/comments';
 
 /**
  * Class that inherits the base TypeDoc {@link https://typedoc.org/api/classes/Theme.html Theme} Class.
@@ -21,7 +21,7 @@ import { formatContents } from './utils/format';
 export class MarkdownTheme extends Theme {
   private location: string;
   private anchorMap: Record<string, string[]> = {};
-  private renderContext?: MarkdownThemeContext;
+  private renderContext?: MarkdownThemeRenderContext;
 
   /**
    * Regular expression used for external url matching.
@@ -48,7 +48,7 @@ export class MarkdownTheme extends Theme {
    */
   getRenderContext() {
     if (!this.renderContext) {
-      this.renderContext = new MarkdownThemeContext(
+      this.renderContext = new MarkdownThemeRenderContext(
         this,
         this.application.options,
       );

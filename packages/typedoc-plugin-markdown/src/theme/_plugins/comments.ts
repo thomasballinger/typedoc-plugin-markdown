@@ -9,7 +9,7 @@ import {
   RendererEvent,
 } from 'typedoc';
 import { MarkdownTheme } from '../theme';
-import { MarkdownThemeContext } from '../theme.context';
+import { MarkdownThemeRenderContext } from '../theme.context';
 
 const BRACKETS = /\[\[([^\]]+)\]\]/g;
 const INLINE_TAG =
@@ -19,7 +19,7 @@ const MEDIA_PATTERN = /media:\/\/([^ "\)\]\}]+)/g;
 
 export function load(app: Application) {
   let project: ProjectReflection;
-  let context: MarkdownThemeContext;
+  let context: MarkdownThemeRenderContext;
   let includes: string;
   let media: string;
 

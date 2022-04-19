@@ -1,9 +1,9 @@
 import { DeclarationReflection, ReflectionType } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
-import { escapeChars, stripLineBreaks } from '../../utils/format';
+import { escapeChars, stripLineBreaks } from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function propertyTablePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: DeclarationReflection[],
 ) {
   const comments = props.map(

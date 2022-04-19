@@ -1,4 +1,5 @@
 const knownSymbols = {
+  Options: 'https://typedoc.org/api/classes/Options.html',
   ProjectReflection: 'https://typedoc.org/api/classes/ProjectReflection.html',
   Theme: 'https://typedoc.org/api/classes/Theme.html',
   Reflection: 'https://typedoc.org/api/classes/Reflection.html',

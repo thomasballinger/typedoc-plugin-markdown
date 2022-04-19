@@ -17,13 +17,13 @@ import {
   UnionType,
   UnknownType,
 } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
-import { escapeChars } from '../../utils/format';
+import { escapeChars } from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export type Collapse = 'object' | 'function' | 'all' | 'none';
 
 export function typePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   theType:
     | ArrayType
     | IntersectionType
@@ -203,7 +203,7 @@ export function typePartial(
       if (model.typeArguments && model.typeArguments.length > 0) {
         reflection.push(
           `<${model.typeArguments
-            .map((typeArgument) => context.typePartial.call(typeArgument))
+            .map((typeArgument) => context.typePartial(typeArgument))
             .join(', ')}\\>`,
         );
       }

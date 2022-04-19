@@ -1,7 +1,8 @@
 {
-  "entryPoints": ["../src"],
+  "entryPoints": ["../src/theme"],
   "includeVersion": true,
   "tsconfig": "../tsconfig.json",
+  "readme": "none",
   "excludeExternals": true,
   "excludePrivate": true,
   "excludeProtected": true,

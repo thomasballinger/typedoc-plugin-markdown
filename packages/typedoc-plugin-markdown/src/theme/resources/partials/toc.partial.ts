@@ -3,11 +3,11 @@ import {
   ProjectReflection,
   ReflectionGroup,
 } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
-import { escapeChars } from '../../utils/format';
+import { escapeChars } from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function tocPartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: ProjectReflection | DeclarationReflection,
 ) {
   const md: string[] = [];

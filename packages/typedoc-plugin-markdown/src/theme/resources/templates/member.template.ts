@@ -1,6 +1,6 @@
 import { DeclarationReflection, PageEvent } from 'typedoc';
 import { MarkdownThemeContext } from '../..';
-import { heading } from '../../utils/elements';
+import { heading } from '../../../utils/elements';
 
 export const memberTemplate = (
   context: MarkdownThemeContext,

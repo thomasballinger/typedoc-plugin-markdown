@@ -1,8 +1,8 @@
 import { SignatureReflection } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function indexSignatureTitlePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: SignatureReflection,
 ) {
   const md = ['▪'];

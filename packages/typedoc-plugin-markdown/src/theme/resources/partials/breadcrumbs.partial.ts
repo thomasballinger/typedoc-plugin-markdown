@@ -1,9 +1,9 @@
 import { DeclarationReflection, PageEvent, ProjectReflection } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
-import { escapeChars } from '../../utils/format';
+import { escapeChars } from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function breadcrumbsPartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: PageEvent<ProjectReflection | DeclarationReflection>,
 ) {
   const { entryPoints, entryDocument, readme } = context.options;

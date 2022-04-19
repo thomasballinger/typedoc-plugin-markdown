@@ -39,24 +39,17 @@ import { readmeTemplate } from './resources/templates/readme.template';
 import { reflectionTemplate } from './resources/templates/reflection.template';
 
 /**
- * The theme context is the context of the theme. It implementation follows that of the DefaultThemeRenderer.
+ * Provides theme context for theme resources, following the theming model of TypeDoc [DefaultThemeRenderContext](https://typedoc.org/api/classes/DefaultThemeRenderContext.html).
  *
- * **Options**
+ * The context is passed into theme templates and partials:
  *
- * Options used in the templates
- *
- * [Templates](#properties-templates)
- *
- *
- *
- * Templates are used
- *
- * Partials
+ * - [Options](#properties-options) - exposed options of the renderer.
+ * - [Templates](#properties-templates) - methods that pages are mapped to.
+ * - [Partials](#properties-partials) - individual elements making up a page.
  */
-export class MarkdownThemeContext {
+export class MarkdownThemeRenderContext {
   /**
    * The options applied to the renderer.
-   * @category Options
    */
   options: Record<string, any>;
 

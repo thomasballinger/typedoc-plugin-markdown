@@ -1,9 +1,9 @@
 import { TypeParameterReflection } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
-import { stripLineBreaks } from '../../utils/format';
+import { stripLineBreaks } from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function typeParameterTablePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: TypeParameterReflection[],
 ) {
   function table(parameters: any) {

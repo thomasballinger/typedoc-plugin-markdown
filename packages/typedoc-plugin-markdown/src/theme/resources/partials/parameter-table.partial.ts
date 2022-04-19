@@ -1,9 +1,9 @@
 import { ParameterReflection, ReflectionKind } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
-import { stripLineBreaks } from '../../utils/format';
+import { stripLineBreaks } from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function parameterTablePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: ParameterReflection[],
 ) {
   const flattenParams = (current: any) => {

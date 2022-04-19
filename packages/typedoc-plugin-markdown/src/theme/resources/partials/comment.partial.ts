@@ -1,8 +1,8 @@
 import { Comment } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function commentPartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   comment: Comment,
 ) {
   const md: string[] = [];

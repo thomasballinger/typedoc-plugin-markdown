@@ -1,9 +1,9 @@
 import { PageEvent, ParameterReflection } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
-import { escapeChars } from '../../utils/format';
+import { escapeChars } from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function reflectionTitlePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: PageEvent<any>,
   shouldEscape = true,
 ) {

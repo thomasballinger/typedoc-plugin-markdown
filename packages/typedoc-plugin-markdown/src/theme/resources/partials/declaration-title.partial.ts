@@ -5,15 +5,15 @@ import {
   ReflectionKind,
   ReflectionType,
 } from 'typedoc';
-import { MarkdownThemeContext } from '../../theme.context';
 import {
   escapeChars,
   stripComments,
   stripLineBreaks,
-} from '../../utils/format';
+} from '../../../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function declarationTitlePartial(
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: ParameterReflection | DeclarationReflection,
 ) {
   const md: string[] = [];
