@@ -82,10 +82,12 @@ export class MarkdownTheme extends Theme {
 
     if (noReadmeFile) {
       project.url = entryDocument;
-      urls.push(new UrlMapping(entryDocument, project, this.indexTemplate));
+      urls.push(
+        new UrlMapping(entryDocument, project, this.reflectionTemplate),
+      );
     } else {
       project.url = modulesFile;
-      urls.push(new UrlMapping(modulesFile, project, this.indexTemplate));
+      urls.push(new UrlMapping(modulesFile, project, this.reflectionTemplate));
       urls.push(new UrlMapping(entryDocument, project, this.readmeTemplate));
     }
 
@@ -271,42 +273,36 @@ export class MarkdownTheme extends Theme {
               kind: [ReflectionKind.TypeAlias],
               isLeaf: true,
               directory: 'types',
-              template: this.reflectionMemberTemplate,
+              template: this.memberTemplate,
             },
             {
               kind: [ReflectionKind.Variable],
               isLeaf: true,
               directory: 'variables',
-              template: this.reflectionMemberTemplate,
+              template: this.memberTemplate,
             },
             {
               kind: [ReflectionKind.Function],
               isLeaf: true,
               directory: 'functions',
-              template: this.reflectionMemberTemplate,
+              template: this.memberTemplate,
             },
           ]
         : []),
     ];
   }
 
-  protected indexTemplate = (pageEvent: PageEvent<ProjectReflection>) => {
-    return this.getRenderContext().indexTemplate(pageEvent);
-  };
-
   protected readmeTemplate = (pageEvent: PageEvent<ProjectReflection>) => {
     return this.getRenderContext().readmeTemplate(pageEvent);
   };
 
   protected reflectionTemplate = (
-    pageEvent: PageEvent<DeclarationReflection>,
+    pageEvent: PageEvent<ProjectReflection | DeclarationReflection>,
   ) => {
     return this.getRenderContext().reflectionTemplate(pageEvent);
   };
 
-  protected reflectionMemberTemplate = (
-    pageEvent: PageEvent<DeclarationReflection>,
-  ) => {
+  protected memberTemplate = (pageEvent: PageEvent<DeclarationReflection>) => {
     return this.getRenderContext().memberTemplate(pageEvent);
   };
 

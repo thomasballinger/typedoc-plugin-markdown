@@ -1,10 +1,10 @@
-import { DeclarationReflection, PageEvent } from 'typedoc';
+import { DeclarationReflection, PageEvent, ProjectReflection } from 'typedoc';
 import { MarkdownThemeContext } from '../..';
 import { heading, unorderedList } from '../../../utils/elements';
 
 export const reflectionTemplate = (
   context: MarkdownThemeContext,
-  props: PageEvent<DeclarationReflection>,
+  props: PageEvent<ProjectReflection | DeclarationReflection>,
 ) => {
   const md: string[] = [];
 
@@ -22,17 +22,18 @@ export const reflectionTemplate = (
     md.push(context.commentPartial(props.model.comment));
   }
 
-  if (props.model.typeParameters) {
+  if ('typeParameters' in props.model) {
     md.push(heading(2, 'Type parameters'));
     md.push(context.typeParameterTablePartial(props.model.typeParameters));
   }
 
-  if (props.model.typeHierarchy && props.model.typeHierarchy.next) {
-    md.push(heading(2, 'Hierarchy'));
-    md.push(context.hierarchyPartial(props.model.typeHierarchy));
+  if ('typeHierarchy' in props.model) {
+    if (props.model?.typeHierarchy?.next) {
+      md.push(heading(2, 'Hierarchy'));
+      md.push(context.hierarchyPartial(props.model.typeHierarchy));
+    }
   }
-
-  if (props.model.implementedTypes) {
+  if ('implementedTypes' in props.model && props.model?.implementedTypes) {
     md.push(heading(2, 'Implements'));
     md.push(
       unorderedList(
@@ -43,7 +44,7 @@ export const reflectionTemplate = (
     );
   }
 
-  if (props.model.signatures) {
+  if ('signatures' in props.model && props.model?.signatures) {
     md.push(heading(2, 'Callable'));
     props.model.signatures.forEach((signature) => {
       md.push(heading(3, signature.name));
@@ -51,7 +52,7 @@ export const reflectionTemplate = (
     });
   }
 
-  if (props.model.indexSignature) {
+  if ('indexSignature' in props.model && props.model.indexSignature) {
     md.push(heading(2, 'Indexable'));
     md.push(context.indexSignatureTitlePartial(props.model.indexSignature));
   }

@@ -33,7 +33,6 @@ import { tocPartial } from './resources/partials/toc.partial';
 import { typeAndParentPartial } from './resources/partials/type-and-parent.partial';
 import { typeParameterTablePartial } from './resources/partials/type-parameter-table.partial';
 import { Collapse, typePartial } from './resources/partials/type.partial';
-import { indexTemplate } from './resources/templates/index.template';
 import { memberTemplate } from './resources/templates/member.template';
 import { readmeTemplate } from './resources/templates/readme.template';
 import { reflectionTemplate } from './resources/templates/reflection.template';
@@ -53,13 +52,9 @@ export class MarkdownThemeRenderContext {
    */
   options: Record<string, any>;
 
-  /**
-   * The index template mapped to entry point of a document
-   *
-   * @category Templates
-   */
-  indexTemplate = (props: PageEvent<ProjectReflection>) =>
-    indexTemplate(this, props);
+  constructor(private theme: MarkdownTheme, options: Options) {
+    this.options = options.getRawValues() as Record<string, any>;
+  }
 
   /**
    * The readme template, used when a readme is not available.
@@ -72,8 +67,9 @@ export class MarkdownThemeRenderContext {
    * The reflection template, used to describe main reflections.
    * @category Templates
    */
-  reflectionTemplate = (props: PageEvent<DeclarationReflection>) =>
-    reflectionTemplate(this, props);
+  reflectionTemplate = (
+    props: PageEvent<ProjectReflection | DeclarationReflection>,
+  ) => reflectionTemplate(this, props);
 
   /**
    * When allReflectionsHaveOwnDocument the template used for child members.
@@ -204,10 +200,6 @@ export class MarkdownThemeRenderContext {
    */
   typeParameterTablePartial = (props: any) =>
     typeParameterTablePartial(this, props);
-
-  constructor(private theme: MarkdownTheme, options: Options) {
-    this.options = options.getRawValues() as Record<string, any>;
-  }
 
   relativeURL = (url: string | undefined) => this.theme.getRelativeUrl(url);
 

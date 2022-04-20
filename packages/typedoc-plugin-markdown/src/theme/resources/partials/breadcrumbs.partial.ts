@@ -7,7 +7,7 @@ export function breadcrumbsPartial(
   props: PageEvent<ProjectReflection | DeclarationReflection>,
 ) {
   const { entryPoints, entryDocument, readme } = context.options;
-  const project = props.project;
+  const project = { name: 'x', url: 'x' };
 
   if (!project) {
     return '';
