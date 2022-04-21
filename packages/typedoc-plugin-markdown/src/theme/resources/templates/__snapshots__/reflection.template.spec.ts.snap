@@ -69,3 +69,11 @@ exports[`Reflection Template: should compile project reflection 1`] = `
 
 [groupsPartial]"
 `;
+
+exports[`Reflection Template: should compile project reflection with options 1`] = `
+"[reflectionPathPartial]
+
+[tocPartial]
+
+[groupsPartial]"
+`;
