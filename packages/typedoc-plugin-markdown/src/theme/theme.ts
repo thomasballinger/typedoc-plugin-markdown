@@ -170,7 +170,7 @@ export class MarkdownTheme extends Theme {
         }
       }
     } else if (reflection.parent) {
-      this.applyAnchorUrl(reflection, reflection.parent);
+      this.applyAnchorUrl(reflection, reflection.parent, true);
     }
     return urls;
   }
@@ -192,7 +192,11 @@ export class MarkdownTheme extends Theme {
     return url.replace(/^_/, '');
   }
 
-  private applyAnchorUrl(reflection: Reflection, container: Reflection) {
+  private applyAnchorUrl(
+    reflection: Reflection,
+    container: Reflection,
+    isSymbol = false,
+  ) {
     const preserveAnchorCasing = this.application.options.getValue(
       'preserveAnchorCasing',
     ) as boolean;
@@ -204,11 +208,13 @@ export class MarkdownTheme extends Theme {
         ? reflection.name
         : reflection.name.toLowerCase();
 
-      this.anchorMap[container.url]
-        ? this.anchorMap[container.url].push(reflectionId)
-        : (this.anchorMap[container.url] = [reflectionId]);
+      if (isSymbol) {
+        this.anchorMap[container.url]
+          ? this.anchorMap[container.url].push(reflectionId)
+          : (this.anchorMap[container.url] = [reflectionId]);
+      }
 
-      const count = this.anchorMap[container.url].filter(
+      const count = this.anchorMap[container.url]?.filter(
         (id) => id === reflectionId,
       )?.length;
 
