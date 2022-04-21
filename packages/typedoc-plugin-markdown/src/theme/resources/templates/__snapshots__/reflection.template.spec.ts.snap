@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Reflection Template: should compile Enum 1`] = `
-"[breadcrumbsPartial]
-
-# [reflectionTitlePartial]
-
-[reflectionPathPartial]
-
-[tocPartial]
-
-[groupsPartial]"
-`;
-
 exports[`Reflection Template: should compile callable reflection 1`] = `
 "[breadcrumbsPartial]
 
@@ -28,7 +16,19 @@ exports[`Reflection Template: should compile callable reflection 1`] = `
 [tocPartial]"
 `;
 
-exports[`Reflection Template: should compile implemented class 1`] = `
+exports[`Reflection Template: should compile enum reflection 1`] = `
+"[breadcrumbsPartial]
+
+# [reflectionTitlePartial]
+
+[reflectionPathPartial]
+
+[tocPartial]
+
+[groupsPartial]"
+`;
+
+exports[`Reflection Template: should compile implemented class reflection 1`] = `
 "[breadcrumbsPartial]
 
 # [reflectionTitlePartial]
