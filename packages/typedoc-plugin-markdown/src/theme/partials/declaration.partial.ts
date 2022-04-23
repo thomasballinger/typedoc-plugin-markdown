@@ -1,9 +1,9 @@
 import { DeclarationReflection } from 'typedoc';
-import { MarkdownThemeContext } from '..';
+import { MarkdownThemeRenderContext } from '../theme.context';
 import { heading } from '../utils/elements';
 
 export const declarationPartial = (
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   model: DeclarationReflection,
 ) => {
   const md: string[] = [];

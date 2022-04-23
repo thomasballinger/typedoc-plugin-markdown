@@ -1,9 +1,9 @@
 import { DeclarationReflection, SignatureReflection } from 'typedoc';
-import { MarkdownThemeContext } from '..';
+import { MarkdownThemeRenderContext } from '../theme.context';
 import { heading, link } from '../utils/elements';
 
 export const sourcesPartial = (
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   model: DeclarationReflection | SignatureReflection,
 ) => {
   const md: string[] = [];

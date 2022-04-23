@@ -3,11 +3,11 @@ import {
   ReflectionCategory,
   ReflectionGroup,
 } from 'typedoc';
-import { MarkdownThemeContext } from '..';
+import { MarkdownThemeRenderContext } from '../theme.context';
 import { heading, horizontalRule } from '../utils/elements';
 
 export const groupsPartial = (
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: ReflectionGroup[],
 ) => {
   const md: string[] = [];

@@ -8,6 +8,7 @@ const knownSymbols = {
   Reflection: 'https://typedoc.org/api/classes/Reflection.html',
   Renderer: 'https://typedoc.org/api/classes/Renderer.html',
   Theme: 'https://typedoc.org/api/classes/Theme.html',
+  TypeDocOptions: 'https://typedoc.org/api/modules.html#TypeDocOptions',
   UrlMapping: 'https://typedoc.org/api/classes/UrlMapping.html',
 };
 

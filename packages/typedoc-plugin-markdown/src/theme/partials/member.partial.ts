@@ -1,10 +1,10 @@
 import { DeclarationReflection, ReferenceReflection } from 'typedoc';
-import { MarkdownThemeContext } from '..';
+import { MarkdownThemeRenderContext } from '../theme.context';
 import { heading } from '../utils/elements';
 import { escapeChars } from '../utils/format';
 
 export const memberPartial = (
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: DeclarationReflection | ReferenceReflection,
 ) => {
   const md: string[] = [];

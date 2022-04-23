@@ -1,4 +1,3 @@
-import * as path from 'path';
 import {
   DeclarationReflection,
   PageEvent,
@@ -11,7 +10,7 @@ import {
   UrlMapping,
 } from 'typedoc';
 import { MarkdownThemeRenderContext } from './theme.context';
-import { TemplateMapping } from './theme.model';
+import { TemplateMapping, TypedocPluginMarkdownOptions } from './theme.model';
 import { formatContents } from './utils/format';
 
 /**
@@ -19,14 +18,8 @@ import { formatContents } from './utils/format';
  * The theme is responsible for providing context templates mappings to pages.
  */
 export class MarkdownTheme extends Theme {
-  private location: string;
   private anchorMap: Record<string, string[]> = {};
   private renderContext?: MarkdownThemeRenderContext;
-
-  /**
-   * Regular expression used for external url matching.
-   */
-  static URL_PREFIX = /^(http|ftp)s?:\/\//;
 
   /**
    * Creates a new instance of MarkdownTheme.
@@ -49,7 +42,7 @@ export class MarkdownTheme extends Theme {
     if (!this.renderContext) {
       this.renderContext = new MarkdownThemeRenderContext(
         this,
-        this.application.options,
+        this.application.options.getRawValues() as TypedocPluginMarkdownOptions,
       );
     }
     return this.renderContext;
@@ -118,34 +111,6 @@ export class MarkdownTheme extends Theme {
     return anchor;
   }
 
-  /**
-   * Transform the given absolute url path into a relative path.
-   *
-   * @param url  The path to transform.
-   * @returns A path relative to the document currently processed.
-   */
-  getRelativeUrl(url: string | undefined) {
-    const publicPath = this.application.options.getValue('publicPath');
-    if (!url) {
-      return '';
-    }
-
-    if (MarkdownTheme.URL_PREFIX.test(url)) {
-      return url;
-    }
-
-    if (publicPath) {
-      return publicPath + url;
-    }
-
-    const relative = path.relative(
-      path.dirname(this.location),
-      path.dirname(url),
-    );
-
-    return path.join(relative, path.basename(url)).replace(/\\/g, '/');
-  }
-
   private buildUrls(
     reflection: DeclarationReflection,
     urls: UrlMapping[],
@@ -154,7 +119,7 @@ export class MarkdownTheme extends Theme {
       reflection.kindOf(mapping.kind),
     );
     if (mapping) {
-      if (!reflection.url || !MarkdownTheme.URL_PREFIX.test(reflection.url)) {
+      if (!reflection.url || !/^(http|ftp)s?:\/\//.test(reflection.url)) {
         const url = this.toUrl(mapping, reflection);
         urls.push(new UrlMapping(url, reflection, mapping.template));
         reflection.url = url;
@@ -201,7 +166,7 @@ export class MarkdownTheme extends Theme {
     ) as boolean;
     if (
       container.url &&
-      (!reflection.url || !MarkdownTheme.URL_PREFIX.test(reflection.url))
+      (!reflection.url || !/^(http|ftp)s?:\/\//.test(reflection.url))
     ) {
       const reflectionId = preserveAnchorCasing
         ? reflection.name
@@ -320,6 +285,7 @@ export class MarkdownTheme extends Theme {
   }
 
   protected onBeginPage(page: PageEvent) {
+    this.getRenderContext().activeLocation = page.url;
     if (page.model instanceof DeclarationReflection) {
       this.getRenderContext().activeReflection = page.model;
     }

@@ -1,9 +1,9 @@
 import { DeclarationReflection, PageEvent } from 'typedoc';
-import { MarkdownThemeContext } from '..';
+import { MarkdownThemeRenderContext } from '../theme.context';
 import { heading } from '../utils/elements';
 
 export const memberTemplate = (
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: PageEvent<DeclarationReflection>,
 ) => {
   const md: string[] = [];

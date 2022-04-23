@@ -1,8 +1,8 @@
+import * as path from 'path';
 import {
   Comment,
   DeclarationHierarchy,
   DeclarationReflection,
-  Options,
   PageEvent,
   ParameterReflection,
   ProjectReflection,
@@ -36,6 +36,7 @@ import { Collapse, typePartial } from './partials/type.partial';
 import { memberTemplate } from './templates/member.template';
 import { readmeTemplate } from './templates/readme.template';
 import { reflectionTemplate } from './templates/reflection.template';
+import { TypedocPluginMarkdownOptions } from './theme.model';
 
 /**
  * Provides theme context for theme resources, following the theming model of TypeDoc [DefaultThemeRenderContext](https://typedoc.org/api/classes/DefaultThemeRenderContext.html).
@@ -47,33 +48,20 @@ import { reflectionTemplate } from './templates/reflection.template';
  * - [Partials](#properties-partials) - individual elements making up a page.
  */
 export class MarkdownThemeRenderContext {
+  public project: ProjectReflection;
+  public activeLocation: string;
+  public activeReflection: DeclarationReflection;
+  public modulesFileName = 'modules.md';
+
   /**
-   * The options applied to the renderer.
+   *
+   * @param theme MarkdownTheme instance
+   * @param options The options applied to the renderer
    */
-  options: Record<string, any>;
-  modulesFileName = 'modules.md';
-  _project: ProjectReflection;
-  _activeReflection: DeclarationReflection;
-
-  constructor(private theme: MarkdownTheme, options: Options) {
-    this.options = options.getRawValues() as Record<string, any>;
-  }
-
-  set project(project) {
-    this._project = project;
-  }
-
-  get project() {
-    return this._project;
-  }
-
-  set activeReflection(activeReflection: DeclarationReflection) {
-    this._activeReflection = activeReflection;
-  }
-
-  get activeReflection() {
-    return this._activeReflection;
-  }
+  constructor(
+    private theme: MarkdownTheme,
+    public options: TypedocPluginMarkdownOptions,
+  ) {}
 
   /**
    * The readme template, used when a readme is not available.
@@ -221,9 +209,34 @@ export class MarkdownThemeRenderContext {
   typeParameterTablePartial = (props: any) =>
     typeParameterTablePartial(this, props);
 
-  relativeURL = (url: string | undefined) => this.theme.getRelativeUrl(url);
+  /**
+   * Transform the given absolute url path into a relative path.
+   *
+   * @param url  The path to transform.
+   * @returns A path relative to the document currently processed.
+   */
+  relativeURL(url: string | undefined) {
+    if (!url) {
+      return '';
+    }
 
-  urlTo = (reflection: Reflection) => this.theme.getRelativeUrl(reflection.url);
+    if (/^(http|ftp)s?:\/\//.test(url)) {
+      return url;
+    }
+
+    if (this.options.publicPath) {
+      return this.options.publicPath + url;
+    }
+
+    const relative = path.relative(
+      path.dirname(this.activeLocation),
+      path.dirname(url),
+    );
+
+    return path.join(relative, path.basename(url)).replace(/\\/g, '/');
+  }
+
+  urlTo = (reflection: Reflection) => this.relativeURL(reflection.url);
 
   attemptExternalResolution = (type: ReferenceType) => {
     return this.theme.owner.attemptExternalResolution(type);

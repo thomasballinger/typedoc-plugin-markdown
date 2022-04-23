@@ -1,8 +1,8 @@
 import { PageEvent, ProjectReflection } from 'typedoc';
-import { MarkdownThemeContext } from '..';
+import { MarkdownThemeRenderContext } from '../theme.context';
 
 export const readmeTemplate = (
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: PageEvent<ProjectReflection>,
 ) => {
   const md: string[] = [];

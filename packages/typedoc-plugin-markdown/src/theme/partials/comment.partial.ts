@@ -3,13 +3,6 @@ import * as path from 'path';
 import { Comment, Reflection } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
 
-const URL_PREFIX = /^(http|ftp)s?:\/\//;
-const BRACKETS = /\[\[([^\]]+)\]\]/g;
-const INLINE_TAG =
-  /(?:\[(.+?)\])?\{@(link|linkcode|linkplain)\s+((?:.|\n)+?)\}/gi;
-const INCLUDE_PATTERN = /\[\[include:([^\]]+?)\]\]/g;
-const MEDIA_PATTERN = /media:\/\/([^ "\)\]\}]+)/g;
-
 export function commentPartial(
   context: MarkdownThemeRenderContext,
   comment: Comment,
@@ -61,10 +54,13 @@ function parseComment(
 }
 
 function replaceBrackets(context: MarkdownThemeRenderContext, text: string) {
-  return text.replace(BRACKETS, (match: string, content: string): string => {
-    const split = splitLinkText(content);
-    return buildLink(context, match, split.target, split.caption);
-  });
+  return text.replace(
+    /\[\[([^\]]+)\]\]/g,
+    (match: string, content: string): string => {
+      const split = splitLinkText(content);
+      return buildLink(context, match, split.target, split.caption);
+    },
+  );
 }
 
 function replaceInlineTags(
@@ -72,7 +68,7 @@ function replaceInlineTags(
   text: string,
 ): string {
   return text.replace(
-    INLINE_TAG,
+    /(?:\[(.+?)\])?\{@(link|linkcode|linkplain)\s+((?:.|\n)+?)\}/gi,
     (match: string, leading: string, tagName: string, content: string) => {
       const split = splitLinkText(content);
       const target = split.target;
@@ -97,7 +93,7 @@ function buildLink(
     caption = '`' + caption + '`';
   }
 
-  if (URL_PREFIX.test(target)) {
+  if (/^(http|ftp)s?:\/\//.test(target)) {
     return `[${caption}](${target})`;
   }
 
@@ -138,7 +134,7 @@ function splitLinkText(text: string) {
 
 function insertIncludes(context: MarkdownThemeRenderContext, text: string) {
   return text.replace(
-    INCLUDE_PATTERN,
+    /\[\[include:([^\]]+?)\]\]/g,
     (match: string, includesPath: string) => {
       includesPath = path.join(context.options.includes!, includesPath.trim());
       if (fs.existsSync(includesPath) && fs.statSync(includesPath).isFile()) {
@@ -151,11 +147,14 @@ function insertIncludes(context: MarkdownThemeRenderContext, text: string) {
 }
 
 function insertMedia(context: MarkdownThemeRenderContext, text: string) {
-  return text.replace(MEDIA_PATTERN, (match: string, mediaPath: string) => {
-    if (fs.existsSync(path.join(context.options.media!, mediaPath))) {
-      return context.relativeURL('media') + '/' + mediaPath;
-    } else {
-      return match;
-    }
-  });
+  return text.replace(
+    /media:\/\/([^ "\)\]\}]+)/g,
+    (match: string, mediaPath: string) => {
+      if (fs.existsSync(path.join(context.options.media!, mediaPath))) {
+        return context.relativeURL('media') + '/' + mediaPath;
+      } else {
+        return match;
+      }
+    },
+  );
 }

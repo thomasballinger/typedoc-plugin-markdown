@@ -1,17 +1,21 @@
-import { PageEvent, ReflectionKind, RenderTemplate } from 'typedoc';
+import {
+  PageEvent,
+  ReflectionKind,
+  RenderTemplate,
+  TypeDocOptions,
+} from 'typedoc';
 
-export interface TypedocPluginMarkdownOptions {
+/**
+ * An interface describing all the plugins specific options and extended TypeDoc options.
+ */
+export interface TypedocPluginMarkdownOptions extends TypeDocOptions {
   hideBreadcrumbs: boolean;
   hideInPageTOC: boolean;
   hidePageTitle: boolean;
   hideMembersSymbol: boolean;
   entryDocument: string;
-  entryPoints: string[];
-  includes: string;
   indexTitle: string;
-  media: string;
   namedAnchors: boolean;
-  readme: string;
   publicPath: string;
 }
 

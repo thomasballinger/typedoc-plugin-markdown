@@ -3,11 +3,11 @@ import {
   ReflectionKind,
   SignatureReflection,
 } from 'typedoc';
-import { MarkdownThemeContext } from '..';
+import { MarkdownThemeRenderContext } from '../theme.context';
 import { heading } from '../utils/elements';
 
 export const signaturePartial = (
-  context: MarkdownThemeContext,
+  context: MarkdownThemeRenderContext,
   props: SignatureReflection,
   nested = false,
   accessor?: string,
