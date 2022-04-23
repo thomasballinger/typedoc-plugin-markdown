@@ -1,9 +1,13 @@
 const knownSymbols = {
+  DeclarationReflection:
+    'https://typedoc.org/api/classes/DeclarationReflection.html',
+  Comment: 'https://typedoc.org/api/classes/Comment.html',
   Options: 'https://typedoc.org/api/classes/Options.html',
+  PageEvent: 'https://typedoc.org/api/classes/PageEvent.html',
   ProjectReflection: 'https://typedoc.org/api/classes/ProjectReflection.html',
-  Theme: 'https://typedoc.org/api/classes/Theme.html',
   Reflection: 'https://typedoc.org/api/classes/Reflection.html',
   Renderer: 'https://typedoc.org/api/classes/Renderer.html',
+  Theme: 'https://typedoc.org/api/classes/Theme.html',
   UrlMapping: 'https://typedoc.org/api/classes/UrlMapping.html',
 };
 

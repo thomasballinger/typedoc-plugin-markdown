@@ -7,6 +7,7 @@ module.exports = {
   collectCoverage: false,
   coverageReporters: ['lcov', 'text', 'text-summary'],
   collectCoverageFrom: ['<rootDir>/dist/**/*js'],
+  setupFiles: ['<rootDir>/test/helpers.js'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.test.json',

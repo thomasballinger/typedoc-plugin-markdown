@@ -6,13 +6,13 @@ import {
   Reflection,
   ReflectionKind,
   Renderer,
+  RendererEvent,
   Theme,
   UrlMapping,
 } from 'typedoc';
-import { formatContents } from '../utils/format';
 import { MarkdownThemeRenderContext } from './theme.context';
 import { TemplateMapping } from './theme.model';
-import { load as loadCommentsPlugin } from './_plugins/comments';
+import { formatContents } from './utils/format';
 
 /**
  * Class that inherits the base TypeDoc {@link https://typedoc.org/api/classes/Theme.html Theme} Class.
@@ -35,9 +35,8 @@ export class MarkdownTheme extends Theme {
   constructor(renderer: Renderer) {
     super(renderer);
 
-    loadCommentsPlugin(this.application);
-
     this.listenTo(this.owner, {
+      [RendererEvent.BEGIN]: this.onBeginRenderer,
       [PageEvent.BEGIN]: this.onBeginPage,
     });
   }
@@ -72,7 +71,7 @@ export class MarkdownTheme extends Theme {
   getUrls(project: ProjectReflection) {
     const urls: UrlMapping[] = [];
 
-    const modulesFile = 'modules.md';
+    const modulesFile = this.modulesFileName();
 
     const entryDocument = this.application.options.getValue(
       'entryDocument',
@@ -298,6 +297,10 @@ export class MarkdownTheme extends Theme {
     ];
   }
 
+  protected modulesFileName = () => {
+    return this.getRenderContext().modulesFileName;
+  };
+
   protected readmeTemplate = (pageEvent: PageEvent<ProjectReflection>) => {
     return this.getRenderContext().readmeTemplate(pageEvent);
   };
@@ -312,7 +315,13 @@ export class MarkdownTheme extends Theme {
     return this.getRenderContext().memberTemplate(pageEvent);
   };
 
+  protected onBeginRenderer(event: RendererEvent) {
+    this.getRenderContext().project = event.project;
+  }
+
   protected onBeginPage(page: PageEvent) {
-    this.location = page.url;
+    if (page.model instanceof DeclarationReflection) {
+      this.getRenderContext().activeReflection = page.model;
+    }
   }
 }

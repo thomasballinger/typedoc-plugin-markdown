@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reflection Template: should compile callable reflection 1`] = `
+"{ breadcrumbsPartial }
+
+# { reflectionTitlePartial }
+
+{ reflectionPathPartial }
+
+## Callable
+
+### CallableReflection
+
+{ reflectionTitlePartial }
+
+{ tocPartial }"
+`;
+
+exports[`Reflection Template: should compile enum reflection 1`] = `
+"{ breadcrumbsPartial }
+
+# { reflectionTitlePartial }
+
+{ reflectionPathPartial }
+
+{ tocPartial }
+
+{ groupsPartial }"
+`;
+
+exports[`Reflection Template: should compile implemented class reflection 1`] = `
+"{ breadcrumbsPartial }
+
+# { reflectionTitlePartial }
+
+{ reflectionPathPartial }
+
+## Implements
+
+- { typePartial }
+
+{ tocPartial }
+
+{ groupsPartial }"
+`;
+
+exports[`Reflection Template: should compile indexable reflection 1`] = `
+"{ breadcrumbsPartial }
+
+# { reflectionTitlePartial }
+
+{ reflectionPathPartial }
+
+## Indexable
+
+{ indexSignatureTitlePartial }
+
+{ tocPartial }"
+`;
+
+exports[`Reflection Template: should compile project reflection 1`] = `
+"{ breadcrumbsPartial }
+
+# { reflectionTitlePartial }
+
+{ reflectionPathPartial }
+
+{ tocPartial }
+
+{ groupsPartial }"
+`;
+
+exports[`Reflection Template: should compile project reflection with options 1`] = `
+"{ reflectionPathPartial }
+
+{ tocPartial }
+
+{ groupsPartial }"
+`;

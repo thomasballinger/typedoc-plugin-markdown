@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Comment Partial: should allow html in comments' 1`] = `
+"<p>
+You can write <strong>HTML</strong> tags directly in comments
+</p>
+<ul>
+<li>List item</li>
+</ul>
+
+"
+`;
+
+exports[`Comment Partial: should build @link references' 1`] = `
+"See {@linkcode CommentClass} and [CommentClass's comment property]{@link CommentClass.comment}.
+Also, check out [Google](https://www.google.com) and
+[GitHub](https://github.com).
+
+Taken from [JsDoc](http://usejsdoc.org/tags-inline-link.html).
+
+
+"
+`;
+
+exports[`Comment Partial: should convert comments with fenced block' 1`] = `
+"Some comments with fence blocks
+
+\`\`\`typescript
+someFunction()
+\`\`\`
+
+\`\`\`js
+anotherFunction()
+\`\`\`
+
+
+"
+`;
+
+exports[`Comment Partial: should convert comments with includes' 1`] = `
+"This is an example of include
+
+This is a simple example on how to use include.
+
+![My image alt text](( relativeURL )/logo.png)
+
+
+This is an example of handlebars include
+
+This is a simple example on a handlebars file.
+
+
+"
+`;
+
+exports[`Comment Partial: should convert comments with tags' 1`] = `
+"**\`name\`** Tag description on same line
+
+**\`description\`**
+Tag description on new line
+
+- Tag description on another line
+
+
+**\`deprecated\`**
+Another tag description
+"
+`;
+
+exports[`Comment Partial: should convert symbols brackets to symbol links' 1`] = `
+"Additionally you can link to other classes, members or functions using double square brackets.
+
+- Link to an external reflection: [[CommentClass]]
+- Link to an internal reflection: [[commentsInReturn]]
+- Link to an undefined reflection: [[VOID]]
+
+
+"
+`;

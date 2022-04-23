@@ -1,7 +1,5 @@
 import { Application, TSConfigReader } from 'typedoc';
 
-console.log('SET_ME_UP');
-
 export const getProject = () => {
   const app = new Application();
   app.options.addReader(new TSConfigReader());

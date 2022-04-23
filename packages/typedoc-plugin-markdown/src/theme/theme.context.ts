@@ -13,29 +13,29 @@ import {
   SignatureReflection,
 } from 'typedoc';
 import { MarkdownTheme } from '.';
-import { breadcrumbsPartial } from './resources/partials/breadcrumbs.partial';
-import { commentPartial } from './resources/partials/comment.partial';
-import { declarationTitlePartial } from './resources/partials/declaration-title.partial';
-import { declarationPartial } from './resources/partials/declaration.partial';
-import { groupsPartial } from './resources/partials/groups.partial';
-import { hierarchyPartial } from './resources/partials/hierarchy.partial';
-import { indexSignatureTitlePartial } from './resources/partials/index-signature-title.partial';
-import { memberPartial } from './resources/partials/member.partial';
-import { parameterTablePartial } from './resources/partials/parameter-table.partial';
-import { propertyTablePartial } from './resources/partials/property-table.partial';
-import { referencePartial } from './resources/partials/reference.partial';
-import { reflectionPathPartial } from './resources/partials/reflection-path.partial';
-import { reflectionTitlePartial } from './resources/partials/reflection-title.partial';
-import { signatureTitlePartial } from './resources/partials/signature-title.partial';
-import { signaturePartial } from './resources/partials/signature.partial';
-import { sourcesPartial } from './resources/partials/sources.partial';
-import { tocPartial } from './resources/partials/toc.partial';
-import { typeAndParentPartial } from './resources/partials/type-and-parent.partial';
-import { typeParameterTablePartial } from './resources/partials/type-parameter-table.partial';
-import { Collapse, typePartial } from './resources/partials/type.partial';
-import { memberTemplate } from './resources/templates/member.template';
-import { readmeTemplate } from './resources/templates/readme.template';
-import { reflectionTemplate } from './resources/templates/reflection.template';
+import { breadcrumbsPartial } from './partials/breadcrumbs.partial';
+import { commentPartial } from './partials/comment.partial';
+import { declarationTitlePartial } from './partials/declaration-title.partial';
+import { declarationPartial } from './partials/declaration.partial';
+import { groupsPartial } from './partials/groups.partial';
+import { hierarchyPartial } from './partials/hierarchy.partial';
+import { indexSignatureTitlePartial } from './partials/index-signature-title.partial';
+import { memberPartial } from './partials/member.partial';
+import { parameterTablePartial } from './partials/parameter-table.partial';
+import { propertyTablePartial } from './partials/property-table.partial';
+import { referencePartial } from './partials/reference.partial';
+import { reflectionPathPartial } from './partials/reflection-path.partial';
+import { reflectionTitlePartial } from './partials/reflection-title.partial';
+import { signatureTitlePartial } from './partials/signature-title.partial';
+import { signaturePartial } from './partials/signature.partial';
+import { sourcesPartial } from './partials/sources.partial';
+import { tocPartial } from './partials/toc.partial';
+import { typeAndParentPartial } from './partials/type-and-parent.partial';
+import { typeParameterTablePartial } from './partials/type-parameter-table.partial';
+import { Collapse, typePartial } from './partials/type.partial';
+import { memberTemplate } from './templates/member.template';
+import { readmeTemplate } from './templates/readme.template';
+import { reflectionTemplate } from './templates/reflection.template';
 
 /**
  * Provides theme context for theme resources, following the theming model of TypeDoc [DefaultThemeRenderContext](https://typedoc.org/api/classes/DefaultThemeRenderContext.html).
@@ -51,9 +51,28 @@ export class MarkdownThemeRenderContext {
    * The options applied to the renderer.
    */
   options: Record<string, any>;
+  modulesFileName = 'modules.md';
+  _project: ProjectReflection;
+  _activeReflection: DeclarationReflection;
 
   constructor(private theme: MarkdownTheme, options: Options) {
     this.options = options.getRawValues() as Record<string, any>;
+  }
+
+  set project(project) {
+    this._project = project;
+  }
+
+  get project() {
+    return this._project;
+  }
+
+  set activeReflection(activeReflection: DeclarationReflection) {
+    this._activeReflection = activeReflection;
+  }
+
+  get activeReflection() {
+    return this._activeReflection;
   }
 
   /**
@@ -79,12 +98,18 @@ export class MarkdownThemeRenderContext {
     memberTemplate(this, props);
 
   /**
-   * The breadcrumbs partial used to display a breadcrumb tree.
+   * Renders the breadcrumb tree in page header.
    * @category Partials
    */
   breadcrumbsPartial = (
     props: PageEvent<ProjectReflection | DeclarationReflection>,
   ) => breadcrumbsPartial(this, props);
+
+  /**
+   * Converts a Comment model into comment text.
+   * @category Partials
+   */
+  commentPartial = (props: Comment) => commentPartial(this, props);
 
   /**
    * The title of declarations.
@@ -99,11 +124,6 @@ export class MarkdownThemeRenderContext {
    */
   declarationPartial = (props: DeclarationReflection) =>
     declarationPartial(this, props);
-
-  /**
-   * @category Partials
-   */
-  commentPartial = (props: Comment) => commentPartial(this, props);
 
   /**
    * @category Partials

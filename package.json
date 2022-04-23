@@ -14,7 +14,7 @@
     "build:vuepress-plugin-typedoc": "cd packages/vuepress-plugin-typedoc && yarn run build",
     "build:docusaurus-plugin-typedoc": "cd packages/docusaurus-plugin-typedoc && yarn run build",
     "pretest": "yarn run build",
-    "test": "lerna run test --parallel",
+    "test": "lerna run test -t 'Breadcrumbs Partial:' --parallel",
     "deploy": "lerna publish from-package",
     "postinstall": "lerna bootstrap"
   },
