@@ -18,8 +18,7 @@ import {
   UnknownType,
 } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { escapeChars } from '../utils/format';
-
+import { escapeChars } from '../theme.utils';
 export type Collapse = 'object' | 'function' | 'all' | 'none';
 
 export function typePartial(

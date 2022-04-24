@@ -1,7 +1,7 @@
 import { SignatureReflection } from 'typedoc';
 import { ArrayType, ReferenceType } from 'typedoc/dist/lib/models/types';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { escapeChars } from '../utils/format';
+import { escapeChars } from '../theme.utils';
 
 export function typeAndParentPartial(
   context: MarkdownThemeRenderContext,

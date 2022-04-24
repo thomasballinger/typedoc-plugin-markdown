@@ -11,7 +11,6 @@ import {
 } from 'typedoc';
 import { MarkdownThemeRenderContext } from './theme.context';
 import { TemplateMapping, TypedocPluginMarkdownOptions } from './theme.model';
-import { formatContents } from './utils/format';
 
 /**
  * Class that inherits the base TypeDoc {@link https://typedoc.org/api/classes/Theme.html Theme} Class.
@@ -52,7 +51,11 @@ export class MarkdownTheme extends Theme {
    * Abstract method that renders the provided page to a string.
    */
   render(page: PageEvent<Reflection>): string {
-    return formatContents(page.template(page) as string);
+    return (
+      (page.template(page) as string)
+        .replace(/[\r\n]{3,}/g, '\n\n')
+        .replace(/^\s+|\s+$/g, '') + '\n'
+    );
   }
 
   /**

@@ -4,7 +4,7 @@ import {
   ReflectionGroup,
 } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { heading, horizontalRule } from '../utils/elements';
+import { heading, horizontalRule } from '../theme.utils';
 
 export const membersPartial = (
   context: MarkdownThemeRenderContext,

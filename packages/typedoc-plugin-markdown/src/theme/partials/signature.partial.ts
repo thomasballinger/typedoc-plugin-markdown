@@ -4,7 +4,7 @@ import {
   SignatureReflection,
 } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { heading } from '../utils/elements';
+import { heading } from '../theme.utils';
 
 export const signaturePartial = (
   context: MarkdownThemeRenderContext,

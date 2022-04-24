@@ -1,7 +1,6 @@
 import { DeclarationReflection, ReferenceReflection } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { heading } from '../utils/elements';
-import { escapeChars } from '../utils/format';
+import { escapeChars, heading } from '../theme.utils';
 
 export const memberPartial = (
   context: MarkdownThemeRenderContext,

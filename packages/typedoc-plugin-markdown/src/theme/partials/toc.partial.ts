@@ -4,7 +4,7 @@ import {
   ReflectionGroup,
 } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { escapeChars } from '../utils/format';
+import { escapeChars } from '../theme.utils';
 
 export function tocPartial(
   context: MarkdownThemeRenderContext,

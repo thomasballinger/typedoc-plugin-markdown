@@ -1,6 +1,6 @@
 import { DeclarationReflection, PageEvent, ProjectReflection } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../../theme.context';
-import { heading, unorderedList } from '../../utils/elements';
+import { heading, unorderedList } from '../../theme.utils';
 
 export const reflectionTemplate = (
   context: MarkdownThemeRenderContext,

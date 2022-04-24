@@ -1,6 +1,6 @@
 import { DeclarationHierarchy } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../../theme.context';
-import { backTicks, bold } from '../../utils/elements';
+import { backTicks, bold } from '../../theme.utils';
 
 export const hierarchyPartial = (
   context: MarkdownThemeRenderContext,

@@ -1,6 +1,6 @@
 import { DeclarationReflection, PageEvent, ProjectReflection } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../../theme.context';
-import { escapeChars } from '../../utils/format';
+import { escapeChars } from '../../theme.utils';
 
 export const breadcrumbsPartial = (
   context: MarkdownThemeRenderContext,

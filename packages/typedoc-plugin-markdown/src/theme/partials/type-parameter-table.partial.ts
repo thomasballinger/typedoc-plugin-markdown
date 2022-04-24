@@ -1,6 +1,6 @@
 import { TypeParameterReflection } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { stripLineBreaks } from '../utils/format';
+import { stripLineBreaks } from '../theme.utils';
 
 export function typeParameterTablePartial(
   context: MarkdownThemeRenderContext,

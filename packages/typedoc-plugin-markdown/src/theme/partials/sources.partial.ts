@@ -1,6 +1,6 @@
 import { DeclarationReflection, SignatureReflection } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { heading, link } from '../utils/elements';
+import { heading, link } from '../theme.utils';
 
 export const sourcesPartial = (
   context: MarkdownThemeRenderContext,

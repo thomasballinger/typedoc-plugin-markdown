@@ -5,12 +5,12 @@ import {
   ReflectionType,
 } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../../theme.context';
-import { heading, MarkdownString } from '../../utils/elements';
 import {
   escapeChars,
+  heading,
   stripComments,
   stripLineBreaks,
-} from '../../utils/format';
+} from '../../theme.utils';
 
 export const declarationPartial = (
   context: MarkdownThemeRenderContext,
@@ -58,45 +58,43 @@ const declarationBody = (
   context: MarkdownThemeRenderContext,
   model: DeclarationReflection,
 ) => {
-  const markdownString = new MarkdownString();
+  const md: string[] = [];
 
   const typeDeclaration = (model.type as any)
     ?.declaration as DeclarationReflection;
   if (model.comment) {
-    markdownString.ln(context.commentPartial(model.comment));
+    md.push(context.commentPartial(model.comment));
   }
 
   if (model.typeParameters) {
-    markdownString.ln(heading(4, 'Type parameters'));
-    markdownString.ln(context.typeParameterTablePartial(model.typeParameters));
+    md.push(heading(4, 'Type parameters'));
+    md.push(context.typeParameterTablePartial(model.typeParameters));
   }
 
   if (typeDeclaration?.indexSignature) {
-    markdownString.ln(
-      context.indexSignatureTitlePartial(typeDeclaration.indexSignature),
-    );
+    md.push(context.indexSignatureTitlePartial(typeDeclaration.indexSignature));
   }
 
   if (typeDeclaration?.signatures) {
-    markdownString.ln(
+    md.push(
       heading(
         4,
         typeDeclaration.children ? 'Call signature' : 'Type declaration',
       ),
     );
     typeDeclaration.signatures.forEach((signature) => {
-      markdownString.ln(context.signaturePartial(signature, true));
+      md.push(context.signaturePartial(signature, true));
     });
   }
 
   if (typeDeclaration?.children) {
-    markdownString.ln(heading(4, 'Type declaration'));
-    markdownString.ln(context.propertyTablePartial(typeDeclaration.children));
+    md.push(heading(4, 'Type declaration'));
+    md.push(context.propertyTablePartial(typeDeclaration.children));
   }
 
-  markdownString.ln(context.sourcesPartial(model));
+  md.push(context.sourcesPartial(model));
 
-  return markdownString.render();
+  return md.join('\n\n');
 };
 
 const getDeclarationType = (
