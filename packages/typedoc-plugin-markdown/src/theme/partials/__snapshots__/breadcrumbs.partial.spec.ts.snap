@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Breadcrumbs Partial: (with readme) should compile README breadcrumbs' 1`] = `"project-name / [Exports](( relativeURL ))"`;
+exports[`Breadcrumbs Partial: (with readme) should compile README breadcrumbs' 1`] = `" / [Exports](( relativeURL ))"`;
 
-exports[`Breadcrumbs Partial: (with readme) should compile class breadcrumbs' 1`] = `"[project-name](( relativeURL )) / [Exports](( relativeURL )) / [breadcrumbs.md](( relativeURL )) / Breadcrumbs"`;
+exports[`Breadcrumbs Partial: (with readme) should compile class breadcrumbs' 1`] = `"[undefined](( relativeURL )) / [Exports](( relativeURL )) / [breadcrumbs.md](( relativeURL )) / Breadcrumbs"`;
 
-exports[`Breadcrumbs Partial: (with readme) should compile module breadcrumbs' 1`] = `"[project-name](( relativeURL )) / [Exports](( relativeURL )) / breadcrumbs"`;
+exports[`Breadcrumbs Partial: (with readme) should compile module breadcrumbs' 1`] = `"[undefined](( relativeURL )) / [Exports](( relativeURL )) / breadcrumbs"`;
 
-exports[`Breadcrumbs Partial: (without readme) should compile README breadcrumbs' 1`] = `"project-name"`;
+exports[`Breadcrumbs Partial: (without readme) should compile README breadcrumbs' 1`] = `""`;
 
-exports[`Breadcrumbs Partial: (without readme) should compile class breadcrumbs' 1`] = `"[project-name](( relativeURL )) / [breadcrumbs.md](( relativeURL )) / Breadcrumbs"`;
+exports[`Breadcrumbs Partial: (without readme) should compile class breadcrumbs' 1`] = `"[undefined](( relativeURL )) / [breadcrumbs.md](( relativeURL )) / Breadcrumbs"`;
 
-exports[`Breadcrumbs Partial: (without readme) should compile module breadcrumbs' 1`] = `"[project-name](( relativeURL )) / breadcrumbs"`;
+exports[`Breadcrumbs Partial: (without readme) should compile module breadcrumbs' 1`] = `"[undefined](( relativeURL )) / breadcrumbs"`;

@@ -15,7 +15,6 @@ import {
 import { MarkdownTheme } from '.';
 import { breadcrumbsPartial } from './partials/breadcrumbs.partial';
 import { commentPartial } from './partials/comment.partial';
-import { declarationTitlePartial } from './partials/declaration-title.partial';
 import { declarationPartial } from './partials/declaration.partial';
 import { groupsPartial } from './partials/groups.partial';
 import { hierarchyPartial } from './partials/hierarchy.partial';
@@ -100,14 +99,7 @@ export class MarkdownThemeRenderContext {
   commentPartial = (props: Comment) => commentPartial(this, props);
 
   /**
-   * The title of declarations.
-   * @category Partials
-   */
-  declarationTitlePartial = (
-    props: ParameterReflection | DeclarationReflection,
-  ) => declarationTitlePartial(this, props);
-
-  /**
+   * Renders a declaration
    * @category Partials
    */
   declarationPartial = (props: DeclarationReflection) =>

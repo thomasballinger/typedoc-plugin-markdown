@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Declaration Partial: should compile a const with default value 1`] = `
+" \`Const\` **stringConstWithDefaultValue**: { typePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile an undefined declaration 1`] = `
+" **undefinedNumberDeclaration**: { typePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile any function type 1`] = `
+" **AnyFunctionType**<\`A\`\\\\>: { typePartial }
+
+#### Type parameters
+
+{ typeParameterTablePartial }
+
+#### Type declaration
+
+{ reflectionTitlePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile callable declaration 1`] = `
+" **callableDeclaration**: \`Object\`
+
+#### Call signature
+
+{ reflectionTitlePartial }
+
+#### Type declaration
+
+{ propertyTablePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile declaration with double underscores in name and value 1`] = `
+" \`Const\` **\\\\_\\\\_DOUBLE\\\\_UNDERSCORES\\\\_DECLARATION\\\\_\\\\_**: { typePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile enum delcaration 1`] = `
+" **Down** = \`\\"DOWN\\"\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile function declaration 1`] = `
+" **functionDeclaration**: { typePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile indexable declaration 1`] = `
+" **indexableDeclaration**: \`Object\`
+
+{ indexSignatureTitlePartial }
+
+#### Type declaration
+
+{ propertyTablePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile object literal cast as a const 1`] = `
+" \`Const\` **objectLiteralAsConstDeclaration**: \`Object\`
+
+{ commentPartial }
+
+#### Type declaration
+
+{ propertyTablePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile object literal declaration 1`] = `
+" \`Const\` **objectLiteralDeclaration**: \`Object\`
+
+{ commentPartial }
+
+#### Type declaration
+
+{ propertyTablePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Declaration Partial: should compile type literal declaration 1`] = `
+" **typeLiteralDeclaration**: \`Object\`
+
+#### Type declaration
+
+{ propertyTablePartial }
+
+{ sourcesPartial }"
+`;

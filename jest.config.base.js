@@ -4,9 +4,8 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   verbose: true,
-  collectCoverage: false,
+  collectCoverage: true,
   coverageReporters: ['lcov', 'text', 'text-summary'],
-  collectCoverageFrom: ['<rootDir>/dist/**/*js'],
   setupFiles: ['<rootDir>/test/helpers.js'],
   globals: {
     'ts-jest': {

@@ -122,7 +122,7 @@ function splitLinkText(text: string) {
         .substr(splitIndex + 1)
         .replace(/\n+/, ' ')
         .trim(),
-      target: text.substr(0, splitIndex).trim(),
+      target: text.substring(0, splitIndex).trim(),
     };
   } else {
     return {
