@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Comment, Reflection } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function commentPartial(
   context: MarkdownThemeRenderContext,

@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hierarchy Partial: should compile type hierarchy 1`] = `
+"- **\`ParentClass\`**
+  - { typePartial }
+    - { typePartial }"
+`;

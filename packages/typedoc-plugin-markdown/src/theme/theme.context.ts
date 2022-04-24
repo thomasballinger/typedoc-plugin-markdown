@@ -13,13 +13,13 @@ import {
   SignatureReflection,
 } from 'typedoc';
 import { MarkdownTheme } from '.';
-import { breadcrumbsPartial } from './partials/breadcrumbs.partial';
-import { commentPartial } from './partials/comment.partial';
-import { declarationPartial } from './partials/declaration.partial';
-import { groupsPartial } from './partials/groups.partial';
-import { hierarchyPartial } from './partials/hierarchy.partial';
+import { breadcrumbsPartial } from './partials/breadcrumbs/breadcrumbs.partial';
+import { commentPartial } from './partials/comment/comment.partial';
+import { declarationPartial } from './partials/declaration/declaration.partial';
+import { hierarchyPartial } from './partials/hierarchy/hierarchy.partial';
 import { indexSignatureTitlePartial } from './partials/index-signature-title.partial';
 import { memberPartial } from './partials/member.partial';
+import { membersPartial } from './partials/members.partial';
 import { parameterTablePartial } from './partials/parameter-table.partial';
 import { propertyTablePartial } from './partials/property-table.partial';
 import { referencePartial } from './partials/reference.partial';
@@ -32,9 +32,9 @@ import { tocPartial } from './partials/toc.partial';
 import { typeAndParentPartial } from './partials/type-and-parent.partial';
 import { typeParameterTablePartial } from './partials/type-parameter-table.partial';
 import { Collapse, typePartial } from './partials/type.partial';
-import { memberTemplate } from './templates/member.template';
-import { readmeTemplate } from './templates/readme.template';
-import { reflectionTemplate } from './templates/reflection.template';
+import { memberTemplate } from './templates/member/member.template';
+import { readmeTemplate } from './templates/readme/readme.template';
+import { reflectionTemplate } from './templates/reflection/reflection.template';
 import { TypedocPluginMarkdownOptions } from './theme.model';
 
 /**
@@ -108,11 +108,6 @@ export class MarkdownThemeRenderContext {
   /**
    * @category Partials
    */
-  groupsPartial = (props: ReflectionGroup[]) => groupsPartial(this, props);
-
-  /**
-   * @category Partials
-   */
   hierarchyPartial = (props: DeclarationHierarchy) =>
     hierarchyPartial(this, props);
 
@@ -127,6 +122,11 @@ export class MarkdownThemeRenderContext {
    */
   memberPartial = (props: DeclarationReflection | ReferenceReflection) =>
     memberPartial(this, props);
+
+  /**
+   * @category Partials
+   */
+  membersPartial = (props: ReflectionGroup[]) => membersPartial(this, props);
 
   /**
    * @category Partials

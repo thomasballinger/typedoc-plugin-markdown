@@ -1,19 +1,21 @@
 const { Application, TSConfigReader } = require('typedoc');
+const path = require('path');
+const fs = require('fs');
 
 /**
  * Returns project reflection from a given entry point
  * @param {*} entryPoints
  * @returns
  */
-global.getProject = (entryPoints) => {
+global.getProject = (location) => {
   const app = new Application();
   app.options.addReader(new TSConfigReader());
   app.bootstrap({
     plugin: ['none'],
-    entryPoints: entryPoints
-      ? entryPoints.map((inputFile) => './test/stubs/src/' + inputFile)
-      : ['./test/stubs/src/index.ts'],
-    tsconfig: './test/stubs/tsconfig.json',
+    entryPoints: fs
+      .readdirSync(location + '/__stubs__')
+      .map((stub) => path.join(location, '__stubs__', stub)),
+    tsconfig: './tsconfig.test.json',
   });
   return app.convert();
 };
@@ -26,8 +28,9 @@ global.getProject = (entryPoints) => {
 global.getMockContext = (options = {}) => ({
   breadcrumbsPartial: (props) => '{ breadcrumbsPartial }',
   commentPartial: (props) => '{ commentPartial }',
-  groupsPartial: (props) => '{ groupsPartial }',
   indexSignatureTitlePartial: (props) => '{ indexSignatureTitlePartial }',
+  memberPartial: (props) => '{ memberPartial }',
+  membersPartial: (props) => '{ membersPartial }',
   propertyTablePartial: (props) => '{ propertyTablePartial }',
   reflectionPathPartial: (props) => '{ reflectionPathPartial }',
   reflectionTitlePartial: (props) => '{ reflectionTitlePartial }',

@@ -5,7 +5,7 @@ describe(`Declaration Partial:`, () => {
   let project: ProjectReflection;
 
   beforeAll(async () => {
-    project = global.getProject(['declarations.ts']);
+    project = global.getProject(__dirname);
   });
 
   test(`should compile a const with default value`, () => {

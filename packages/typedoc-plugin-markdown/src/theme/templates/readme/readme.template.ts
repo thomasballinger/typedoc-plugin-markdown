@@ -1,5 +1,5 @@
 import { PageEvent, ProjectReflection } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export const readmeTemplate = (
   context: MarkdownThemeRenderContext,

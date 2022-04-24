@@ -1,6 +1,6 @@
 import { DeclarationReflection, PageEvent, ProjectReflection } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
-import { heading, unorderedList } from '../utils/elements';
+import { MarkdownThemeRenderContext } from '../../theme.context';
+import { heading, unorderedList } from '../../utils/elements';
 
 export const reflectionTemplate = (
   context: MarkdownThemeRenderContext,
@@ -60,7 +60,7 @@ export const reflectionTemplate = (
   md.push(context.tocPartial(props.model));
 
   if (props.model.groups) {
-    md.push(context.groupsPartial(props.model.groups));
+    md.push(context.membersPartial(props.model.groups));
   }
 
   return md.join('\n\n');

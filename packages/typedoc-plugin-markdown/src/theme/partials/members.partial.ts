@@ -6,7 +6,7 @@ import {
 import { MarkdownThemeRenderContext } from '../theme.context';
 import { heading, horizontalRule } from '../utils/elements';
 
-export const groupsPartial = (
+export const membersPartial = (
   context: MarkdownThemeRenderContext,
   props: ReflectionGroup[],
 ) => {
@@ -19,23 +19,26 @@ export const groupsPartial = (
           ?.filter((category) => !category.allChildrenHaveOwnDocument())
           .forEach((category) => {
             md.push(heading(2, `${group.title}: ${category.title}`));
-            md.push(getMembers(category));
+            md.push(members(context, category));
           });
       } else {
         md.push(heading(2, group.title));
-        md.push(getMembers(group));
+        md.push(members(context, group));
       }
     });
   return md.join('\n\n');
-
-  function getMembers(item: ReflectionGroup | ReflectionCategory) {
-    const md: string[] = [];
-    item.children.forEach((child, index) => {
-      md.push(context.memberPartial(child as DeclarationReflection));
-      if (index !== item.children.length - 1) {
-        md.push(horizontalRule());
-      }
-    });
-    return md.join('\n\n');
-  }
 };
+
+function members(
+  context: MarkdownThemeRenderContext,
+  item: ReflectionGroup | ReflectionCategory,
+) {
+  const md: string[] = [];
+  item.children.forEach((child, index) => {
+    md.push(context.memberPartial(child as DeclarationReflection));
+    if (index !== item.children.length - 1) {
+      md.push(horizontalRule());
+    }
+  });
+  return md.join('\n\n');
+}

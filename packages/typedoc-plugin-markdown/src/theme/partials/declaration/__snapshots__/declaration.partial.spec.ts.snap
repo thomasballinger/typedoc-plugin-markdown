@@ -47,7 +47,7 @@ exports[`Declaration Partial: should compile declaration with double underscores
 `;
 
 exports[`Declaration Partial: should compile enum delcaration 1`] = `
-" **Down** = \`\\"DOWN\\"\`
+" **EnumDeclarations**: { typePartial }
 
 { sourcesPartial }"
 `;

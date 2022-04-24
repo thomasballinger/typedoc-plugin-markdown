@@ -1,5 +1,5 @@
-import { DeclarationHierarchy } from 'typedoc/dist/lib/models';
-import { MarkdownThemeRenderContext } from '../theme.context';
+import { DeclarationHierarchy } from 'typedoc';
+import { MarkdownThemeRenderContext } from '../../theme.context';
 
 export function hierarchyPartial(
   context: MarkdownThemeRenderContext,

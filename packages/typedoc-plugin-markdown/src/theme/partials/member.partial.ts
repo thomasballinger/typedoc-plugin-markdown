@@ -8,6 +8,7 @@ export const memberPartial = (
   props: DeclarationReflection | ReferenceReflection,
 ) => {
   const md: string[] = [];
+
   md.push(
     heading(
       3,

@@ -4,9 +4,13 @@ import {
   ReflectionKind,
   ReflectionType,
 } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
-import { heading, MarkdownString } from '../utils/elements';
-import { escapeChars, stripComments, stripLineBreaks } from '../utils/format';
+import { MarkdownThemeRenderContext } from '../../theme.context';
+import { heading, MarkdownString } from '../../utils/elements';
+import {
+  escapeChars,
+  stripComments,
+  stripLineBreaks,
+} from '../../utils/format';
 
 export const declarationPartial = (
   context: MarkdownThemeRenderContext,
