@@ -206,8 +206,9 @@ export class MarkdownThemeRenderContext {
    *
    * @param url  The path to transform.
    * @returns A path relative to the document currently processed.
+   * @category Utilities
    */
-  relativeURL(url: string | undefined) {
+  relativeURL = (url: string | undefined) => {
     if (!url) {
       return '';
     }
@@ -226,10 +227,22 @@ export class MarkdownThemeRenderContext {
     );
 
     return path.join(relative, path.basename(url)).replace(/\\/g, '/');
-  }
+  };
+  /**
+   *
+   * @param reflection
+   * @returns
+   * @category Utilities
+   */
 
   urlTo = (reflection: Reflection) => this.relativeURL(reflection.url);
 
+  /**
+   *
+   * @param type
+   * @returns Resolved externals
+   * @category Utilities
+   */
   attemptExternalResolution = (type: ReferenceType) => {
     return this.theme.owner.attemptExternalResolution(type);
   };

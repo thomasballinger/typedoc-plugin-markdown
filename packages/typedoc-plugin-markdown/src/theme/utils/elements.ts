@@ -1,29 +1,3 @@
-export class MarkdownString {
-  lines: string[] = [];
-  markdownString = '';
-
-  ln(md: string) {
-    this.markdownString = this.markdownString + '\n\n';
-    this.lines.push(md);
-  }
-
-  space(md: string) {
-    this.lines.push(md);
-  }
-
-  render(join: 'br' | 'space' = 'br') {
-    return this.lines.join(join === 'br' ? '\n\n' : ' ');
-  }
-
-  render2() {
-    return this.markdownString;
-  }
-
-  heading(level: number, text: string) {
-    `${[...Array(level)].map(() => '#').join('')} ${text}`;
-  }
-}
-
 export const heading = (level: number, text: string) =>
   `${[...Array(level)].map(() => '#').join('')} ${text}`;
 
