@@ -7,10 +7,6 @@ export interface CallableReflection {
   (): string;
 }
 
-export interface IndexableReflection {
-  [index: number]: string;
-}
-
 export enum EnumReflection {
   Up = 'UP',
   Down = 'DOWN',

@@ -1,6 +1,6 @@
 import { DeclarationReflection, SignatureReflection } from 'typedoc';
 import { MarkdownThemeRenderContext } from '../theme.context';
-import { heading, link } from '../theme.utils';
+import { escapeChars, heading, link } from '../theme.utils';
 
 export const sourcesPartial = (
   context: MarkdownThemeRenderContext,
@@ -27,9 +27,11 @@ export const sourcesPartial = (
     md.push(heading(4, 'Defined in'));
     model.sources.forEach((source) => {
       if (source.url) {
-        md.push(link(`${source.fileName}:${source.line}`, source.url));
+        md.push(
+          link(`${escapeChars(source.fileName)}:${source.line}`, source.url),
+        );
       } else {
-        md.push(`${source.fileName}:${source.line}`);
+        md.push(`${escapeChars(source.fileName)}:${source.line}`);
       }
     });
   }

@@ -62,6 +62,7 @@ const declarationBody = (
 
   const typeDeclaration = (model.type as any)
     ?.declaration as DeclarationReflection;
+
   if (model.comment) {
     md.push(context.commentPartial(model.comment));
   }
@@ -72,7 +73,7 @@ const declarationBody = (
   }
 
   if (typeDeclaration?.indexSignature) {
-    md.push(context.indexSignatureTitlePartial(typeDeclaration.indexSignature));
+    md.push(context.indexSignaturePartial(typeDeclaration.indexSignature));
   }
 
   if (typeDeclaration?.signatures) {

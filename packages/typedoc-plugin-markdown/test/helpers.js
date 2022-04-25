@@ -28,7 +28,7 @@ global.getProject = (location) => {
 global.getMockContext = (options = {}) => ({
   breadcrumbsPartial: (props) => '{ breadcrumbsPartial }',
   commentPartial: (props) => '{ commentPartial }',
-  indexSignatureTitlePartial: (props) => '{ indexSignatureTitlePartial }',
+  indexSignaturePartial: (props) => '{ indexSignatureTitlePartial }',
   memberPartial: (props) => '{ memberPartial }',
   membersPartial: (props) => '{ membersPartial }',
   propertyTablePartial: (props) => '{ propertyTablePartial }',

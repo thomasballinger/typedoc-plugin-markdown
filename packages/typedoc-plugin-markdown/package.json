@@ -11,7 +11,7 @@
     "prepublishOnly": "yarn run lint && yarn run build && yarn run test",
     "build": "rimraf dist && tsc",
     "pretestx": "yarn run demo:md",
-    "test": "jest ---colors --updateSnapshot",
+    "test": "jest ---colors -t \"Index Signature Partial:\" --updateSnapshot",
     "build-and-test": "yarn run build && yarn run test",
     "docs": "yarn run build && yarn run docs:md && yarn run docs:html",
     "docs:md": "typedoc --options ./docs/options.json --plugin ./dist  --plugin ./docs/plugin --plugin typedoc-plugin-mdn-links --out ./docs/out/md",
