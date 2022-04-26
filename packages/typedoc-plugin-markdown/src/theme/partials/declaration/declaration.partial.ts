@@ -56,20 +56,20 @@ const declarationTitle = (
 
 const declarationBody = (
   context: MarkdownThemeRenderContext,
-  model: DeclarationReflection,
+  props: DeclarationReflection,
 ) => {
   const md: string[] = [];
 
-  const typeDeclaration = (model.type as any)
+  const typeDeclaration = (props.type as any)
     ?.declaration as DeclarationReflection;
 
-  if (model.comment) {
-    md.push(context.commentPartial(model.comment));
+  if (props.comment) {
+    md.push(context.commentPartial(props.comment));
   }
 
-  if (model.typeParameters) {
+  if (props.typeParameters) {
     md.push(heading(4, 'Type parameters'));
-    md.push(context.typeParameterTablePartial(model.typeParameters));
+    md.push(context.typeParameterTablePartial(props.typeParameters));
   }
 
   if (typeDeclaration?.indexSignature) {
@@ -93,7 +93,7 @@ const declarationBody = (
     md.push(context.propertyTablePartial(typeDeclaration.children));
   }
 
-  md.push(context.sourcesPartial(model));
+  md.push(context.sourcesPartial(props));
 
   return md.join('\n\n');
 };

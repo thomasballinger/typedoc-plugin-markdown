@@ -1,13 +1,14 @@
-const { Application, TSConfigReader } = require('typedoc');
-const path = require('path');
-const fs = require('fs');
+require('ts-node/register');
+import { Application, Comment, ReferenceType, TSConfigReader } from 'typedoc';
+import { commentPartial } from '../src/theme/partials/comment/comment.partial';
+import { Collapse, typePartial } from '../src/theme/partials/type.partial';
 
 /**
  * Returns project reflection from a given entry point
  * @param {*} entryPoints
  * @returns
  */
-global.getProject = (entryPoint) => {
+global.getProject = (entryPoint: string) => {
   const app = new Application();
   app.options.addReader(new TSConfigReader());
   app.bootstrap({
@@ -25,21 +26,28 @@ global.getProject = (entryPoint) => {
  */
 global.getMockContext = (options = {}) => ({
   breadcrumbsPartial: (props) => '{ breadcrumbsPartial }',
-  commentPartial: (props) => '{ commentPartial }',
+  commentPartial: (props: Comment) =>
+    commentPartial(global.getMockContext(), props),
   declarationPartial: (props) => '{ declaration }',
   groupsPartial: (props) => '{ groupsPartial }',
   indexSignaturePartial: (props) => '{ indexSignatureTitlePartial }',
   memberPartial: (props) => '{ memberPartial }',
+  parameterTablePartial: (props) => '{ parameterTablePartial }',
   propertyTablePartial: (props) => '{ propertyTablePartial }',
   referencePartial: (props) => '{ referencePartial }',
   reflectionPathPartial: (props) => '{ reflectionPathPartial }',
   reflectionTitlePartial: (props) => '{ reflectionTitlePartial }',
-  signaturePartial: (props) => '{ reflectionTitlePartial }',
+  signaturePartial: (props) => '{ signaturePartial }',
+  signatureTitlePartial: (props) => '{ signatureTitlePartial }',
   sourcesPartial: (props) => '{ sourcesPartial }',
   typeParameterTablePartial: (props) => '{ typeParameterTablePartial }',
   tocPartial: (props) => '{ tocPartial }',
-  typePartial: (props) => '{ typePartial }',
+  typePartial: (props: any, collapse?: Collapse, emphasis?: boolean) =>
+    typePartial(global.getMockContext(), props, collapse, emphasis),
+
+  attemptExternalResolution: (type: ReferenceType) => type.name,
   relativeURL: (props) => '( relativeURL )',
+
   options: {
     entryPoints: ['index.ts'],
     entryDocument: 'README.md',

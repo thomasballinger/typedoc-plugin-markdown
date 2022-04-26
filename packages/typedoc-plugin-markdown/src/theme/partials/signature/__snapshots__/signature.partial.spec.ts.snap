@@ -1,0 +1,246 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Signature Partial: should compile a promise that returns a symbol' 1`] = `
+"**promiseReturningASymbol**(): [\`Promise\`]( Promise )<[\`User\`]( User )\\\\>
+
+#### Returns
+
+[\`Promise\`]( Promise )<[\`User\`]( User )\\\\>
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile a promise that returns an object' 1`] = `
+"**promiseReturningAnObject**(): [\`Promise\`]( Promise )<{ \`data\`: \`string\` ; \`id\`: \`string\`  }\\\\>
+
+#### Returns
+
+[\`Promise\`]( Promise )<{ \`data\`: \`string\` ; \`id\`: \`string\`  }\\\\>
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile class with constructor' 1`] = `
+"**new ClassWithConstructor**(\`x\`: \`string\`, \`y\`: \`string\`)
+
+#### Parameters
+
+{ parameterTablePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile function that returns a function' 1`] = `
+"**functionReturningAFunction**(): <T\\\\>(\`x\`: \`string\`) => \`boolean\`
+
+{ commentPartial }
+
+#### Returns
+
+\`fn\`
+
+Return comments
+
+
+{ signaturePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile function that returns an object' 1`] = `
+"**functionReturningAnObject**(): \`Object\`
+
+{ commentPartial }
+
+#### Returns
+
+\`Object\`
+
+Return comments
+
+
+{ propertyTablePartial }
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile function with nested typen params' 1`] = `
+"**functionWithNestedParams**(\`params\`: \`Object\`, \`context\`: \`any\`): \`boolean\`
+
+{ commentPartial }
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`boolean\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile function with reference type' 1`] = `
+"**functionWithReferenceType**(\`descriptor\`: [\`TypedPropertyDescriptor\`]( TypedPropertyDescriptor )<\`any\`\\\\>): \`boolean\`
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`boolean\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile named parameters with comments' 1`] = `
+"**functionWithNamedParamsAndComments**(\`__namedParameters?\`: \`Object\`, \`anotherParam\`: \`string\`): \`void\`
+
+{ commentPartial }
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`void\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile named parameters' 1`] = `
+"**functionWithNamedParams**(\`__namedParameters\`: \`Object\`): \`string\`
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`string\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile pipes in params and comments' 1`] = `
+"**functionWithPipesInParamsAndComments**(\`n\`: \`number\`): \`number\` \\\\| \`\`null\`\`
+
+{ commentPartial }
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`number\` \\\\| \`\`null\`\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile signature with @return comments' 1`] = `
+"**commentsInReturn**(): \`boolean\`
+
+{ commentPartial }
+
+#### Returns
+
+\`boolean\`
+
+Return comments
+
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile signature with a flag 1`] = `
+"\`Private\` **privateFunction**(): \`string\`
+
+{ commentPartial }
+
+#### Returns
+
+\`string\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile signature with default values' 1`] = `
+"**functionWithDefaults**(\`valueA?\`: \`string\`, \`valueB?\`: \`number\`, \`valueC?\`: \`number\`, \`valueD?\`: \`boolean\`, \`valueE?\`: \`boolean\`, \`valueF?\`: \`string\`): \`string\`
+
+{ commentPartial }
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`string\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile signature with optional params' 1`] = `
+"**functionWithOptionalParam**(\`requiredParam\`: \`string\`, \`optionalParam?\`: \`string\`): \`void\`
+
+{ commentPartial }
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`void\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile signature with params' 1`] = `
+"**functionWithParameters**(\`paramZ\`: \`string\`, \`paramG\`: \`any\`, \`paramA\`: \`any\`): \`number\`
+
+{ commentPartial }
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`number\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile signature with rest params' 1`] = `
+"**functionWithRest**(...\`rest\`: \`string\`[]): \`string\`
+
+{ commentPartial }
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`string\`
+
+{ sourcesPartial }"
+`;
+
+exports[`Signature Partial: should compile signature with union types' 1`] = `
+"**functionWithUnionTypes**(\`arg\`: \`number\` \\\\| \`boolean\`[], ...\`args\`: (\`string\` \\\\| \`number\`)[]): \`any\`
+
+#### Parameters
+
+{ parameterTablePartial }
+
+#### Returns
+
+\`any\`
+
+{ sourcesPartial }"
+`;

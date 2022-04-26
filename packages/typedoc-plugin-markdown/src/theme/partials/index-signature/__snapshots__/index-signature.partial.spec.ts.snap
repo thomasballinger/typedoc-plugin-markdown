@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Index Signature Partial: should compile index signature 1`] = `"\\\\[\`index\`: { typePartial }\\\\]: { typePartial }"`;
+exports[`Index Signature Partial: should compile index signature 1`] = `"\\\\[\`index\`: \`number\`\\\\]: \`string\`"`;

@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parameter Table Partial: should compile table with default values' 1`] = `
+"
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| \`valueA\` | \`string\` | \`'defaultValue'\` | A parameter with a default string value. |
+| \`valueB\` | \`number\` | \`100\` | A parameter with a default numeric value. |
+| \`valueC\` | \`number\` | \`Number.NaN\` | A parameter with a default NaN value. |
+| \`valueD\` | \`boolean\` | \`true\` | A parameter with a default boolean value. |
+| \`valueE\` | \`boolean\` | \`null\` | A parameter with a default null value. |
+| \`valueF\` | \`string\` | \`'<foo>'\` | - |
+"
+`;
+
+exports[`Parameter Table Partial: should compile table with named parameters' 1`] = `
+"
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| \`__namedParameters\` | \`Object\` | various options |
+| \`__namedParameters.bar?\` | \`number\` | - |
+| \`__namedParameters.foo?\` | \`number\` | - |
+| \`anotherParam\` | \`string\` | - |
+"
+`;
+
+exports[`Parameter Table Partial: should compile table with nested parameters' 1`] = `
+"
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| \`params\` | \`Object\` | The parameters passed to the method. |
+| \`params.name\` | \`string\` | The name of the new group. |
+| \`params.nestedObj\` | \`Object\` | A nested object. |
+| \`params.nestedObj.name\` | \`string\` | - |
+| \`params.nestedObj.obj\` | \`Object\` | - |
+| \`params.nestedObj.obj.name\` | CallSignature name:void | - |
+| \`params.nestedObj.value\` | \`number\` | - |
+| \`params.parent?\` | \`number\` | - |
+| \`context\` | \`any\` | The context of the method call. |
+"
+`;
+
+exports[`Parameter Table Partial: should compile table with union type parameters' 1`] = `
+"
+| Name | Type |
+| :------ | :------ |
+| \`arg\` | \`number\` \\\\| \`boolean\`[] |
+| \`...args\` | (\`string\` \\\\| \`number\`)[] |
+"
+`;

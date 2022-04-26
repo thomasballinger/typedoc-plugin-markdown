@@ -1,6 +1,6 @@
 import { DeclarationReflection, ReflectionType } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
-import { escapeChars, stripLineBreaks } from '../theme.utils';
+import { MarkdownThemeRenderContext } from '../../theme.context';
+import { escapeChars, stripLineBreaks } from '../../theme.utils';
 
 export function propertyTablePartial(
   context: MarkdownThemeRenderContext,
@@ -77,13 +77,9 @@ export function propertyTablePartial(
     if (property.flags.isRest) {
       md.push('...');
     }
-    if (property.getSignature) {
-      md.push(context.signatureTitlePartial(property.getSignature, 'get'));
-    } else if (property.setSignature) {
-      md.push(context.signatureTitlePartial(property.setSignature, 'set'));
-    } else {
-      md.push(property.name);
-    }
+
+    md.push(property.name);
+
     if (property.flags.isOptional) {
       md.push('?');
     }

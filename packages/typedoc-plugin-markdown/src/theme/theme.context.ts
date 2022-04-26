@@ -20,13 +20,12 @@ import { groupsPartial } from './partials/groups/groups.partial';
 import { hierarchyPartial } from './partials/hierarchy/hierarchy.partial';
 import { indexSignaturePartial } from './partials/index-signature/index-signature.partial';
 import { memberPartial } from './partials/member/member.partial';
-import { parameterTablePartial } from './partials/parameter-table.partial';
-import { propertyTablePartial } from './partials/property-table.partial';
+import { parameterTablePartial } from './partials/parameter-table/parameter-table.partial';
+import { propertyTablePartial } from './partials/property-table/property-table.partial';
 import { referencePartial } from './partials/reference.partial';
 import { reflectionPathPartial } from './partials/reflection-path.partial';
 import { reflectionTitlePartial } from './partials/reflection-title.partial';
-import { signatureTitlePartial } from './partials/signature-title.partial';
-import { signaturePartial } from './partials/signature.partial';
+import { signaturePartial } from './partials/signature/signature.partial';
 import { sourcesPartial } from './partials/sources.partial';
 import { tocPartial } from './partials/toc.partial';
 import { typeAndParentPartial } from './partials/type-and-parent.partial';
@@ -165,12 +164,6 @@ export class MarkdownThemeRenderContext {
     nested?: boolean,
     accessor?: string,
   ) => signaturePartial(this, props, nested, accessor);
-
-  /**
-   * @category Partials
-   */
-  signatureTitlePartial = (props: SignatureReflection, accessor?: string) =>
-    signatureTitlePartial(this, props, accessor);
 
   /**
    * @category Partials

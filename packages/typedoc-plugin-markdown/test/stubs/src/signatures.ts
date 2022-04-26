@@ -97,10 +97,6 @@ export function functionWithUnionTypes(
   return null;
 }
 
-export interface CallableSignature {
-  (): string;
-}
-
 export function functionWithNamedParams({ x: number, b: string }) {
   return '';
 }
