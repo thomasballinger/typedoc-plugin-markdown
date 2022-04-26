@@ -3,11 +3,6 @@ import { Application, Comment, ReferenceType, TSConfigReader } from 'typedoc';
 import { commentPartial } from '../src/theme/partials/comment/comment.partial';
 import { Collapse, typePartial } from '../src/theme/partials/type.partial';
 
-/**
- * Returns project reflection from a given entry point
- * @param {*} entryPoints
- * @returns
- */
 global.getProject = (entryPoint: string) => {
   const app = new Application();
   app.options.addReader(new TSConfigReader());
@@ -19,11 +14,6 @@ global.getProject = (entryPoint: string) => {
   return app.convert();
 };
 
-/**
- * Returns a mock context
- * @param {*} options
- * @returns
- */
 global.getMockContext = (options = {}) => ({
   breadcrumbsPartial: (props) => '{ breadcrumbsPartial }',
   commentPartial: (props: Comment) =>
@@ -32,11 +22,11 @@ global.getMockContext = (options = {}) => ({
   groupsPartial: (props) => '{ groupsPartial }',
   indexSignaturePartial: (props) => '{ indexSignatureTitlePartial }',
   memberPartial: (props) => '{ memberPartial }',
+  pageTitlePartial: (props) => '{ pageTitlePartial }',
   parameterTablePartial: (props) => '{ parameterTablePartial }',
   propertyTablePartial: (props) => '{ propertyTablePartial }',
   referencePartial: (props) => '{ referencePartial }',
   reflectionPathPartial: (props) => '{ reflectionPathPartial }',
-  reflectionTitlePartial: (props) => '{ reflectionTitlePartial }',
   signaturePartial: (props) => '{ signaturePartial }',
   signatureTitlePartial: (props) => '{ signatureTitlePartial }',
   sourcesPartial: (props) => '{ sourcesPartial }',

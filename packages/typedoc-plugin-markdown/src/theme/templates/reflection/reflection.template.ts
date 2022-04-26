@@ -13,10 +13,8 @@ export const reflectionTemplate = (
   }
 
   if (!context.options.hidePageTitle) {
-    md.push(heading(1, context.reflectionTitlePartial(props, true)));
+    md.push(heading(1, context.pageTitlePartial(props, true)));
   }
-
-  md.push(context.reflectionPathPartial(props.model));
 
   if (props.model.comment) {
     md.push(context.commentPartial(props.model.comment));

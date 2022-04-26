@@ -20,11 +20,10 @@ import { groupsPartial } from './partials/groups/groups.partial';
 import { hierarchyPartial } from './partials/hierarchy/hierarchy.partial';
 import { indexSignaturePartial } from './partials/index-signature/index-signature.partial';
 import { memberPartial } from './partials/member/member.partial';
+import { pageTitlePartial } from './partials/page-title/page-title.partial';
 import { parameterTablePartial } from './partials/parameter-table/parameter-table.partial';
 import { propertyTablePartial } from './partials/property-table/property-table.partial';
 import { referencePartial } from './partials/reference/reference.partial';
-import { reflectionPathPartial } from './partials/reflection-path.partial';
-import { reflectionTitlePartial } from './partials/reflection-title.partial';
 import { signaturePartial } from './partials/signature/signature.partial';
 import { sourcesPartial } from './partials/sources.partial';
 import { tocPartial } from './partials/toc.partial';
@@ -130,6 +129,12 @@ export class MarkdownThemeRenderContext {
   /**
    * @category Partials
    */
+  pageTitlePartial = (props: any, shouldEscape: boolean) =>
+    pageTitlePartial(this, props, shouldEscape);
+
+  /**
+   * @category Partials
+   */
   parameterTablePartial = (props: ParameterReflection[]) =>
     parameterTablePartial(this, props);
 
@@ -144,17 +149,6 @@ export class MarkdownThemeRenderContext {
    */
   referencePartial = (props: ReferenceReflection) =>
     referencePartial(this, props);
-
-  /**
-   * @category Partials
-   */
-  reflectionPathPartial = (props: any) => reflectionPathPartial(this, props);
-
-  /**
-   * @category Partials
-   */
-  reflectionTitlePartial = (props: any, shouldEscape: boolean) =>
-    reflectionTitlePartial(this, props, shouldEscape);
 
   /**
    * @category Partials

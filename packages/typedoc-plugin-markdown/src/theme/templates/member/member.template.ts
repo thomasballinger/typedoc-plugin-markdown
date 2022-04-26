@@ -13,10 +13,8 @@ export const memberTemplate = (
   }
 
   if (!context.options.hidePageTitle) {
-    md.push(heading(1, context.reflectionTitlePartial(props, true)));
+    md.push(heading(1, context.pageTitlePartial(props, true)));
   }
-
-  md.push(context.reflectionPathPartial(props.model));
 
   if (props.model) {
     md.push(context.memberPartial(props.model));
