@@ -18,7 +18,7 @@ import { commentPartial } from './partials/comment/comment.partial';
 import { declarationPartial } from './partials/declaration/declaration.partial';
 import { hierarchyPartial } from './partials/hierarchy/hierarchy.partial';
 import { indexSignaturePartial } from './partials/index-signature/index-signature.partial';
-import { memberPartial } from './partials/member.partial';
+import { memberPartial } from './partials/member/member.partial';
 import { membersPartial } from './partials/members.partial';
 import { parameterTablePartial } from './partials/parameter-table.partial';
 import { propertyTablePartial } from './partials/property-table.partial';

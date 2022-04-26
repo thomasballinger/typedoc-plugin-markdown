@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Member Partial: should compile a referenced member' 1`] = `
+"### ReferencedMember
+
+{ referencePartial }"
+`;
+
+exports[`Member Partial: should compile a signature member' 1`] = `
+"### signatureMember
+
+{ reflectionTitlePartial }"
+`;
+
+exports[`Member Partial: should compile declaration member' 1`] = `
+"### declarationMember
+
+{ declaration }"
+`;
+
+exports[`Member Partial: should compile members with getter' 1`] = `
+"### getter
+
+{ reflectionTitlePartial }"
+`;
+
+exports[`Member Partial: should compile members with setter' 1`] = `
+"### setter
+
+{ reflectionTitlePartial }"
+`;
+
+exports[`Member Partial: should set named anchors' 1`] = `
+"<a id=\\"undefined\\" name=\\"undefined\\"></a>
+
+### declarationMember
+
+{ declaration }"
+`;
