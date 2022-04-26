@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reference Partial: should compile a referenced member' 1`] = `"Renames and re-exports [ReferencedClass](( relativeURL ))"`;

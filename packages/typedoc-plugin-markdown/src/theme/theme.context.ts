@@ -22,7 +22,7 @@ import { indexSignaturePartial } from './partials/index-signature/index-signatur
 import { memberPartial } from './partials/member/member.partial';
 import { parameterTablePartial } from './partials/parameter-table/parameter-table.partial';
 import { propertyTablePartial } from './partials/property-table/property-table.partial';
-import { referencePartial } from './partials/reference.partial';
+import { referencePartial } from './partials/reference/reference.partial';
 import { reflectionPathPartial } from './partials/reflection-path.partial';
 import { reflectionTitlePartial } from './partials/reflection-title.partial';
 import { signaturePartial } from './partials/signature/signature.partial';
