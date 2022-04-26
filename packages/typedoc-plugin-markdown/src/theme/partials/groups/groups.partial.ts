@@ -3,10 +3,10 @@ import {
   ReflectionCategory,
   ReflectionGroup,
 } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
-import { heading, horizontalRule } from '../theme.utils';
+import { MarkdownThemeRenderContext } from '../../theme.context';
+import { heading, horizontalRule } from '../../theme.utils';
 
-export const membersPartial = (
+export const groupsPartial = (
   context: MarkdownThemeRenderContext,
   props: ReflectionGroup[],
 ) => {

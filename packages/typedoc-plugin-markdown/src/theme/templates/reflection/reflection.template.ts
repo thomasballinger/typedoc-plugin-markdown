@@ -60,7 +60,7 @@ export const reflectionTemplate = (
   md.push(context.tocPartial(props.model));
 
   if (props.model.groups) {
-    md.push(context.membersPartial(props.model.groups));
+    md.push(context.groupsPartial(props.model.groups));
   }
 
   return md.join('\n\n');

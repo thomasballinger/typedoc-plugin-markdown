@@ -9,12 +9,14 @@ const fs = require('fs');
  */
 global.getProject = (location) => {
   const app = new Application();
+  const entryPoints = fs
+    .readdirSync(location + '/__stubs__')
+    .map((stub) => path.join(location, '__stubs__', stub));
+  console.log(entryPoints);
   app.options.addReader(new TSConfigReader());
   app.bootstrap({
     plugin: ['none'],
-    entryPoints: fs
-      .readdirSync(location + '/__stubs__')
-      .map((stub) => path.join(location, '__stubs__', stub)),
+    entryPoints,
     tsconfig: './tsconfig.test.json',
   });
   return app.convert();

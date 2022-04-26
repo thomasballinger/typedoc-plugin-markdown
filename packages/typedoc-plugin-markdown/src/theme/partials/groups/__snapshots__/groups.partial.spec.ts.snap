@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Groups Partial: should compile groups with categories' 1`] = `
+"## Interfaces: CategoryA
+
+{ memberPartial }
+
+---
+
+{ memberPartial }
+
+## Interfaces: Other
+
+{ memberPartial }
+
+## Variables: CategoryA
+
+{ memberPartial }
+
+---
+
+{ memberPartial }
+
+## Variables: CategoryB
+
+{ memberPartial }
+
+## Variables: Other
+
+{ memberPartial }
+
+---
+
+{ memberPartial }
+
+## Functions: CategoryA
+
+{ memberPartial }
+
+---
+
+{ memberPartial }
+
+---
+
+{ memberPartial }
+
+## Functions: CategoryB
+
+{ memberPartial }
+
+## Functions: Other
+
+{ memberPartial }
+
+---
+
+{ memberPartial }"
+`;
+
+exports[`Groups Partial: should compile groups without categories' 1`] = `
+"## Properties
+
+{ memberPartial }"
+`;
