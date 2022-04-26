@@ -5,7 +5,7 @@ describe(`Hierarchy Partial:`, () => {
   let project: ProjectReflection;
 
   beforeAll(async () => {
-    project = global.getProject(__dirname);
+    project = global.getProject('hierarchy.ts');
   });
 
   test(`should compile type hierarchy`, () => {

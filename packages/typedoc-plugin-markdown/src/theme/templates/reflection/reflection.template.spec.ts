@@ -5,7 +5,7 @@ describe(`Reflection Template:`, () => {
   let project: ProjectReflection;
 
   beforeAll(async () => {
-    project = global.getProject(__dirname);
+    project = global.getProject('reflections.ts');
   });
 
   test(`should compile project reflection`, () => {

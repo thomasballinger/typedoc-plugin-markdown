@@ -25,7 +25,7 @@ exports[`Reflection Template: should compile enum reflection 1`] = `
 
 { tocPartial }
 
-{ membersPartial }"
+{ groupsPartial }"
 `;
 
 exports[`Reflection Template: should compile implemented class reflection 1`] = `
@@ -41,7 +41,7 @@ exports[`Reflection Template: should compile implemented class reflection 1`] = 
 
 { tocPartial }
 
-{ membersPartial }"
+{ groupsPartial }"
 `;
 
 exports[`Reflection Template: should compile indexable reflection 1`] = `
@@ -67,7 +67,7 @@ exports[`Reflection Template: should compile project reflection 1`] = `
 
 { tocPartial }
 
-{ membersPartial }"
+{ groupsPartial }"
 `;
 
 exports[`Reflection Template: should compile project reflection with options 1`] = `
@@ -75,5 +75,5 @@ exports[`Reflection Template: should compile project reflection with options 1`]
 
 { tocPartial }
 
-{ membersPartial }"
+{ groupsPartial }"
 `;

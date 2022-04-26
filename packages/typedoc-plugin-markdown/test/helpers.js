@@ -7,17 +7,13 @@ const fs = require('fs');
  * @param {*} entryPoints
  * @returns
  */
-global.getProject = (location) => {
+global.getProject = (entryPoint) => {
   const app = new Application();
-  const entryPoints = fs
-    .readdirSync(location + '/__stubs__')
-    .map((stub) => path.join(location, '__stubs__', stub));
-  console.log(entryPoints);
   app.options.addReader(new TSConfigReader());
   app.bootstrap({
     plugin: ['none'],
-    entryPoints,
-    tsconfig: './tsconfig.test.json',
+    entryPoints: ['./test/stubs/src/' + entryPoint],
+    tsconfig: './test/stubs/tsconfig.json',
   });
   return app.convert();
 };
@@ -31,9 +27,9 @@ global.getMockContext = (options = {}) => ({
   breadcrumbsPartial: (props) => '{ breadcrumbsPartial }',
   commentPartial: (props) => '{ commentPartial }',
   declarationPartial: (props) => '{ declaration }',
+  groupsPartial: (props) => '{ groupsPartial }',
   indexSignaturePartial: (props) => '{ indexSignatureTitlePartial }',
   memberPartial: (props) => '{ memberPartial }',
-  membersPartial: (props) => '{ membersPartial }',
   propertyTablePartial: (props) => '{ propertyTablePartial }',
   referencePartial: (props) => '{ referencePartial }',
   reflectionPathPartial: (props) => '{ reflectionPathPartial }',

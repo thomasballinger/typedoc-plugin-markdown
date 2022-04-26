@@ -7,7 +7,7 @@ describe(`Member Partial:`, () => {
   let context: MarkdownThemeRenderContext;
 
   beforeAll(async () => {
-    project = global.getProject(__dirname);
+    project = global.getProject('members.ts');
   });
 
   test(`should compile declaration member'`, () => {

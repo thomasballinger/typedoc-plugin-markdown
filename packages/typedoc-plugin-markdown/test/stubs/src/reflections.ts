@@ -15,3 +15,7 @@ export enum EnumReflection {
 }
 
 export class ImplementedClass implements ReflectionClass {}
+
+export interface IndexableReflection {
+  [index: number]: string;
+}

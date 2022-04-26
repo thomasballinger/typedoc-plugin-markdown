@@ -5,7 +5,7 @@ describe(`Comment Partial:`, () => {
   let project: ProjectReflection;
 
   beforeAll(async () => {
-    project = global.getProject(__dirname);
+    project = global.getProject('comments.ts');
   });
 
   test(`should build @link references'`, () => {

@@ -2,8 +2,9 @@ export let declarationMember: string;
 
 export function signatureMember() {}
 
-class NotExportedClass {}
-export { NotExportedClass as ReferenceMember };
+export class ReferencedClass {}
+
+export { ReferencedClass as ReferencedMember };
 
 export class ClassWithAccessorMembers {
   private _private: string;

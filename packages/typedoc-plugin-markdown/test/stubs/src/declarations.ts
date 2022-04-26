@@ -57,7 +57,7 @@ export let typeLiteralDeclaration: {
    */
   valueA?: number;
   valueB?: boolean;
-  valueC: { [dataId: string]: 'ok' | 'ko' }
+  valueC: { [dataId: string]: 'ok' | 'ko' };
 };
 
 export let functionDeclaration: (someArg: number) => boolean;
