@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page Title Partial: should compile title with type params' 1`] = `"Class: ClassWithTypeParams<T, V\\\\>"`;

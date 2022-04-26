@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sources Partial: should display implementation of sources' 1`] = `
+"#### Implementation of
+
+SomeInterface.prop
+
+#### Defined in
+
+sources.ts:6"
+`;
+
+exports[`Sources Partial: should display inherited sources' 1`] = `
+"#### Inherited from
+
+SomeClass.prop
+
+#### Defined in
+
+sources.ts:2"
+`;
+
+exports[`Sources Partial: should display overide sources' 1`] = `
+"#### Overrides
+
+SomeClass.prop
+
+#### Defined in
+
+sources.ts:10"
+`;

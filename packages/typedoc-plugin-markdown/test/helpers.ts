@@ -34,7 +34,7 @@ global.getMockContext = (options = {}) => ({
   tocPartial: (props) => '{ tocPartial }',
   typePartial: (props: any, collapse?: Collapse, emphasis?: boolean) =>
     typePartial(global.getMockContext(), props, collapse, emphasis),
-
+  typeAndParentPartial: (props) => '{ typeAndParentPartial }',
   attemptExternalResolution: (type: ReferenceType) => type.name,
   relativeURL: (props) => '( relativeURL )',
 

@@ -25,9 +25,8 @@ import { parameterTablePartial } from './partials/parameter-table/parameter-tabl
 import { propertyTablePartial } from './partials/property-table/property-table.partial';
 import { referencePartial } from './partials/reference/reference.partial';
 import { signaturePartial } from './partials/signature/signature.partial';
-import { sourcesPartial } from './partials/sources.partial';
+import { sourcesPartial } from './partials/sources/sources.partial';
 import { tocPartial } from './partials/toc.partial';
-import { typeAndParentPartial } from './partials/type-and-parent.partial';
 import { typeParameterTablePartial } from './partials/type-parameter-table.partial';
 import { Collapse, typePartial } from './partials/type.partial';
 import { memberTemplate } from './templates/member/member.template';
@@ -176,11 +175,6 @@ export class MarkdownThemeRenderContext {
    */
   typePartial = (props: any, collapse?: Collapse, emphasis?: boolean) =>
     typePartial(this, props, collapse, emphasis);
-
-  /**
-   * @category Partials
-   */
-  typeAndParentPartial = (props: any) => typeAndParentPartial(this, props);
 
   /**
    * @category Partials
