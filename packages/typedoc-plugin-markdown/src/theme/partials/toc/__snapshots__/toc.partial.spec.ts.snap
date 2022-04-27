@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TOC Partial: (default) should display toc for class' 1`] = `
+"## Table of contents
+
+
+### Constructors
+
+
+- [constructor](( relativeURL ))
+
+
+### Methods
+
+
+- [someMethod](( relativeURL ))
+
+"
+`;
+
+exports[`TOC Partial: (default) should display toc for module' 1`] = `
+"## Table of contents
+
+
+### Classes
+
+
+- [SomeClass](( relativeURL ))
+
+
+### Type aliases
+
+
+- [answer](( relativeURL ))
+
+
+### Variables
+
+
+- [answer](( relativeURL ))
+
+"
+`;

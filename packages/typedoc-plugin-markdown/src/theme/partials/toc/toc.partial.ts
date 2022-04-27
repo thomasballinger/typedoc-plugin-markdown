@@ -3,13 +3,13 @@ import {
   ProjectReflection,
   ReflectionGroup,
 } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
-import { escapeChars } from '../theme.utils';
+import { MarkdownThemeRenderContext } from '../../theme.context';
+import { escapeChars } from '../../theme.utils';
 
-export function tocPartial(
+export const tocPartial = (
   context: MarkdownThemeRenderContext,
   props: ProjectReflection | DeclarationReflection,
-) {
+) => {
   const md: string[] = [];
 
   const { hideInPageTOC } = context.options;
@@ -49,4 +49,4 @@ export function tocPartial(
     });
   }
   return md.length > 0 ? md.join('\n') : '';
-}
+};
