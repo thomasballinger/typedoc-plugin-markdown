@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`typeParameterTablePartial should compile type parameter table 1`] = `
+"
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| \`A\` | extends [\`ClassWithTypeParams\`]( ClassWithTypeParams )<\`string\`, \`number\`, [\`A\`]( A )\\\\> | Comment for type \`A\` |
+| \`B\` | \`string\` \\\\| \`boolean\` | Comment for type \`B\` |
+| \`C\` | \`string\` | - |
+"
+`;

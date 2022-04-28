@@ -27,7 +27,7 @@ import { referencePartial } from './partials/reference/reference.partial';
 import { signaturePartial } from './partials/signature/signature.partial';
 import { sourcesPartial } from './partials/sources/sources.partial';
 import { tocPartial } from './partials/toc/toc.partial';
-import { typeParameterTablePartial } from './partials/type-parameter-table.partial';
+import { typeParameterTablePartial } from './partials/type-parameter-table/type-parameter-table.partial';
 import { Collapse, typePartial } from './partials/type.partial';
 import { memberTemplate } from './templates/member/member.template';
 import { readmeTemplate } from './templates/readme/readme.template';

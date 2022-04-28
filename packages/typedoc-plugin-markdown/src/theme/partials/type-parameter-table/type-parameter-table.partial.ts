@@ -1,18 +1,19 @@
 import { TypeParameterReflection } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
-import { stripLineBreaks } from '../theme.utils';
+import { MarkdownThemeRenderContext } from '../../theme.context';
+import { stripLineBreaks } from '../../theme.utils';
 
-export function typeParameterTablePartial(
+export const typeParameterTablePartial = (
   context: MarkdownThemeRenderContext,
   props: TypeParameterReflection[],
-) {
-  function table(parameters: any) {
+) => {
+  function table(parameters: TypeParameterReflection[]) {
+    console.log(parameters);
     const showTypeCol = hasTypes(parameters);
     const comments = parameters.map(
       (param) =>
         !!param.comment?.text?.trim() || !!param.comment?.shortText?.trim(),
     );
-    const hasComments = !comments.every((value) => !value);
+    const hasComments = !comments?.every((value) => !value);
 
     const headers = ['Name'];
 
@@ -70,11 +71,11 @@ export function typeParameterTablePartial(
   }
 
   function hasTypes(parameters: TypeParameterReflection[]) {
-    const types = (parameters as TypeParameterReflection[]).map(
+    const types = (parameters as TypeParameterReflection[])?.map(
       (param) => !!param.type || !!param.default,
     );
     return !types.every((value) => !value);
   }
 
   return table(props);
-}
+};
