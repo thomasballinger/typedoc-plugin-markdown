@@ -17,8 +17,8 @@ import {
   UnionType,
   UnknownType,
 } from 'typedoc';
-import { MarkdownThemeRenderContext } from '../theme.context';
-import { escapeChars } from '../theme.utils';
+import { MarkdownThemeRenderContext } from '../../theme.context';
+import { escapeChars } from '../../theme.utils';
 export type Collapse = 'object' | 'function' | 'all' | 'none';
 
 export function typePartial(

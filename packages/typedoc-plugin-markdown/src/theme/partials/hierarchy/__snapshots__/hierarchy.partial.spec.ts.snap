@@ -2,6 +2,6 @@
 
 exports[`Hierarchy Partial: should compile type hierarchy 1`] = `
 "- **\`ParentClass\`**
-  - { typePartial }
-    - { typePartial }"
+  - [\`ChildClassA\`]( ChildClassA )
+    - [\`ChildClassB\`]( ChildClassB )"
 `;

@@ -9,7 +9,7 @@ exports[`Member Partial: should compile a referenced member' 1`] = `
 exports[`Member Partial: should compile a signature member' 1`] = `
 "### signatureMember
 
-{ reflectionTitlePartial }"
+{ signaturePartial }"
 `;
 
 exports[`Member Partial: should compile declaration member' 1`] = `
@@ -21,13 +21,13 @@ exports[`Member Partial: should compile declaration member' 1`] = `
 exports[`Member Partial: should compile members with getter' 1`] = `
 "### getter
 
-{ reflectionTitlePartial }"
+{ signaturePartial }"
 `;
 
 exports[`Member Partial: should compile members with setter' 1`] = `
 "### setter
 
-{ reflectionTitlePartial }"
+{ signaturePartial }"
 `;
 
 exports[`Member Partial: should set named anchors' 1`] = `

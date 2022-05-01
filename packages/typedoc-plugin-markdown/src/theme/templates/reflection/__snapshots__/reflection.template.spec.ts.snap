@@ -3,15 +3,13 @@
 exports[`Reflection Template: should compile callable reflection 1`] = `
 "{ breadcrumbsPartial }
 
-# { reflectionTitlePartial }
-
-{ reflectionPathPartial }
+# { pageTitlePartial }
 
 ## Callable
 
 ### CallableReflection
 
-{ reflectionTitlePartial }
+{ signaturePartial }
 
 { tocPartial }"
 `;
@@ -19,9 +17,7 @@ exports[`Reflection Template: should compile callable reflection 1`] = `
 exports[`Reflection Template: should compile enum reflection 1`] = `
 "{ breadcrumbsPartial }
 
-# { reflectionTitlePartial }
-
-{ reflectionPathPartial }
+# { pageTitlePartial }
 
 { tocPartial }
 
@@ -31,13 +27,11 @@ exports[`Reflection Template: should compile enum reflection 1`] = `
 exports[`Reflection Template: should compile implemented class reflection 1`] = `
 "{ breadcrumbsPartial }
 
-# { reflectionTitlePartial }
-
-{ reflectionPathPartial }
+# { pageTitlePartial }
 
 ## Implements
 
-- { typePartial }
+- [\`ReflectionClass\`]( ReflectionClass )
 
 { tocPartial }
 
@@ -47,9 +41,7 @@ exports[`Reflection Template: should compile implemented class reflection 1`] = 
 exports[`Reflection Template: should compile indexable reflection 1`] = `
 "{ breadcrumbsPartial }
 
-# { reflectionTitlePartial }
-
-{ reflectionPathPartial }
+# { pageTitlePartial }
 
 ## Indexable
 
@@ -61,9 +53,7 @@ exports[`Reflection Template: should compile indexable reflection 1`] = `
 exports[`Reflection Template: should compile project reflection 1`] = `
 "{ breadcrumbsPartial }
 
-# { reflectionTitlePartial }
-
-{ reflectionPathPartial }
+# { pageTitlePartial }
 
 { tocPartial }
 
@@ -71,9 +61,7 @@ exports[`Reflection Template: should compile project reflection 1`] = `
 `;
 
 exports[`Reflection Template: should compile project reflection with options 1`] = `
-"{ reflectionPathPartial }
-
-{ tocPartial }
+"{ tocPartial }
 
 { groupsPartial }"
 `;

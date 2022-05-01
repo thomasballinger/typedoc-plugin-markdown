@@ -7,7 +7,6 @@ export const typeParameterTablePartial = (
   props: TypeParameterReflection[],
 ) => {
   function table(parameters: TypeParameterReflection[]) {
-    console.log(parameters);
     const showTypeCol = hasTypes(parameters);
     const comments = parameters.map(
       (param) =>

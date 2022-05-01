@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Declaration Partial: should compile a const with default value 1`] = `
-" \`Const\` **stringConstWithDefaultValue**: { typePartial }
+" \`Const\` **stringConstWithDefaultValue**: \`\`\\"hello\\"\`\`
 
 { sourcesPartial }"
 `;
 
 exports[`Declaration Partial: should compile an undefined declaration 1`] = `
-" **undefinedNumberDeclaration**: { typePartial }
+" **undefinedNumberDeclaration**: \`number\`
 
 { sourcesPartial }"
 `;
 
 exports[`Declaration Partial: should compile any function type 1`] = `
-" **AnyFunctionType**<\`A\`\\\\>: { typePartial }
+" **AnyFunctionType**<\`A\`\\\\>: (...\`input\`: \`any\`[]) => [\`A\`]( A )
 
 #### Type parameters
 
@@ -21,7 +21,7 @@ exports[`Declaration Partial: should compile any function type 1`] = `
 
 #### Type declaration
 
-{ reflectionTitlePartial }
+{ signaturePartial }
 
 { sourcesPartial }"
 `;
@@ -31,7 +31,7 @@ exports[`Declaration Partial: should compile callable declaration 1`] = `
 
 #### Call signature
 
-{ reflectionTitlePartial }
+{ signaturePartial }
 
 #### Type declaration
 
@@ -41,19 +41,19 @@ exports[`Declaration Partial: should compile callable declaration 1`] = `
 `;
 
 exports[`Declaration Partial: should compile declaration with double underscores in name and value 1`] = `
-" \`Const\` **\\\\_\\\\_DOUBLE\\\\_UNDERSCORES\\\\_DECLARATION\\\\_\\\\_**: { typePartial }
+" \`Const\` **\\\\_\\\\_DOUBLE\\\\_UNDERSCORES\\\\_DECLARATION\\\\_\\\\_**: typeof [\`__DOUBLE_UNDERSCORES_DECLARATION__\`]( __DOUBLE_UNDERSCORES_DECLARATION__ )
 
 { sourcesPartial }"
 `;
 
 exports[`Declaration Partial: should compile enum delcaration 1`] = `
-" **EnumDeclarations**: { typePartial }
+" **EnumDeclarations**: \`Object\`
 
 { sourcesPartial }"
 `;
 
 exports[`Declaration Partial: should compile function declaration 1`] = `
-" **functionDeclaration**: { typePartial }
+" **functionDeclaration**: (\`someArg\`: \`number\`) => \`boolean\`
 
 { sourcesPartial }"
 `;
@@ -73,7 +73,14 @@ exports[`Declaration Partial: should compile indexable declaration 1`] = `
 exports[`Declaration Partial: should compile object literal cast as a const 1`] = `
 " \`Const\` **objectLiteralAsConstDeclaration**: \`Object\`
 
-{ commentPartial }
+Comments
+
+**\`param\`** Comment for object.
+
+**\`param\`** Comment for Prop1.
+
+**\`param\`** Comment for Prop2.
+
 
 #### Type declaration
 
@@ -85,7 +92,12 @@ exports[`Declaration Partial: should compile object literal cast as a const 1`] 
 exports[`Declaration Partial: should compile object literal declaration 1`] = `
 " \`Const\` **objectLiteralDeclaration**: \`Object\`
 
-{ commentPartial }
+**\`param\`** description for valueX
+
+**\`param\`** description for valueZ
+
+**\`param\`** description for valueY
+
 
 #### Type declaration
 

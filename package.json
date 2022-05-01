@@ -21,25 +21,23 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.25",
+    "@types/node": "^17.0.30",
     "@types/progress": "^2.0.5",
-    "@types/tmp": "^0.2.3",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "cuid": "^2.1.8",
-    "eslint": "^8.13.0",
+    "eslint": "^8.14.0",
     "fs-extra": "^10.1.0",
-    "jest": "^27.5.1",
+    "jest": "^28.0.3",
     "lerna": "^4.0.0",
     "markdownlint": "^0.25.1",
     "markdownlint-cli": "^0.31.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
-    "tmp": "^0.2.1",
-    "ts-jest": "^27.1.4",
+    "ts-jest": "^28.0.0-next.3",
     "ts-node": "^10.7.0",
     "typedoc": "^0.22.15",
     "typedoc-plugin-mdn-links": "^1.0.6",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.4"
   }
 }

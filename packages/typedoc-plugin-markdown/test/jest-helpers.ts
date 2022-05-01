@@ -1,7 +1,7 @@
 require('ts-node/register');
 import { Application, Comment, ReferenceType, TSConfigReader } from 'typedoc';
 import { commentPartial } from '../src/theme/partials/comment/comment.partial';
-import { Collapse, typePartial } from '../src/theme/partials/type.partial';
+import { Collapse, typePartial } from '../src/theme/partials/type/type.partial';
 
 global.getProject = (entryPoint: string) => {
   const app = new Application();
