@@ -102,8 +102,8 @@ export class MarkdownTheme extends Theme {
    * @param reflection
    * @returns
    */
-  toUrl(mapping: any, reflection: DeclarationReflection) {
-    return mapping.directory + '/' + this.getUrl(reflection) + '.md';
+  getUrl(reflection: DeclarationReflection, mapping: TemplateMapping) {
+    return mapping.directory + '/' + this.getUrlPath(reflection) + '.md';
   }
 
   /**
@@ -111,7 +111,7 @@ export class MarkdownTheme extends Theme {
    * @param anchor
    * @returns
    */
-  toAnchorRef(anchor: string) {
+  getAnchor(anchor: string) {
     return anchor;
   }
 
@@ -124,7 +124,7 @@ export class MarkdownTheme extends Theme {
     );
     if (mapping) {
       if (!reflection.url || !/^(http|ftp)s?:\/\//.test(reflection.url)) {
-        const url = this.toUrl(mapping, reflection);
+        const url = this.getUrl(reflection, mapping);
         urls.push(new UrlMapping(url, reflection, mapping.template));
         reflection.url = url;
         reflection.hasOwnDocument = true;
@@ -143,7 +143,7 @@ export class MarkdownTheme extends Theme {
     return urls;
   }
 
-  private getUrl(reflection: Reflection, relative?: Reflection): string {
+  private getUrlPath(reflection: Reflection, relative?: Reflection): string {
     let url = reflection.getAlias();
     const filenameSeparator = this.application.options.getValue(
       'filenameSeparator',
@@ -154,7 +154,8 @@ export class MarkdownTheme extends Theme {
       reflection.parent !== relative &&
       !(reflection.parent instanceof ProjectReflection)
     ) {
-      url = this.getUrl(reflection.parent, relative) + filenameSeparator + url;
+      url =
+        this.getUrlPath(reflection.parent, relative) + filenameSeparator + url;
     }
 
     return url.replace(/^_/, '');
@@ -186,7 +187,7 @@ export class MarkdownTheme extends Theme {
         (id) => id === reflectionId,
       )?.length;
 
-      const anchor = this.toAnchorRef(
+      const anchor = this.getAnchor(
         reflectionId + (count > 1 ? '-' + (count - 1).toString() : ''),
       );
 

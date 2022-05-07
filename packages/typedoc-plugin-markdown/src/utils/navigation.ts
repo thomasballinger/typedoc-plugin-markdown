@@ -1,10 +1,8 @@
 import {
   Application,
-  Context,
   ProjectReflection,
   Reflection,
   ReflectionKind,
-  RendererEvent,
 } from 'typedoc';
 import { MarkdownTheme } from '../theme';
 
@@ -72,17 +70,7 @@ export class NavigationItem {
   }
 }
 
-export function load(app: Application) {
-  app.renderer.on(RendererEvent.END, (context: Context) => {
-    app.renderer.trigger(
-      NAVIGATION_GENERATED,
-      getNavigation(app, context.project),
-      context.project,
-    );
-  });
-}
-
-function getNavigation(app: Application, project: ProjectReflection) {
+export function getNavigation(app: Application, project: ProjectReflection) {
   const urls = app.renderer.theme?.getUrls(project);
   const entryDocument = app.options.getValue('entryDocument') as string;
   const readme = app.options.getValue('readme') as string;

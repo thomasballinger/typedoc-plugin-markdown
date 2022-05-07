@@ -1,8 +1,28 @@
-import * as fs from 'fs';
-import { RendererEvent, Renderer, DeclarationReflection } from 'typedoc';
+import { DeclarationReflection, Renderer } from 'typedoc';
 import { MarkdownTheme } from 'typedoc-plugin-markdown';
+import { GithubWikiThemeContext } from './theme.context';
 
 export class GithubWikiTheme extends MarkdownTheme {
+  private _contextCache?: GithubWikiThemeContext;
+
+  constructor(renderer: Renderer) {
+    super(renderer);
+  }
+
+  override getRenderContext() {
+    this._contextCache ||= new GithubWikiThemeContext(
+      this,
+      this.application.options,
+    );
+    return this._contextCache;
+  }
+
+  override getUrl(reflection: DeclarationReflection) {
+    return `${reflection.getFullName().replace(/\//g, '.')}.md`;
+  }
+}
+
+/*export class GithubWikiTheme extends MarkdownTheme {
   constructor(renderer: Renderer) {
     super(renderer);
 
@@ -59,3 +79,4 @@ export class GithubWikiTheme extends MarkdownTheme {
     return this.entryPoints.length > 1 ? 'Modules.md' : 'Exports.md';
   }
 }
+*/
