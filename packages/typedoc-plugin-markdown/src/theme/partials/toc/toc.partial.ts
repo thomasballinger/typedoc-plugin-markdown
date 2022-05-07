@@ -12,7 +12,7 @@ export const tocPartial = (
 ) => {
   const md: string[] = [];
 
-  const { hideInPageTOC } = context.options;
+  const hideInPageTOC = context.getOption('hideInPageTOC');
 
   const isVisible = props.groups?.some((group) =>
     group.allChildrenHaveOwnDocument(),

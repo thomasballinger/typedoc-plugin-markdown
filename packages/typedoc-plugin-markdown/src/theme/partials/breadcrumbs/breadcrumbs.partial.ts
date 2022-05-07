@@ -6,7 +6,9 @@ export const breadcrumbsPartial = (
   context: MarkdownThemeRenderContext,
   props: PageEvent<ProjectReflection | DeclarationReflection>,
 ) => {
-  const { entryPoints, entryDocument, readme } = context.options;
+  const entryPoints = context.getOption('entryPoints');
+  const entryDocument = context.getOption('entryDocument');
+  const readme = context.getOption('readme');
 
   const md: string[] = [];
 

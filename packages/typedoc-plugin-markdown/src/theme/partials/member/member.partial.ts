@@ -8,7 +8,7 @@ export const memberPartial = (
 ) => {
   const md: string[] = [];
 
-  if (context.options.namedAnchors) {
+  if (context.getOption('namedAnchors')) {
     md.push(`<a id="${props.anchor}" name="${props.anchor}"></a>`);
   }
 

@@ -3,6 +3,7 @@ import {
   Comment,
   DeclarationHierarchy,
   DeclarationReflection,
+  Options,
   PageEvent,
   ParameterReflection,
   ProjectReflection,
@@ -54,10 +55,11 @@ export class MarkdownThemeRenderContext {
    * @param theme MarkdownTheme instance
    * @param options The options applied to the renderer
    */
-  constructor(
-    private theme: MarkdownTheme,
-    public options: TypedocPluginMarkdownOptions,
-  ) {}
+  constructor(private theme: MarkdownTheme, public options: Options) {}
+
+  getOption<K extends keyof TypedocPluginMarkdownOptions>(name: K) {
+    return this.options.getValue(name) as TypedocPluginMarkdownOptions[K];
+  }
 
   /**
    * The readme template, used when a readme is not available.
@@ -198,8 +200,8 @@ export class MarkdownThemeRenderContext {
       return url;
     }
 
-    if (this.options.publicPath) {
-      return this.options.publicPath + url;
+    if (this.getOption('publicPath')) {
+      return this.getOption('publicPath') + url;
     }
 
     const relative = path.relative(

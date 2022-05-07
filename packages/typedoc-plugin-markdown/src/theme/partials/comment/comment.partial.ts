@@ -42,11 +42,11 @@ function parseComment(
 
   parsedComments = replaceBrackets(context, parsedComments);
 
-  if (context.options.includes) {
+  if (context.getOption('includes')) {
     parsedComments = insertIncludes(context, parsedComments);
   }
 
-  if (context.options.media) {
+  if (context.getOption('media')) {
     parsedComments = insertMedia(context, parsedComments);
   }
 
@@ -136,7 +136,10 @@ function insertIncludes(context: MarkdownThemeRenderContext, text: string) {
   return text.replace(
     /\[\[include:([^\]]+?)\]\]/g,
     (match: string, includesPath: string) => {
-      includesPath = path.join(context.options.includes!, includesPath.trim());
+      includesPath = path.join(
+        context.getOption('includes')!,
+        includesPath.trim(),
+      );
       if (fs.existsSync(includesPath) && fs.statSync(includesPath).isFile()) {
         return fs.readFileSync(includesPath, 'utf-8');
       } else {
@@ -150,7 +153,7 @@ function insertMedia(context: MarkdownThemeRenderContext, text: string) {
   return text.replace(
     /media:\/\/([^ "\)\]\}]+)/g,
     (match: string, mediaPath: string) => {
-      if (fs.existsSync(path.join(context.options.media!, mediaPath))) {
+      if (fs.existsSync(path.join(context.getOption('media')!, mediaPath))) {
         return context.relativeURL('media') + '/' + mediaPath;
       } else {
         return match;

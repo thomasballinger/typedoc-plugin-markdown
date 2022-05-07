@@ -8,11 +8,11 @@ export const reflectionTemplate = (
 ) => {
   const md: string[] = [];
 
-  if (!context.options.hideBreadcrumbs) {
+  if (!context.getOption('hideBreadcrumbs')) {
     md.push(context.breadcrumbsPartial(props));
   }
 
-  if (!context.options.hidePageTitle) {
+  if (!context.getOption('hidePageTitle')) {
     md.push(heading(1, context.pageTitlePartial(props, true)));
   }
 

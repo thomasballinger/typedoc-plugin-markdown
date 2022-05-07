@@ -10,7 +10,7 @@ import {
   UrlMapping,
 } from 'typedoc';
 import { MarkdownThemeRenderContext } from './theme.context';
-import { TemplateMapping, TypedocPluginMarkdownOptions } from './theme.model';
+import { TemplateMapping } from './theme.model';
 
 /**
  * Class that inherits the base TypeDoc {@link https://typedoc.org/api/classes/Theme.html Theme} Class.
@@ -41,7 +41,7 @@ export class MarkdownTheme extends Theme {
     if (!this.renderContext) {
       this.renderContext = new MarkdownThemeRenderContext(
         this,
-        this.application.options.getRawValues() as TypedocPluginMarkdownOptions,
+        this.application.options,
       );
     }
     return this.renderContext;
@@ -72,6 +72,7 @@ export class MarkdownTheme extends Theme {
     const entryDocument = this.application.options.getValue(
       'entryDocument',
     ) as string;
+
     const readme = this.application.options.getValue('readme') as string;
     const noReadmeFile = readme.endsWith('none');
 
