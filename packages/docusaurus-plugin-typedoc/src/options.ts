@@ -20,7 +20,7 @@ const DEFAULT_PLUGIN_OPTIONS: PluginOptions = {
   watch: false,
   includeExtension: true,
   indexSlug: undefined,
-  //theme: 'docusaurus',
+  theme: 'docusaurus',
   frontmatter: undefined,
 };
 

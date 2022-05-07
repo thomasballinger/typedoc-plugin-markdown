@@ -1,8 +1,18 @@
-import { BindOption, Renderer } from 'typedoc';
+import { ProjectReflection, Renderer, UrlMapping } from 'typedoc';
 import { MarkdownTheme } from 'typedoc-plugin-markdown';
-import { FrontMatter, SidebarOptions } from './types';
 
 export class DocusaurusTheme extends MarkdownTheme {
+  constructor(renderer: Renderer) {
+    super(renderer);
+  }
+
+  override getUrls(project: ProjectReflection): UrlMapping<any>[] {
+    // console.log(super.getUrls(project));
+    return super.getUrls(project);
+  }
+}
+
+/*export class DocusaurusTheme extends MarkdownTheme {
   @BindOption('sidebar')
   sidebar!: SidebarOptions;
 
@@ -24,10 +34,10 @@ export class DocusaurusTheme extends MarkdownTheme {
     /* this.listenTo(this.application.renderer, {
       [PageEvent.END]: this.onPageEnd,
       [RendererEvent.END]: this.onRendererEnd,
-    });*/
+    });
   }
-
-  /*getRelativeUrl(url: string) {
+*/
+/*getRelativeUrl(url: string) {
     const re = new RegExp(this.includeExtension === 'true' ? '' : '.md', 'g');
     const relativeUrl = super.getRelativeUrl(url).replace(re, '');
     if (path.basename(relativeUrl).startsWith('index')) {
@@ -44,7 +54,7 @@ export class DocusaurusTheme extends MarkdownTheme {
         this.getYamlItems(page) as FrontMatterVars,
       );
     }
-  }*/
+  }
 
   /* onRendererEnd(renderer: RendererEvent) {
     writeCategoryYaml(
@@ -69,7 +79,7 @@ export class DocusaurusTheme extends MarkdownTheme {
       },
     );
   }*/
-  /*
+/*
   getYamlItems(page: PageEvent<DeclarationReflection>): FrontMatter {
     const pageId = this.getId(page);
     const pageTitle = this.getTitle(page);
@@ -169,9 +179,8 @@ export class DocusaurusTheme extends MarkdownTheme {
 
   get globalsFile() {
     return 'modules.md';
-  }*/
+  }
 }
-/*
 const writeCategoryYaml = (
   categoryPath: string,
   label: string,

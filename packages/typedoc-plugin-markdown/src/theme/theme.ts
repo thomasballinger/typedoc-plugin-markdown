@@ -87,12 +87,25 @@ export class MarkdownTheme extends Theme {
       urls.push(new UrlMapping(entryDocument, project, this.readmeTemplate));
     }
 
-    project.children?.forEach((child: Reflection) => {
-      if (child instanceof DeclarationReflection) {
-        this.buildUrls(child as DeclarationReflection, urls);
+    project.children?.forEach((reflection: Reflection) => {
+      if (reflection instanceof DeclarationReflection) {
+        /*  const mapping = this.mappings().find((mapping) =>
+          reflection.kindOf(mapping.kind),
+        );
+        const reflectionAlias = reflection.getAlias();
+        const url = `${reflectionAlias}/${reflectionAlias}.md`;
+        if (mapping) {
+          urls.push(new UrlMapping(url, reflection, mapping.template));
+          reflection.url = url;
+          reflection.hasOwnDocument = true;
+        }*/
+        this.buildUrls(reflection as DeclarationReflection, urls);
       }
     });
-
+    console.log(
+      'URLS',
+      urls.map((url) => url.url),
+    );
     return urls;
   }
 
@@ -102,9 +115,12 @@ export class MarkdownTheme extends Theme {
    * @param reflection
    * @returns
    */
-  getUrl(reflection: DeclarationReflection, mapping: TemplateMapping) {
-    return mapping.directory + '/' + this.getUrlPath(reflection) + '.md';
-  }
+  /*getUrl(reflection: DeclarationReflection, previous) {
+    //return mapping.directory + '/' + this.getUrlPath(reflection) + '.md';
+    //console.log('prev', previous.url);
+
+    return this.getUrlPath(reflection) + '.md';
+  }*/
 
   /**
    * Convert a given anchor to an anchor reference.
@@ -124,7 +140,7 @@ export class MarkdownTheme extends Theme {
     );
     if (mapping) {
       if (!reflection.url || !/^(http|ftp)s?:\/\//.test(reflection.url)) {
-        const url = this.getUrl(reflection, mapping);
+        const url = this.getUrlPath(reflection, mapping.directory) + '.md';
         urls.push(new UrlMapping(url, reflection, mapping.template));
         reflection.url = url;
         reflection.hasOwnDocument = true;
@@ -143,22 +159,21 @@ export class MarkdownTheme extends Theme {
     return urls;
   }
 
-  private getUrlPath(reflection: Reflection, relative?: Reflection): string {
-    let url = reflection.getAlias();
-    const filenameSeparator = this.application.options.getValue(
-      'filenameSeparator',
-    ) as string;
+  private getUrlPath(
+    reflection: DeclarationReflection | Reflection,
+    directory: string,
+  ): string {
+    const reflectionAlias = reflection.getAlias();
 
     if (
       reflection.parent &&
-      reflection.parent !== relative &&
       !(reflection.parent instanceof ProjectReflection)
     ) {
-      url =
-        this.getUrlPath(reflection.parent, relative) + filenameSeparator + url;
+      return (
+        reflection.parent.getAlias() + '/' + directory + '/' + reflectionAlias
+      );
     }
-
-    return url.replace(/^_/, '');
+    return reflectionAlias + '/' + reflectionAlias;
   }
 
   private applyAnchorUrl(

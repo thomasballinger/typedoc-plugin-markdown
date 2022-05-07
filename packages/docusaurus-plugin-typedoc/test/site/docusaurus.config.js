@@ -13,9 +13,10 @@ const config = {
         entryPoints: '../../../typedoc-plugin-markdown/test/stubs/src/index.ts',
         tsconfig: '../../../typedoc-plugin-markdown/test/stubs/tsconfig.json',
         sidebar: {
-          sidebarFile: null,
           position: 0,
         },
+        cleanOutputDir: true,
+        readme: 'none',
       },
     ],
   ],

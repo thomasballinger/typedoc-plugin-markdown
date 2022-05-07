@@ -3,6 +3,7 @@ import { Application } from 'typedoc';
 import { load } from 'typedoc-plugin-markdown';
 import { getPluginOptions } from './options';
 import { bootstrap, removeDir } from './render';
+import { DocusaurusTheme } from './theme';
 import { PluginOptions } from './types';
 
 // store list of plugin ids when running multiple instances
@@ -25,12 +26,13 @@ export default function pluginDocusaurus(
         const outputDir = path.resolve(siteDir, options.docsRoot, options.out);
 
         if (opts.cleanOutputDir) {
+          console.log('CLEANME');
           removeDir(outputDir);
         }
 
         const app = new Application();
 
-        //  app.renderer.defineTheme('docusaurus', DocusaurusTheme);
+        app.renderer.defineTheme('docusaurus', DocusaurusTheme);
 
         load(app);
 
