@@ -15,13 +15,12 @@ const DEFAULT_PLUGIN_OPTIONS: PluginOptions = {
   hideInPageTOC: true,
   hideBreadcrumbs: true,
   hidePageTitle: true,
-  hideMembersSymbol: false,
   entryDocument: 'index.md',
   plugin: ['none'],
   watch: false,
   includeExtension: true,
   indexSlug: undefined,
-  theme: 'docusaurus',
+  //theme: 'docusaurus',
   frontmatter: undefined,
 };
 

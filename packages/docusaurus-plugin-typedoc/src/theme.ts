@@ -1,33 +1,6 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import {
-  BindOption,
-  DeclarationReflection,
-  PageEvent,
-  ReflectionKind,
-  Renderer,
-  RendererEvent,
-  UrlMapping,
-} from 'typedoc';
-import { getKindPlural } from 'typedoc-plugin-markdown/dist/groups';
-import { MarkdownTheme } from 'typedoc-plugin-markdown/dist/theme';
-import {
-  FrontMatterVars,
-  prependYAML,
-} from 'typedoc-plugin-markdown/dist/utils/front-matter';
+import { BindOption, Renderer } from 'typedoc';
+import { MarkdownTheme } from 'typedoc-plugin-markdown';
 import { FrontMatter, SidebarOptions } from './types';
-
-const CATEGORY_POSITION = {
-  [ReflectionKind.Module]: 1,
-  [ReflectionKind.Namespace]: 1,
-  [ReflectionKind.Enum]: 2,
-  [ReflectionKind.Class]: 3,
-  [ReflectionKind.Interface]: 4,
-  [ReflectionKind.TypeAlias]: 5,
-  [ReflectionKind.Variable]: 6,
-  [ReflectionKind.Function]: 7,
-  [ReflectionKind.ObjectLiteral]: 8,
-};
 
 export class DocusaurusTheme extends MarkdownTheme {
   @BindOption('sidebar')
@@ -48,13 +21,13 @@ export class DocusaurusTheme extends MarkdownTheme {
   constructor(renderer: Renderer) {
     super(renderer);
 
-    this.listenTo(this.application.renderer, {
+    /* this.listenTo(this.application.renderer, {
       [PageEvent.END]: this.onPageEnd,
       [RendererEvent.END]: this.onRendererEnd,
-    });
+    });*/
   }
 
-  getRelativeUrl(url: string) {
+  /*getRelativeUrl(url: string) {
     const re = new RegExp(this.includeExtension === 'true' ? '' : '.md', 'g');
     const relativeUrl = super.getRelativeUrl(url).replace(re, '');
     if (path.basename(relativeUrl).startsWith('index')) {
@@ -71,9 +44,9 @@ export class DocusaurusTheme extends MarkdownTheme {
         this.getYamlItems(page) as FrontMatterVars,
       );
     }
-  }
+  }*/
 
-  onRendererEnd(renderer: RendererEvent) {
+  /* onRendererEnd(renderer: RendererEvent) {
     writeCategoryYaml(
       renderer.outputDirectory,
       this.sidebar.categoryLabel,
@@ -95,8 +68,8 @@ export class DocusaurusTheme extends MarkdownTheme {
         }
       },
     );
-  }
-
+  }*/
+  /*
   getYamlItems(page: PageEvent<DeclarationReflection>): FrontMatter {
     const pageId = this.getId(page);
     const pageTitle = this.getTitle(page);
@@ -196,9 +169,9 @@ export class DocusaurusTheme extends MarkdownTheme {
 
   get globalsFile() {
     return 'modules.md';
-  }
+  }*/
 }
-
+/*
 const writeCategoryYaml = (
   categoryPath: string,
   label: string,
@@ -218,4 +191,4 @@ const groupUrlsByKind = (urls: UrlMapping[]) => {
     (r, v, i, a, k = v.model.kind) => ((r[k] || (r[k] = [])).push(v), r),
     {},
   );
-};
+};*/
