@@ -28,7 +28,7 @@ export const tocPartial = (
 
   if ((!hideInPageTOC && props.groups) || (isVisible && props.groups)) {
     if (!hideInPageTOC) {
-      md.push(`## Table of contents\n\n`);
+      md.push(`## Index\n\n`);
     }
     const headingLevel = hideInPageTOC ? `##` : `###`;
     props.groups?.forEach((group) => {

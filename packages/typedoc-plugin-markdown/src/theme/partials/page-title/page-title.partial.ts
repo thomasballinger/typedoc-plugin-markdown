@@ -13,7 +13,7 @@ export const pageTitlePartial = (
     props.model.kindString &&
     props.url !== props.project.url
   ) {
-    md.push(`${props.model.kindString}: `);
+    md.push(`${props.model.kindString} `);
   }
   if (props.url === props.project.url) {
     md.push(props.project.name);

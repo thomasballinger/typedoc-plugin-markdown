@@ -1,10 +1,11 @@
 import { PluginOptions } from './types';
 
-const DEFAULT_PLUGIN_OPTIONS: PluginOptions = {
+const DEFAULT_PLUGIN_OPTIONS: any = {
+  frontmatter: undefined,
   id: 'default',
   docsRoot: 'docs',
-  out: 'api',
-  cleanOutputDir: true,
+  includeExtension: true,
+  indexSlug: undefined,
   sidebar: {
     fullNames: false,
     categoryLabel: 'API',
@@ -12,16 +13,30 @@ const DEFAULT_PLUGIN_OPTIONS: PluginOptions = {
     readmeLabel: 'Readme',
     position: null,
   },
+};
+
+const DEFAULT_TYPEDOC_OPTIONS: any = {
+  out: 'api',
+  cleanOutputDir: true,
   hideInPageTOC: true,
   hideBreadcrumbs: true,
   hidePageTitle: true,
   entryDocument: 'index.md',
   plugin: ['none'],
   watch: false,
-  includeExtension: true,
-  indexSlug: undefined,
   theme: 'docusaurus',
-  frontmatter: undefined,
+};
+
+export const getTypedocOptions = (
+  opts: Partial<PluginOptions>,
+): PluginOptions => {
+  const options = {
+    ...DEFAULT_TYPEDOC_OPTIONS,
+    ...Object.fromEntries(
+      Object.entries(opts).filter(([key]) => !(key in DEFAULT_PLUGIN_OPTIONS)),
+    ),
+  };
+  return options;
 };
 
 export const getPluginOptions = (
@@ -29,7 +44,9 @@ export const getPluginOptions = (
 ): PluginOptions => {
   const options = {
     ...DEFAULT_PLUGIN_OPTIONS,
-    ...opts,
+    ...Object.fromEntries(
+      Object.entries(opts).filter(([key]) => key in DEFAULT_PLUGIN_OPTIONS),
+    ),
     sidebar: {
       ...DEFAULT_PLUGIN_OPTIONS.sidebar,
       ...opts.sidebar,

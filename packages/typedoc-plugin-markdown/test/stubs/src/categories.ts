@@ -1,4 +1,8 @@
 /**
+ * Comment for module which could be quite long over a couple of lines ok
+ */
+
+/**
  * @category CategoryA
  */
 export const categoryVariableA1 = true;

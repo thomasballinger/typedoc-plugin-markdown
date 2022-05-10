@@ -1,12 +1,18 @@
 /**
- * comments
+ * Comments for ReflectionClass
  */
 export class ReflectionClass {}
 
+/**
+ * Comments for CallableReflection
+ */
 export interface CallableReflection {
   (): string;
 }
 
+/**
+ * Comments for EnumReflection
+ */
 export enum EnumReflection {
   Up = 'UP',
   Down = 'DOWN',

@@ -154,6 +154,7 @@ export class MarkdownTheme extends Theme {
         }
       }
     } else if (reflection.parent) {
+      console.log(reflection.parent.kindString, reflection.kindString);
       this.applyAnchorUrl(reflection, reflection.parent, true);
     }
     return urls;
@@ -169,6 +170,13 @@ export class MarkdownTheme extends Theme {
       reflection.parent &&
       !(reflection.parent instanceof ProjectReflection)
     ) {
+      /*  return (
+        reflection.parent.getAlias() +
+        '/' +
+        reflection.parent.getAlias() +
+        '.' +
+        reflectionAlias
+      );*/
       return (
         reflection.parent.getAlias() + '/' + directory + '/' + reflectionAlias
       );
