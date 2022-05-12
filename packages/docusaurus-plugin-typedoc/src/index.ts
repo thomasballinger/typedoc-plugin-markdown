@@ -36,7 +36,6 @@ export default function pluginDocusaurus(
         }
 
         // Initialise and confgiure TypeDoc App
-
         const app = new Application();
 
         loadTypedocPluginMarkdown(app);
