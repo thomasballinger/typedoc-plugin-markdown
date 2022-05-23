@@ -37,12 +37,18 @@ export const loadCategoryYaml = (
     );
 
     const moduleDirs = fs.readdirSync(outputDirectory);
-
+    console.log(moduleDirs);
     moduleDirs.forEach((moduleDir) => {
       const path = outputDirectory + '/' + moduleDir;
       const stats = fs.statSync(path);
       if (stats.isDirectory()) {
-        const folders = fs.readdirSync(path);
+        console.log(moduleDir, path);
+        writeCategoryYaml(
+          path,
+          CATEGORY_LABEL[moduleDir],
+          CATEGORY_POSITION[moduleDir],
+        );
+        /* const folders = fs.readdirSync(path);
         // console.log(folders);
         folders.forEach((folder) => {
           // console.log(folder);
@@ -55,7 +61,7 @@ export const loadCategoryYaml = (
               CATEGORY_POSITION[folder],
             );
           }
-        });
+        });*/
       }
     });
 
@@ -74,12 +80,5 @@ export const loadCategoryYaml = (
 
       // Object.keys(groupUrlsByKind(this.getUrls(app.renderer.project)
     }
-
-    // const groupUrlsByKind = (urls: UrlMapping[]) => {
-    //  return urls.reduce(
-    //  (r, v, i, a, k = v.model.kind) => ((r[k] || (r[k] = [])).push(v), r),
-    //  {},
-    // );
-    // };
   });
 };

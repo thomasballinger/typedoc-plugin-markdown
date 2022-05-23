@@ -87,19 +87,9 @@ export class MarkdownTheme extends Theme {
       urls.push(new UrlMapping(entryDocument, project, this.readmeTemplate));
     }
 
-    project.children?.forEach((reflection: Reflection) => {
-      if (reflection instanceof DeclarationReflection) {
-        /*  const mapping = this.mappings().find((mapping) =>
-          reflection.kindOf(mapping.kind),
-        );
-        const reflectionAlias = reflection.getAlias();
-        const url = `${reflectionAlias}/${reflectionAlias}.md`;
-        if (mapping) {
-          urls.push(new UrlMapping(url, reflection, mapping.template));
-          reflection.url = url;
-          reflection.hasOwnDocument = true;
-        }*/
-        this.buildUrls(reflection as DeclarationReflection, urls);
+    project.children?.forEach((child: Reflection) => {
+      if (child instanceof DeclarationReflection) {
+        this.buildUrls(child as DeclarationReflection, urls);
       }
     });
     console.log(
@@ -110,24 +100,11 @@ export class MarkdownTheme extends Theme {
   }
 
   /**
-   * Convert a given mapping and reflection to a url string.
-   * @param mapping
-   * @param reflection
-   * @returns
-   */
-  /*getUrl(reflection: DeclarationReflection, previous) {
-    //return mapping.directory + '/' + this.getUrlPath(reflection) + '.md';
-    //console.log('prev', previous.url);
-
-    return this.getUrlPath(reflection) + '.md';
-  }*/
-
-  /**
    * Convert a given anchor to an anchor reference.
    * @param anchor
    * @returns
    */
-  getAnchor(anchor: string) {
+  toAnchorRef(anchor: string) {
     return anchor;
   }
 
@@ -140,7 +117,8 @@ export class MarkdownTheme extends Theme {
     );
     if (mapping) {
       if (!reflection.url || !/^(http|ftp)s?:\/\//.test(reflection.url)) {
-        const url = this.getUrlPath(reflection, mapping.directory) + '.md';
+        // const url = this.getUrl(reflection, mapping.directory) + '.md';
+        const url = this.toUrl(mapping, reflection);
         urls.push(new UrlMapping(url, reflection, mapping.template));
         reflection.url = url;
         reflection.hasOwnDocument = true;
@@ -154,34 +132,33 @@ export class MarkdownTheme extends Theme {
         }
       }
     } else if (reflection.parent) {
-      console.log(reflection.parent.kindString, reflection.kindString);
       this.applyAnchorUrl(reflection, reflection.parent, true);
     }
     return urls;
   }
 
-  private getUrlPath(
-    reflection: DeclarationReflection | Reflection,
-    directory: string,
-  ): string {
-    const reflectionAlias = reflection.getAlias();
+  private toUrl(mapping: any, reflection: DeclarationReflection): string {
+    const modulesStructure = this.application.options.getValue(
+      'modulesStructure',
+    ) as boolean;
 
+    if (modulesStructure) {
+      const paths = this.getUrl(reflection);
+      paths.splice(paths.length - 1, 0, mapping.directory);
+      return paths.join('/') + '.md';
+    }
+    return mapping.directory + '/' + this.getUrl(reflection).join('.') + '.md';
+  }
+
+  private getUrl(reflection: Reflection, separator = '.') {
+    let url = [reflection.getAlias()];
     if (
       reflection.parent &&
       !(reflection.parent instanceof ProjectReflection)
     ) {
-      /*  return (
-        reflection.parent.getAlias() +
-        '/' +
-        reflection.parent.getAlias() +
-        '.' +
-        reflectionAlias
-      );*/
-      return (
-        reflection.parent.getAlias() + '/' + directory + '/' + reflectionAlias
-      );
+      url = [...this.getUrl(reflection.parent), ...url];
     }
-    return reflectionAlias + '/' + reflectionAlias;
+    return url;
   }
 
   private applyAnchorUrl(
@@ -210,7 +187,7 @@ export class MarkdownTheme extends Theme {
         (id) => id === reflectionId,
       )?.length;
 
-      const anchor = this.getAnchor(
+      const anchor = this.toAnchorRef(
         reflectionId + (count > 1 ? '-' + (count - 1).toString() : ''),
       );
 
@@ -224,7 +201,6 @@ export class MarkdownTheme extends Theme {
       }
     });
   }
-
   /**
    * Maps given reflections to a template.
    * @returns A list of template mappings.
