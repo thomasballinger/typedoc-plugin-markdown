@@ -20,7 +20,7 @@ position: 3"
 exports[`Plugin: (docs) should write doc 1`] = `
 "---
 id: \\"index\\"
-title: \\"typedoc-plugin-markdown\\"
+title: \\"typedoc-plugin-markdown-test\\"
 sidebar_label: \\"Readme\\"
 sidebar_position: 0
 custom_edit_url: null

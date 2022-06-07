@@ -1,0 +1,16 @@
+{{#each flags~}}
+`{{.}}`
+{{~/each}}
+
+**{{{escapeChars name}}}**
+
+{{~#if typeParameters}}
+<{{#each typeParameters}}`{{name}}`{{/each}}\>
+{{/if~}}
+
+: {{#if this.type}} {{{type this.type 'object'}}} {{else}} {{{type this 'object'}}} {{/if}}
+
+{{~#if defaultValue}}
+= `{{defaultValue}}`
+{{/if}}
+

@@ -2,28 +2,16 @@
 
 exports[`Signatures: should compile a promise that returns a symbol' 1`] = `
 "▸ **promiseReturningASymbol**(): [\`Promise\`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<[\`User\`](../modules.md#user)\\\\>
-
-##### Returns
-
-[\`Promise\`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<[\`User\`](../modules.md#user)\\\\>
 "
 `;
 
 exports[`Signatures: should compile a promise that returns an object' 1`] = `
 "▸ **promiseReturningAnObject**(): [\`Promise\`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<{ \`data\`: \`string\` ; \`id\`: \`string\`  }\\\\>
-
-##### Returns
-
-[\`Promise\`]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise )<{ \`data\`: \`string\` ; \`id\`: \`string\`  }\\\\>
 "
 `;
 
 exports[`Signatures: should compile callable signature' 1`] = `
 "▸ **CallableSignature**(): \`string\`
-
-##### Returns
-
-\`string\`
 "
 `;
 
@@ -43,30 +31,6 @@ exports[`Signatures: should compile function that returns a function' 1`] = `
 "▸ **functionReturningAFunction**(): <T\\\\>(\`x\`: \`string\`) => \`boolean\`
 
 Comments for function
-
-##### Returns
-
-\`fn\`
-
-Return comments
-
-▸ <\`T\`\\\\>(\`x\`): \`boolean\`
-
-##### Type parameters
-
-| Name |
-| :------ |
-| \`T\` |
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| \`x\` | \`string\` |
-
-##### Returns
-
-\`boolean\`
 "
 `;
 
@@ -74,17 +38,6 @@ exports[`Signatures: should compile function that returns an object' 1`] = `
 "▸ **functionReturningAnObject**(): \`Object\`
 
 Comments for function
-
-##### Returns
-
-\`Object\`
-
-Return comments
-
-| Name | Type |
-| :------ | :------ |
-| \`x\` | \`number\` |
-| \`y\` | \`number\` |
 "
 `;
 
@@ -106,10 +59,6 @@ Some nested params.
 | \`params.nestedObj.value\` | \`number\` | - |
 | \`params.parent?\` | \`number\` | - |
 | \`context\` | \`any\` | The context of the method call. |
-
-##### Returns
-
-\`boolean\`
 "
 `;
 
@@ -121,10 +70,6 @@ exports[`Signatures: should compile function with reference type' 1`] = `
 | Name | Type |
 | :------ | :------ |
 | \`descriptor\` | \`TypedPropertyDescriptor\`<\`any\`\\\\> |
-
-##### Returns
-
-\`boolean\`
 "
 `;
 
@@ -141,10 +86,6 @@ FOO
 | \`__namedParameters.bar?\` | \`number\` | - |
 | \`__namedParameters.foo?\` | \`number\` | - |
 | \`anotherParam\` | \`string\` | - |
-
-##### Returns
-
-\`void\`
 "
 `;
 
@@ -156,10 +97,6 @@ exports[`Signatures: should compile named parameters' 1`] = `
 | Name | Type |
 | :------ | :------ |
 | \`__namedParameters\` | \`Object\` |
-
-##### Returns
-
-\`string\`
 "
 `;
 
@@ -171,10 +108,6 @@ exports[`Signatures: should compile pipes in params and comments' 1`] = `
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | \`n\` | \`number\` | a\\\\|b |
-
-##### Returns
-
-\`number\` \\\\| \`\`null\`\`
 "
 `;
 
@@ -182,21 +115,11 @@ exports[`Signatures: should compile signature with @return comments' 1`] = `
 "▸ **commentsInReturn**(): \`boolean\`
 
 Comments with a return definition
-
-##### Returns
-
-\`boolean\`
-
-Return comments
 "
 `;
 
 exports[`Signatures: should compile signature with a flag' 1`] = `
 "▸ \`Private\` **privateFunction**(): \`string\`
-
-##### Returns
-
-\`string\`
 "
 `;
 
@@ -215,10 +138,6 @@ This is a function with a parameter that has a default value.
 | \`valueD\` | \`boolean\` | \`true\` | A parameter with a default boolean value. |
 | \`valueE\` | \`boolean\` | \`null\` | A parameter with a default null value. |
 | \`valueF\` | \`string\` | \`'<foo>'\` | - |
-
-##### Returns
-
-\`string\`
 "
 `;
 
@@ -233,10 +152,6 @@ This is a function with a parameter that is optional.
 | :------ | :------ | :------ |
 | \`requiredParam\` | \`string\` | A normal parameter. |
 | \`optionalParam?\` | \`string\` | An optional parameter. |
-
-##### Returns
-
-\`void\`
 "
 `;
 
@@ -252,10 +167,6 @@ This is a function with multiple arguments and a return value.
 | \`paramZ\` | \`string\` | This is a string parameter. |
 | \`paramG\` | \`any\` | This is a parameter flagged with any.<br />     This sentence is placed in the next line. |
 | \`paramA\` | \`any\` | This is a **parameter** pointing to an interface. |
-
-##### Returns
-
-\`number\`
 "
 `;
 
@@ -269,10 +180,6 @@ This is a function with rest parameter.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | \`...rest\` | \`string\`[] | The rest parameter. |
-
-##### Returns
-
-\`string\`
 "
 `;
 
@@ -285,9 +192,5 @@ exports[`Signatures: should compile signature with union types' 1`] = `
 | :------ | :------ |
 | \`arg\` | \`number\` \\\\| \`boolean\`[] |
 | \`...args\` | (\`string\` \\\\| \`number\`)[] |
-
-##### Returns
-
-\`any\`
 "
 `;

@@ -21,38 +21,12 @@ exports[`Generics: should compile class with type params 1`] = `
 `;
 
 exports[`Generics: should compile function with a simple type param' 1`] = `
-"▸ **functionWithTypeParam**<\`A\`\\\\>(): \`boolean\`
-
-[partial: comment]
-
-##### Type parameters
-
-| Name |
-| :------ |
-| \`A\` |
-
-##### Returns
-
-\`boolean\`
+"[partial: member.signature]
 "
 `;
 
 exports[`Generics: should compile function with complex type params' 1`] = `
-"▸ **functionWithTypeParams**<\`A\`, \`B\`, \`C\`\\\\>(): \`boolean\`
-
-[partial: comment]
-
-##### Type parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| \`A\` | extends [\`ClassWithTypeParams\`](ClassWithTypeParams.md)<\`string\`, \`number\`, \`A\`\\\\> | Comment for type \`A\` |
-| \`B\` | \`string\` \\\\| \`boolean\` | Comment for type \`B\` |
-| \`C\` | \`string\` | - |
-
-##### Returns
-
-\`boolean\`
+"[partial: member.signature]
 "
 `;
 

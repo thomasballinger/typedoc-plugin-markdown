@@ -1,46 +1,49 @@
-import * as Handlebars from 'handlebars';
-import { SignatureReflection } from 'typedoc';
-
-import { TestApp } from '../test-app';
+import * as Handlebars from 'handlebars/runtime';
+import { ProjectReflection, SignatureReflection } from 'typedoc';
 
 describe(`Generics:`, () => {
-  let testApp: TestApp;
+  let project: ProjectReflection;
   let partial: Handlebars.TemplateDelegate;
   let declarationPartial: Handlebars.TemplateDelegate;
   let reflectionTemplate: Handlebars.TemplateDelegate;
 
-  beforeAll(() => {
-    partial = TestApp.getPartial('member.signature');
-    declarationPartial = TestApp.getPartial('member.declaration');
-  });
-
-  beforeEach(async () => {
-    testApp = new TestApp(['generics.ts']);
-    await testApp.bootstrap();
-    TestApp.stubPartials([
-      'comment',
-      'member.signature',
-      'members',
-      'member.sources',
-    ]);
-    TestApp.stubHelpers(['toc', 'breadcrumbs', 'hierarchy', 'returns']);
-    reflectionTemplate = TestApp.getTemplate('reflection');
+  beforeAll(async () => {
+    const bootstrap = global.bootstrap('generics.ts', {
+      stubPartials: [
+        'comment',
+        'members',
+        'member.signature',
+        'member.sources',
+      ],
+      stubHelpers: ['toc', 'breadcrumbs', 'hierarchy', 'returns'],
+    });
+    project = bootstrap.project;
+    partial = global.getTemplate(bootstrap.context, 'member.signature');
+    declarationPartial = global.getTemplate(
+      bootstrap.context,
+      'member.declaration',
+    );
+    reflectionTemplate = global.getTemplate(
+      bootstrap.context,
+      'reflection',
+      false,
+    );
   });
 
   test(`should compile class with type params`, () => {
     expect(
-      TestApp.compileTemplate(reflectionTemplate, {
-        model: testApp.findReflection('ClassWithTypeParams'),
-        project: testApp.project,
+      global.renderTemplate(reflectionTemplate, {
+        model: project.findReflectionByName('ClassWithTypeParams'),
+        project: project,
       }),
     ).toMatchSnapshot();
   });
 
   test(`should compile function with a simple type param'`, () => {
     expect(
-      TestApp.compileTemplate(
+      global.renderTemplate(
         partial,
-        testApp.findReflection('functionWithTypeParam')
+        (project.findReflectionByName('functionWithTypeParam') as any)
           .signatures[0] as SignatureReflection,
       ),
     ).toMatchSnapshot();
@@ -48,9 +51,9 @@ describe(`Generics:`, () => {
 
   test(`should compile function with complex type params'`, () => {
     expect(
-      TestApp.compileTemplate(
+      global.renderTemplate(
         partial,
-        testApp.findReflection('functionWithTypeParams')
+        (project.findReflectionByName('functionWithTypeParams') as any)
           .signatures[0] as SignatureReflection,
       ),
     ).toMatchSnapshot();
@@ -58,18 +61,18 @@ describe(`Generics:`, () => {
 
   test(`should compile type with nested generics'`, () => {
     expect(
-      TestApp.compileTemplate(
+      global.renderTemplate(
         declarationPartial,
-        testApp.findReflection('nestedGenerics'),
+        project.findReflectionByName('nestedGenerics'),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile generics with defaults'`, () => {
     expect(
-      TestApp.compileTemplate(
+      global.renderTemplate(
         declarationPartial,
-        testApp.findReflection('genericsWithDefaults')
+        (project.findReflectionByName('genericsWithDefaults') as any)
           .signatures[0] as SignatureReflection,
       ),
     ).toMatchSnapshot();

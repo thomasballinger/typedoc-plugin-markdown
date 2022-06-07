@@ -1,4 +1,4 @@
-import * as Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars/runtime';
 import {
   ArrayType,
   ConditionalType,
@@ -18,97 +18,92 @@ import {
   UnionType,
   UnknownType,
 } from 'typedoc';
-import { escapeChars } from '../../utils';
 
 type Collapse = 'object' | 'function' | 'all' | 'none';
 
-export default function () {
-  Handlebars.registerHelper(
-    'type',
-    function (
-      this:
-        | ArrayType
-        | IntersectionType
-        | IntrinsicType
-        | ReferenceType
-        | TupleType
-        | UnionType
-        | TypeOperatorType
-        | QueryType
-        | PredicateType
-        | ReferenceType
-        | ConditionalType
-        | IndexedAccessType
-        | UnknownType
-        | InferredType,
+export const type = (
+  context:
+    | ArrayType
+    | IntersectionType
+    | IntrinsicType
+    | ReferenceType
+    | TupleType
+    | UnionType
+    | TypeOperatorType
+    | QueryType
+    | PredicateType
+    | ReferenceType
+    | ConditionalType
+    | IndexedAccessType
+    | UnknownType
+    | InferredType,
+  collapse: Collapse = 'none',
+  emphasis = true,
+) => {
+  if (context instanceof ReferenceType) {
+    return getReferenceType(context, emphasis);
+  }
 
-      collapse: Collapse = 'none',
-      emphasis = true,
-    ) {
-      if (this instanceof ReferenceType) {
-        return getReferenceType(this, emphasis);
-      }
+  if (context instanceof ArrayType && context.elementType) {
+    return getArrayType(context, emphasis);
+  }
 
-      if (this instanceof ArrayType && this.elementType) {
-        return getArrayType(this, emphasis);
-      }
+  if (context instanceof UnionType && context.types) {
+    return getUnionType(context, emphasis);
+  }
 
-      if (this instanceof UnionType && this.types) {
-        return getUnionType(this, emphasis);
-      }
+  if (context instanceof IntersectionType && context.types) {
+    return getIntersectionType(context);
+  }
 
-      if (this instanceof IntersectionType && this.types) {
-        return getIntersectionType(this);
-      }
+  if (context instanceof TupleType && context.elements) {
+    return getTupleType(context);
+  }
 
-      if (this instanceof TupleType && this.elements) {
-        return getTupleType(this);
-      }
+  if (context instanceof IntrinsicType && context.name) {
+    return getIntrinsicType(context, emphasis);
+  }
 
-      if (this instanceof IntrinsicType && this.name) {
-        return getIntrinsicType(this, emphasis);
-      }
+  if (context instanceof ReflectionType) {
+    return getReflectionType(context, collapse);
+  }
 
-      if (this instanceof ReflectionType) {
-        return getReflectionType(this, collapse);
-      }
+  if (context instanceof DeclarationReflection) {
+    return getReflectionType(context, collapse);
+  }
 
-      if (this instanceof DeclarationReflection) {
-        return getReflectionType(this, collapse);
-      }
+  if (context instanceof TypeOperatorType) {
+    return getTypeOperatorType(context);
+  }
 
-      if (this instanceof TypeOperatorType) {
-        return getTypeOperatorType(this);
-      }
+  if (context instanceof QueryType) {
+    return getQueryType(context);
+  }
 
-      if (this instanceof QueryType) {
-        return getQueryType(this);
-      }
+  if (context instanceof ConditionalType) {
+    return getConditionalType(context);
+  }
 
-      if (this instanceof ConditionalType) {
-        return getConditionalType(this);
-      }
+  if (context instanceof IndexedAccessType) {
+    return getIndexAccessType(context);
+  }
 
-      if (this instanceof IndexedAccessType) {
-        return getIndexAccessType(this);
-      }
+  if (context instanceof UnknownType) {
+    return getUnknownType(context);
+  }
 
-      if (this instanceof UnknownType) {
-        return getUnknownType(this);
-      }
+  if (context instanceof InferredType) {
+    return getInferredType(context);
+  }
 
-      if (this instanceof InferredType) {
-        return getInferredType(this);
-      }
+  if (context instanceof LiteralType) {
+    return getLiteralType(context);
+  }
 
-      if (this instanceof LiteralType) {
-        return getLiteralType(this);
-      }
+  return context ? Handlebars.helpers.escapeChars(context.toString()) : '';
+};
 
-      return this ? escapeChars(this.toString()) : '';
-    },
-  );
-}
+//}
 
 function getLiteralType(model: LiteralType) {
   if (typeof model.value === 'bigint') {
@@ -118,10 +113,11 @@ function getLiteralType(model: LiteralType) {
 }
 
 export function getReflectionType(
-  model: DeclarationReflection | ReflectionType,
+  context: DeclarationReflection | ReflectionType,
   collapse: Collapse,
 ) {
-  const root = model instanceof ReflectionType ? model.declaration : model;
+  const root =
+    context instanceof ReflectionType ? context.declaration : context;
   if (root.signatures) {
     return collapse === 'function' || collapse === 'all'
       ? `\`fn\``
@@ -139,28 +135,32 @@ function getDeclarationType(model: DeclarationReflection) {
     if (declarationIndexSignature) {
       const key = declarationIndexSignature.parameters
         ? declarationIndexSignature.parameters.map(
-          (param) => `\`[${param.name}: ${param.type}]\``,
-        )
+            (param) => `\`[${param.name}: ${param.type}]\``,
+          )
         : '';
-      const obj = Handlebars.helpers.type.call(declarationIndexSignature.type);
+      const obj = Handlebars.helpers.type(declarationIndexSignature.type);
       indexSignature = `${key}: ${obj}; `;
     }
     const types =
       model.children &&
       model.children.map((obj) => {
-        return `\`${obj.name}${obj.flags.isOptional ? '?' : ''
-          }\`: ${Handlebars.helpers.type.call(
-            obj.signatures || obj.children ? obj : obj.type,
-          )} ${obj.defaultValue && obj.defaultValue !== '...'
-            ? `= ${escapeChars(obj.defaultValue)}`
+        return `\`${obj.name}${
+          obj.flags.isOptional ? '?' : ''
+        }\`: ${Handlebars.helpers.type(
+          obj.signatures || obj.children ? obj : obj.type,
+        )} ${
+          obj.defaultValue && obj.defaultValue !== '...'
+            ? `= ${Handlebars.helpers.escapeChars(obj.defaultValue)}`
             : ''
-          }`;
+        }`;
       });
-    return `{ ${indexSignature ? indexSignature : ''}${types ? types.join('; ') : ''
-      } }${model.defaultValue && model.defaultValue !== '...'
-        ? `= ${escapeChars(model.defaultValue)}`
+    return `{ ${indexSignature ? indexSignature : ''}${
+      types ? types.join('; ') : ''
+    } }${
+      model.defaultValue && model.defaultValue !== '...'
+        ? `= ${Handlebars.helpers.escapeChars(model.defaultValue)}`
         : ''
-      }`;
+    }`;
   }
   return '{}';
 }
@@ -169,25 +169,25 @@ export function getFunctionType(modelSignatures: SignatureReflection[]) {
   const functions = modelSignatures.map((fn) => {
     const typeParams = fn.typeParameters
       ? `<${fn.typeParameters
-        .map((typeParameter) => typeParameter.name)
-        .join(', ')}\\>`
+          .map((typeParameter) => typeParameter.name)
+          .join(', ')}\\>`
       : [];
     const params = fn.parameters
       ? fn.parameters.map((param) => {
-        return `${param.flags.isRest ? '...' : ''}\`${param.name}${param.flags.isOptional ? '?' : ''
-          }\`: ${Handlebars.helpers.type.call(
-            param.type ? param.type : param,
-          )}`;
-      })
+          return `${param.flags.isRest ? '...' : ''}\`${param.name}${
+            param.flags.isOptional ? '?' : ''
+          }\`: ${Handlebars.helpers.type(param.type ? param.type : param)}`;
+        })
       : [];
-    const returns = Handlebars.helpers.type.call(fn.type);
+    const returns = Handlebars.helpers.type(fn.type);
     return typeParams + `(${params.join(', ')}) => ${returns}`;
   });
   return functions.join('');
 }
 
 function getReferenceType(model: ReferenceType, emphasis) {
-  const externalUrl = Handlebars.helpers.attemptExternalResolution(model);
+  //const externalUrl = context.attemptExternalResolution(model);
+  const externalUrl = false;
   if (model.reflection || (model.name && model.typeArguments)) {
     const reflection: string[] = [];
 
@@ -207,7 +207,7 @@ function getReferenceType(model: ReferenceType, emphasis) {
     if (model.typeArguments && model.typeArguments.length > 0) {
       reflection.push(
         `<${model.typeArguments
-          .map((typeArgument) => Handlebars.helpers.type.call(typeArgument))
+          .map((typeArgument) => Handlebars.helpers.type(typeArgument))
           .join(', ')}\\>`,
       );
     }
@@ -217,11 +217,11 @@ function getReferenceType(model: ReferenceType, emphasis) {
     ? externalUrl
       ? `[${`\`${model.name}\``}]( ${externalUrl} )`
       : `\`${model.name}\``
-    : escapeChars(model.name);
+    : Handlebars.helpers.escapeChars(model.name);
 }
 
 function getArrayType(model: ArrayType, emphasis: boolean) {
-  const arrayType = Handlebars.helpers.type.call(
+  const arrayType = Handlebars.helpers.type(
     model.elementType,
     'none',
     emphasis,
@@ -233,60 +233,60 @@ function getArrayType(model: ArrayType, emphasis: boolean) {
 
 function getUnionType(model: UnionType, emphasis: boolean) {
   return model.types
-    .map((unionType) =>
-      Handlebars.helpers.type.call(unionType, 'none', emphasis),
-    )
+    .map((unionType) => Handlebars.helpers.type(unionType, 'none', emphasis))
     .join(` \\| `);
 }
 
 function getIntersectionType(model: IntersectionType) {
   return model.types
-    .map((intersectionType) => Handlebars.helpers.type.call(intersectionType))
+    .map((intersectionType) => Handlebars.helpers.type(intersectionType))
     .join(' & ');
 }
 
 function getTupleType(model: TupleType) {
   return `[${model.elements
-    .map((element) => Handlebars.helpers.type.call(element))
+    .map((element) => Handlebars.helpers.type(element))
     .join(', ')}]`;
 }
 
 function getIntrinsicType(model: IntrinsicType, emphasis: boolean) {
-  return emphasis ? `\`${model.name}\`` : escapeChars(model.name);
+  return emphasis
+    ? `\`${model.name}\``
+    : Handlebars.helpers.escapeChars(model.name);
 }
 
 function getTypeOperatorType(model: TypeOperatorType) {
-  return `${model.operator} ${Handlebars.helpers.type.call(model.target)}`;
+  return `${model.operator} ${Handlebars.helpers.type(model.target)}`;
 }
 
 function getQueryType(model: QueryType) {
-  return `typeof ${Handlebars.helpers.type.call(model.queryType)}`;
+  return `typeof ${Handlebars.helpers.type(model.queryType)}`;
 }
 
 function getInferredType(model: InferredType) {
-  return `infer ${escapeChars(model.name)}`;
+  return `infer ${Handlebars.helpers.escapeChars(model.name)}`;
 }
 
 function getUnknownType(model: UnknownType) {
-  return escapeChars(model.name);
+  return Handlebars.helpers.escapeChars(model.name);
 }
 
 function getConditionalType(model: ConditionalType) {
   const md: string[] = [];
   if (model.checkType) {
-    md.push(Handlebars.helpers.type.call(model.checkType));
+    md.push(Handlebars.helpers.type(model.checkType));
   }
   md.push('extends');
   if (model.extendsType) {
-    md.push(Handlebars.helpers.type.call(model.extendsType));
+    md.push(Handlebars.helpers.type(model.extendsType));
   }
   md.push('?');
   if (model.trueType) {
-    md.push(Handlebars.helpers.type.call(model.trueType));
+    md.push(Handlebars.helpers.type(model.trueType));
   }
   md.push(':');
   if (model.falseType) {
-    md.push(Handlebars.helpers.type.call(model.falseType));
+    md.push(Handlebars.helpers.type(model.falseType));
   }
   return md.join(' ');
 }
@@ -294,10 +294,10 @@ function getConditionalType(model: ConditionalType) {
 function getIndexAccessType(model: IndexedAccessType) {
   const md: string[] = [];
   if (model.objectType) {
-    md.push(Handlebars.helpers.type.call(model.objectType));
+    md.push(Handlebars.helpers.type(model.objectType));
   }
   if (model.indexType) {
-    md.push(`[${Handlebars.helpers.type.call(model.indexType)}]`);
+    md.push(`[${Handlebars.helpers.type(model.indexType)}]`);
   }
   return md.join('');
 }

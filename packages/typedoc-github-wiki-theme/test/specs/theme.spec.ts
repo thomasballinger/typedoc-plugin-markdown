@@ -1,26 +1,36 @@
 import * as fs from 'fs';
-
-import { TestApp } from 'typedoc-plugin-markdown/test/test-app';
-
-let testApp: TestApp;
+import { ProjectReflection } from 'typedoc';
+import { MarkdownThemeRenderContext } from 'typedoc-plugin-markdown';
 
 describe(`Theme:`, () => {
-  describe(`sidebar`, () => {
+  describe(`Exports`, () => {
+    let bootstrap: {
+      project: ProjectReflection;
+      context: MarkdownThemeRenderContext;
+      outDir: string;
+    };
     test(`should write sidebar for exports'`, async () => {
-      testApp = new TestApp(['theme.ts']);
-      await testApp.bootstrap({
-        theme: 'github-wiki',
+      bootstrap = global.bootstrap('theme.ts', {
+        options: { theme: 'github-wiki' },
+        plugin: ['typedoc-plugin-markdown', './dist'],
       });
-      const sidebarFile = fs.readFileSync(testApp.tmpobj.name + '/_Sidebar.md');
+      const sidebarFile = fs.readFileSync(bootstrap.outDir + '/_Sidebar.md');
       expect(sidebarFile.toString()).toMatchSnapshot();
     });
+  });
+
+  describe(`Exports`, () => {
+    let bootstrap: {
+      project: ProjectReflection;
+      context: MarkdownThemeRenderContext;
+      outDir: string;
+    };
     test(`should write sidebar for modules'`, async () => {
-      testApp = new TestApp(['breadcrumbs.ts', 'theme.ts']);
-      await testApp.bootstrap({
-        theme: 'github-wiki',
-        readme: 'none',
+      bootstrap = global.bootstrap(['breadcrumbs.ts', 'theme.ts'], {
+        options: { theme: 'github-wiki' },
+        plugin: ['typedoc-plugin-markdown', './dist'],
       });
-      const sidebarFile = fs.readFileSync(testApp.tmpobj.name + '/_Sidebar.md');
+      const sidebarFile = fs.readFileSync(bootstrap.outDir + '/_Sidebar.md');
       expect(sidebarFile.toString()).toMatchSnapshot();
     });
   });

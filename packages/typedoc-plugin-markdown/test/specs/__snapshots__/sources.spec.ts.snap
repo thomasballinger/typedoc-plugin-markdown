@@ -3,7 +3,7 @@
 exports[`Sources: should display implementation of sources' 1`] = `
 "#### Implementation of
 
-[SomeInterface](SomeInterface.md).[prop](SomeInterface.md#prop)
+[object Object]
 
 #### Defined in
 
@@ -25,7 +25,7 @@ sources.ts:2
 exports[`Sources: should display overide sources' 1`] = `
 "#### Overrides
 
-[SomeClass](../classes/SomeClass.md).[prop](../classes/SomeClass.md#prop)
+[object Object]
 
 #### Defined in
 

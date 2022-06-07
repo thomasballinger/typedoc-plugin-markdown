@@ -1,0 +1,5 @@
+# {{#ifEquals @globalsDocument model.url}}A{{model.name}}{{else}}{{model.kindString}}: B{{url}}{{/ifEquals~}}
+
+{{#if model.typeParameters}}
+<{{#each model.typeParameters}}{{{escapeChars name}}}{{#unless @last}}, {{/unless}}{{/each}}\>
+{{/if}}

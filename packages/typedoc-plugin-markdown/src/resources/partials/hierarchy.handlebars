@@ -1,0 +1,13 @@
+{{#each types}}
+{{#if ../isTarget}}
+{{{spaces ../level}}}- **`{{this}}`**
+{{else}}
+{{{spaces ../level}}}- {{{type this}}}{{/if}}
+{{#if @last}}
+{{#with ../next}}
+{{~#iterate this 'level' ../../level~}}
+{{~> hierarchy level=level~}}
+{{~/iterate~}}
+{{~/with~}}
+{{~/if~}}
+{{~/each~}}

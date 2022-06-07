@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Theme: sidebar should write sidebar for exports' 1`] = `
-"## typedoc-plugin-markdown
+exports[`Theme: Exports should write sidebar for exports' 1`] = `
+"## typedoc-plugin-markdown-test
 
 - [Home](../wiki/Home)
 - [Exports](../wiki/Exports)
@@ -13,9 +13,10 @@ exports[`Theme: sidebar should write sidebar for exports' 1`] = `
 "
 `;
 
-exports[`Theme: sidebar should write sidebar for modules' 1`] = `
-"## typedoc-plugin-markdown
+exports[`Theme: Exports should write sidebar for modules' 1`] = `
+"## typedoc-plugin-markdown-test
 
+- [Home](../wiki/Home)
 
 ### Modules
 

@@ -1,0 +1,21 @@
+{{#unless @options.hideBreadcrumbs}}
+
+{{> breadcrumbs}}
+
+{{/unless}}
+
+{{#unless @options.hidePageTitle}}
+
+{{> reflection.title}}
+
+{{/unless}}
+
+{{#if this.model.parent.parent}}
+
+{{~#reflectionTree this~}}
+
+{{#each tree}}{{#if @last}}{{name}}{{else}}[{{name}}]({{{urlTo .}}}).{{/if}}{{/each}} 
+
+{{~/reflectionTree~}}
+
+{{/if}}

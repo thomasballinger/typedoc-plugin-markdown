@@ -12,8 +12,8 @@ const config = {
     [
       path.resolve(__dirname, '..', '..', 'dist'),
       {
-        entryPoints: '../../../typedoc-plugin-markdown/test/stubs/src/index.ts',
-        tsconfig: '../../../typedoc-plugin-markdown/test/stubs/tsconfig.json',
+        entryPoints: '../../../../test/stubs/src/index.ts',
+        tsconfig: '../../../../test/stubs/tsconfig.json',
         sidebar: {
           autoConfiguration: true,
           position: 0,

@@ -1,9 +1,8 @@
-import * as Handlebars from 'handlebars';
-import { DeclarationReflection } from 'typedoc';
+import * as Handlebars from 'handlebars/runtime';
+import { ProjectReflection } from 'typedoc';
+import { MarkdownThemeRenderContext } from 'typedoc-plugin-markdown';
 
-import { TestApp } from '../test-app';
-
-const getProp = (reflection: DeclarationReflection) => {
+const getProp = (reflection: any) => {
   const prop = reflection.findReflectionByName('prop');
   prop.sources = prop.sources.map((source) => {
     delete source.url;
@@ -13,37 +12,40 @@ const getProp = (reflection: DeclarationReflection) => {
 };
 
 describe(`Sources:`, () => {
-  let testApp: TestApp;
+  let bootstrap: {
+    project: ProjectReflection;
+    context: MarkdownThemeRenderContext;
+  };
   let partial: Handlebars.TemplateDelegate;
+
   beforeAll(async () => {
-    testApp = new TestApp(['sources.ts']);
-    await testApp.bootstrap();
-    partial = TestApp.getPartial('member.sources');
+    bootstrap = global.bootstrap('sources.ts');
+    partial = global.getTemplate(bootstrap.context, 'member.sources');
   });
 
   test(`should display implementation of sources'`, () => {
     expect(
-      TestApp.compileTemplate(
+      global.renderTemplate(
         partial,
-        getProp(testApp.findReflection('SomeClass')),
+        getProp(bootstrap.project.findReflectionByName('SomeClass')),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should display inherited sources'`, () => {
     expect(
-      TestApp.compileTemplate(
+      global.renderTemplate(
         partial,
-        getProp(testApp.findReflection('AnotherInterface')),
+        getProp(bootstrap.project.findReflectionByName('AnotherInterface')),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should display overide sources'`, () => {
     expect(
-      TestApp.compileTemplate(
+      global.renderTemplate(
         partial,
-        getProp(testApp.findReflection('AnotherClass')),
+        getProp(bootstrap.project.findReflectionByName('AnotherClass')),
       ),
     ).toMatchSnapshot();
   });

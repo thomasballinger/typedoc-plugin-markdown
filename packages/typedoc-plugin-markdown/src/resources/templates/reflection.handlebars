@@ -1,0 +1,93 @@
+{{> header}}
+
+{{#with model}}
+
+{{#if hasComment}}
+
+{{> comment}}
+
+{{/if}}
+
+{{/with}}
+
+{{#if model.typeParameters}}
+
+## Type parameters
+
+{{#withTypeParameterTable model.typeParameters}}
+{{> table }}
+{{/withTypeParameterTable}}
+
+{{/if}}
+
+{{#ifShowTypeHierarchy this}}
+
+## Hierarchy
+
+{{#with model.typeHierarchy}}
+
+{{>hierarchy level=0}}
+
+{{/with}}
+
+{{/ifShowTypeHierarchy}}
+
+{{#if model.implementedTypes}}
+
+## Implements
+
+{{#each model.implementedTypes}}
+- {{{ type this }}}
+{{/each}}
+
+{{/if}}
+
+{{#if model.implementedBy}}
+
+## Implemented by
+
+{{#each model.implementedBy}}
+- {{{ type this }}}
+{{/each}}
+
+{{/if}}
+
+{{#if model.signatures}}
+
+## Callable
+
+{{#with model}}
+
+{{#each signatures}}
+
+### {{name}}
+
+{{> member.signature showSources=true }}
+
+{{/each}}
+
+{{/with}}
+
+{{/if}}
+
+{{#if model.indexSignature}}
+
+## Indexable
+
+{{#with model}}
+
+{{#with indexSignature}}
+
+{{> index-signature}}
+
+{{/with}}
+
+{{/with}}
+
+{{/if}}
+
+{{#with model}}
+
+{{> main}}
+
+{{/with}}

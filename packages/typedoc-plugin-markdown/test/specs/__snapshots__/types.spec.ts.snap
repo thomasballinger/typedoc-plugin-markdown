@@ -26,7 +26,7 @@ exports[`Types: should compile 'union' of string literals types' 1`] = `
 "
 `;
 
-exports[`Types: should compile collapsed 'function' type ' 1`] = `""`;
+exports[`Types: should compile collapsed 'function' type ' 1`] = `"\`fn\`"`;
 
 exports[`Types: should compile collapsed 'literal' type' 1`] = `"\`Object\`"`;
 
@@ -34,7 +34,7 @@ exports[`Types: should compile collapsed 'objectLiteralType' type' 1`] = `"\`Obj
 
 exports[`Types: should compile conditional type ' 1`] = `"\`T\` extends \`string\` ? \`\`\\"string\\"\`\` : \`T\` extends \`number\` ? \`\`\\"number\\"\`\` : \`T\` extends \`boolean\` ? \`\`\\"boolean\\"\`\` : \`T\` extends \`undefined\` ? \`\`\\"undefined\\"\`\` : \`\`\\"object\\"\`\`"`;
 
-exports[`Types: should compile expanded 'function' type ' 1`] = `""`;
+exports[`Types: should compile expanded 'function' type ' 1`] = `"<T\\\\>(\`arg\`: \`T\`) => \`T\`"`;
 
 exports[`Types: should compile expanded 'literal' type' 1`] = `"{ \`valueA?\`: \`number\` ; \`valueB?\`: \`boolean\` ; \`valueX\`: { \`valueA\`: \`number\`[] ; \`valueY\`: (\`z\`: \`string\`) => { \`a\`: \`string\` ; \`b\`: \`string\`  } ; \`valueZ\`: \`string\`  } ; \`valueY\`: () => \`string\` ; \`valueZ\`: \`string\`  }"`;
 

@@ -9,13 +9,13 @@ import {
   RendererEvent,
   UrlMapping,
 } from 'typedoc';
-import { getKindPlural } from 'typedoc-plugin-markdown/dist/groups';
-import { MarkdownTheme } from 'typedoc-plugin-markdown/dist/theme';
 import {
   FrontMatterVars,
-  getPageTitle,
+  getKindPlural,
+  MarkdownTheme,
   prependYAML,
-} from 'typedoc-plugin-markdown/dist/utils/front-matter';
+} from 'typedoc-plugin-markdown';
+import { DocusaurusThemeContext } from './theme-context';
 import { FrontMatter, SidebarOptions } from './types';
 
 const CATEGORY_POSITION = {
@@ -46,6 +46,8 @@ export class DocusaurusTheme extends MarkdownTheme {
   @BindOption('frontmatter')
   frontmatter!: FrontMatter;
 
+  private _contextCache?: DocusaurusThemeContext;
+
   constructor(renderer: Renderer) {
     super(renderer);
 
@@ -55,14 +57,12 @@ export class DocusaurusTheme extends MarkdownTheme {
     });
   }
 
-  getRelativeUrl(url: string) {
-    const re = new RegExp(this.includeExtension === 'true' ? '' : '.md', 'g');
-    const relativeUrl = super.getRelativeUrl(url).replace(re, '');
-    if (path.basename(relativeUrl).startsWith('index')) {
-      // always remove the extension for the index or else it creates weird paths like `../.md`
-      return relativeUrl.replace('index', '').replace('.md', '');
-    }
-    return relativeUrl;
+  override getRenderContext() {
+    this._contextCache ||= new DocusaurusThemeContext(
+      this,
+      this.application.options,
+    );
+    return this._contextCache;
   }
 
   onPageEnd(page: PageEvent<DeclarationReflection>) {
@@ -145,7 +145,7 @@ export class DocusaurusTheme extends MarkdownTheme {
         : this.sidebar.readmeLabel;
     }
 
-    if (page.url === this.globalsFile) {
+    if (page.url === this.getRenderContext().globalsDocument) {
       return indexLabel;
     }
 
@@ -156,7 +156,7 @@ export class DocusaurusTheme extends MarkdownTheme {
     if (page.url === this.entryDocument) {
       return page.url === page.project.url ? '0.5' : '0';
     }
-    if (page.url === this.globalsFile) {
+    if (page.url === this.getRenderContext().globalsDocument) {
       return '0.5';
     }
     if (page.model.getFullName().split('.').length === 1) {
@@ -174,7 +174,7 @@ export class DocusaurusTheme extends MarkdownTheme {
     if (page.url === this.entryDocument && page.url !== page.project.url) {
       return readmeTitle;
     }
-    return getPageTitle(page);
+    return this.getRenderContext().getPageTitle(page);
   }
 
   get mappings() {
@@ -187,10 +187,6 @@ export class DocusaurusTheme extends MarkdownTheme {
       }
       return mapping;
     });
-  }
-
-  get globalsFile() {
-    return 'modules.md';
   }
 }
 

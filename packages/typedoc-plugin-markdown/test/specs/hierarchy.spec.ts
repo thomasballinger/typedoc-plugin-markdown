@@ -1,27 +1,26 @@
-import * as Handlebars from 'handlebars';
-
-import { TestApp } from '../test-app';
+import * as Handlebars from 'handlebars/runtime';
+import { ProjectReflection } from 'typedoc';
 
 describe(`Hierarchy:`, () => {
-  let testApp: TestApp;
+  let project: ProjectReflection;
   let helper: Handlebars.HelperDelegate;
 
   beforeAll(async () => {
-    testApp = new TestApp(['hierarchy.ts']);
-    await testApp.bootstrap();
-    helper = Handlebars.helpers.hierarchy;
+    const bootstrap = global.bootstrap('hierarchy.ts');
+    project = bootstrap.project;
+    helper = bootstrap.context.Handlebars.helpers.hierarchy;
   });
   test(`should compile type hierarchy`, () => {
-    const reflection = testApp.findReflection('ParentClass');
+    const reflection = project.findReflectionByName('ParentClass') as any;
     expect(
-      TestApp.compileHelper(helper, reflection.typeHierarchy, 0),
+      global.compileHelper(helper, reflection.typeHierarchy, 0),
     ).toMatchSnapshot();
   });
 
   test(`should compile nested type hierarchy`, () => {
-    const reflection = testApp.findReflection('ChildClassA');
+    const reflection = project.findReflectionByName('ChildClassA') as any;
     expect(
-      TestApp.compileHelper(helper, reflection.typeHierarchy, 0),
+      global.compileHelper(helper, reflection.typeHierarchy, 0),
     ).toMatchSnapshot();
   });
 });

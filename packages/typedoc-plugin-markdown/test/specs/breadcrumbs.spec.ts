@@ -1,26 +1,27 @@
-import * as Handlebars from 'handlebars';
-import { Reflection } from 'typedoc';
-
-import { TestApp } from '../test-app';
+import { ProjectReflection, Reflection } from 'typedoc';
+import { MarkdownThemeRenderContext } from '../../src';
 
 describe(`Breadcrumbs:`, () => {
-  let moduleReflection: Reflection;
-  let classReflection: Reflection;
-
   describe(`(with readme)`, () => {
-    let testApp: TestApp;
+    let project: ProjectReflection;
+    let context: MarkdownThemeRenderContext;
+    let moduleReflection: Reflection;
+    let classReflection: Reflection;
     beforeAll(async () => {
-      testApp = new TestApp(['breadcrumbs.ts']);
-      await testApp.bootstrap();
-      moduleReflection = testApp.project.children[0];
-      classReflection = testApp.project.findReflectionByName('Breadcrumbs');
+      const bootstrap = global.bootstrap('breadcrumbs.ts');
+      project = bootstrap.project;
+      context = bootstrap.context;
+      moduleReflection = (project as any)?.children[0];
+      classReflection = project.findReflectionByName(
+        'Breadcrumbs',
+      ) as Reflection;
     });
 
     test(`should compile README breadcrumbs'`, () => {
       expect(
-        Handlebars.helpers.breadcrumbs.call({
-          project: testApp.project,
-          model: testApp.project,
+        context.Handlebars.helpers.breadcrumbs({
+          project: project,
+          model: project,
           url: 'README.md',
         }),
       ).toMatchSnapshot();
@@ -28,9 +29,9 @@ describe(`Breadcrumbs:`, () => {
 
     test(`should compile entryPoint (globals) breadcrumbs'`, () => {
       expect(
-        Handlebars.helpers.breadcrumbs.call({
-          project: testApp.project,
-          model: testApp.project,
+        context.Handlebars.helpers.breadcrumbs({
+          project: project,
+          model: project,
           url: 'globals.md',
         }),
       ).toMatchSnapshot();
@@ -38,8 +39,8 @@ describe(`Breadcrumbs:`, () => {
 
     test(`should compile module breadcrumbs'`, () => {
       expect(
-        Handlebars.helpers.breadcrumbs.call({
-          project: testApp.project,
+        context.Handlebars.helpers.breadcrumbs({
+          project: project,
           model: moduleReflection,
           url: moduleReflection.url,
         }),
@@ -47,8 +48,8 @@ describe(`Breadcrumbs:`, () => {
     });
     test(`should compile class breadcrumbs'`, () => {
       expect(
-        Handlebars.helpers.breadcrumbs.call({
-          project: testApp.project,
+        context.Handlebars.helpers.breadcrumbs({
+          project: project,
           model: classReflection,
           url: classReflection.url,
         }),
@@ -56,18 +57,26 @@ describe(`Breadcrumbs:`, () => {
     });
   });
   describe(`(without readme)`, () => {
-    let testApp: TestApp;
+    let project: ProjectReflection;
+    let context: MarkdownThemeRenderContext;
+    let moduleReflection: Reflection;
+    let classReflection: Reflection;
     beforeAll(async () => {
-      testApp = new TestApp(['breadcrumbs.ts']);
-      await testApp.bootstrap({ readme: 'none' });
-      moduleReflection = testApp.project.children[0];
-      classReflection = testApp.project.findReflectionByName('Breadcrumbs');
+      const bootstrap = global.bootstrap('breadcrumbs.ts', {
+        options: { readme: 'none' },
+      });
+      project = bootstrap.project;
+      context = bootstrap.context;
+      moduleReflection = (project as any)?.children[0];
+      classReflection = project.findReflectionByName(
+        'Breadcrumbs',
+      ) as Reflection;
     });
 
     test(`should compile module breadcrumbs'`, () => {
       expect(
-        Handlebars.helpers.breadcrumbs.call({
-          project: testApp.project,
+        context.Handlebars.helpers.breadcrumbs({
+          project: project,
           model: moduleReflection,
           url: moduleReflection.url,
         }),
@@ -75,8 +84,8 @@ describe(`Breadcrumbs:`, () => {
     });
     test(`should compile class breadcrumbs'`, () => {
       expect(
-        Handlebars.helpers.breadcrumbs.call({
-          project: testApp.project,
+        context.Handlebars.helpers.breadcrumbs({
+          project: project,
           model: classReflection,
           url: classReflection.url,
         }),

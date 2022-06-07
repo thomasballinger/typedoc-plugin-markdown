@@ -1,0 +1,11 @@
+{{~#if @hasReadmeFile}}
+
+[Readme]({{{relativeURL @options.entryDocument}}}) \| {{ ' ' }}[{{@globalsName}}]({{{relativeURL @project.url}}})
+
+{{~/if~}}
+
+{{~#reflectionTree this~}}
+
+{{#each tree}} {{#if @first}} / {{/if}} [{{name}}]({{{urlTo .}}}) {{#unless @last}} / {{/unless}} {{/each}} 
+
+{{~/reflectionTree~}}

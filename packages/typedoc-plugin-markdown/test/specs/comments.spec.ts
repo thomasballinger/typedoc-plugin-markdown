@@ -1,69 +1,85 @@
-import * as Handlebars from 'handlebars';
-
-import { TestApp } from '../test-app';
+import * as Handlebars from 'handlebars/runtime';
+import * as path from 'path';
+import { ProjectReflection } from 'typedoc';
 
 describe(`Comments:`, () => {
-  let testApp: TestApp;
-  let partial: Handlebars.TemplateDelegate;
+  let project: ProjectReflection;
+  let template: Handlebars.TemplateDelegate;
   beforeAll(async () => {
-    testApp = new TestApp(['comments.ts']);
-    await testApp.bootstrap({
-      includes: './test/stubs/inc',
-      media: './test/stubs/media',
+    const bootstrap = global.bootstrap('comments.ts', {
+      options: {
+        includes: path.join(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          '..',
+          'test/stubs/inc',
+        ),
+        media: path.join(
+          __dirname,
+          '..',
+          '..',
+          '..',
+          '..',
+          './test/stubs/media',
+        ),
+      },
     });
-    partial = TestApp.getPartial('comment');
+    project = bootstrap.project;
+    template = global.getTemplate(bootstrap.context, 'comment');
   });
 
   test(`should build @link references'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentWithDocLinks'),
+      global.renderTemplate(
+        template,
+        project.findReflectionByName('commentWithDocLinks'),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should convert symbols brackets to symbol links'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithSymbolLinks'),
+      global.renderTemplate(
+        template,
+        project.findReflectionByName('commentsWithSymbolLinks'),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should convert comments with fenced block'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithFencedBlock'),
+      global.renderTemplate(
+        template,
+        project.findReflectionByName('commentsWithFencedBlock'),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should convert comments with includes'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithIncludes'),
+      global.renderTemplate(
+        template,
+        project.findReflectionByName('commentsWithIncludes'),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should convert comments with tags'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithTags'),
+      global.renderTemplate(
+        template,
+        project.findReflectionByName('commentsWithTags'),
       ),
     ).toMatchSnapshot();
   });
 
   test(`should allow html in comments'`, () => {
     expect(
-      TestApp.compileTemplate(
-        partial,
-        testApp.findReflection('commentsWithHTML'),
+      global.renderTemplate(
+        template,
+        project.findReflectionByName('commentsWithHTML'),
       ),
     ).toMatchSnapshot();
   });

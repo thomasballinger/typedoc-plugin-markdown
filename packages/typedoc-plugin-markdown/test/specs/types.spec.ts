@@ -1,61 +1,72 @@
-import * as Handlebars from 'handlebars';
-
-import { TestApp } from '../test-app';
+import * as Handlebars from 'handlebars/runtime';
+import { ProjectReflection } from 'typedoc';
+import { MarkdownThemeRenderContext } from 'typedoc-plugin-markdown';
 
 describe(`Types:`, () => {
-  let testApp: TestApp;
+  let bootstrap: {
+    project: ProjectReflection;
+    context: MarkdownThemeRenderContext;
+  };
+  let helper: Handlebars.HelperDelegate;
 
   beforeAll(async () => {
-    testApp = new TestApp(['types.ts']);
-    await testApp.bootstrap();
+    bootstrap = global.bootstrap('types.ts');
+    helper = bootstrap.context.Handlebars.helpers.type;
   });
 
   test(`should compile 'array' type'`, () => {
     expect(
-      TestApp.compileHelper(
-        Handlebars.helpers.type,
-        testApp.findReflection('arrayType').type,
+      global.compileHelper(
+        helper,
+        (bootstrap.project.findReflectionByName('arrayType') as any).type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile 'stringLiteral' type'`, () => {
     expect(
-      TestApp.compileHelper(
-        Handlebars.helpers.type,
-        testApp.findReflection('stringLiteralType').type,
+      global.compileHelper(
+        helper,
+        (bootstrap.project.findReflectionByName('stringLiteralType') as any)
+          .type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile 'union' of string literals types'`, () => {
     expect(
-      TestApp.compileHelper(
-        Handlebars.helpers.type,
-        testApp.findReflection('unionType').type,
+      global.compileHelper(
+        helper,
+        (bootstrap.project.findReflectionByName('unionType') as any).type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile 'union' of literal declarations`, () => {
     expect(
-      TestApp.compileHelper(
-        Handlebars.helpers.type,
-        testApp.findReflection('unionTypeWithSymbolsDeclarations').type,
+      global.compileHelper(
+        helper,
+        (
+          bootstrap.project.findReflectionByName(
+            'unionTypeWithSymbolsDeclarations',
+          ) as any
+        ).type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile intrinsic type'`, () => {
     expect(
-      Handlebars.helpers.type.call(testApp.findReflection('stringType').type),
+      helper(
+        (bootstrap.project.findReflectionByName('stringType') as any).type,
+      ),
     ).toMatchSnapshot();
   });
 
   test(`should compile collapsed 'literal' type'`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('literalType').type,
+      helper(
+        (bootstrap.project.findReflectionByName('literalType') as any).type,
         'all',
       ),
     ).toMatchSnapshot();
@@ -63,14 +74,16 @@ describe(`Types:`, () => {
 
   test(`should compile expanded 'literal' type'`, () => {
     expect(
-      Handlebars.helpers.type.call(testApp.findReflection('literalType').type),
+      helper(
+        (bootstrap.project.findReflectionByName('literalType') as any).type,
+      ),
     ).toMatchSnapshot();
   });
 
   test(`should compile collapsed 'objectLiteralType' type'`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('objectLiteralType'),
+      helper(
+        bootstrap.project.findReflectionByName('objectLiteralType') as any,
         'object',
       ),
     ).toMatchSnapshot();
@@ -78,28 +91,28 @@ describe(`Types:`, () => {
 
   test(`should compile expanded 'objectLiteralType' type'`, () => {
     expect(
-      Handlebars.helpers.type.call(testApp.findReflection('objectLiteralType')),
+      helper(bootstrap.project.findReflectionByName('objectLiteralType')),
     ).toMatchSnapshot();
   });
-
   test(`should compile 'tuple' type'`, () => {
     expect(
-      Handlebars.helpers.type.call(testApp.findReflection('tupleType').type),
+      helper((bootstrap.project.findReflectionByName('tupleType') as any).type),
     ).toMatchSnapshot();
   });
 
   test(`should compile 'intersection' type'`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('intersectionType').type,
+      helper(
+        (bootstrap.project.findReflectionByName('intersectionType') as any)
+          .type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile collapsed 'function' type '`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('functionReflectionType').type,
+      helper(
+        bootstrap.project.findReflectionByName('functionReflectionType') as any,
         'function',
       ),
     ).toMatchSnapshot();
@@ -107,48 +120,58 @@ describe(`Types:`, () => {
 
   test(`should compile expanded 'function' type '`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('functionReflectionType').type,
+      helper(
+        bootstrap.project.findReflectionByName('functionReflectionType') as any,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile 'typeOperator' type '`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('typeOperatorType').type,
+      helper(
+        (bootstrap.project.findReflectionByName('typeOperatorType') as any)
+          .type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile unionType with object literal type '`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('objectLiteralUnionType').type,
+      helper(
+        (
+          bootstrap.project.findReflectionByName(
+            'objectLiteralUnionType',
+          ) as any
+        ).type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should compile conditional type '`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('ConditionalType').type,
+      helper(
+        (bootstrap.project.findReflectionByName('ConditionalType') as any).type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should resolve external refs'`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('externalReference').type,
+      helper(
+        (bootstrap.project.findReflectionByName('externalReference') as any)
+          .type,
       ),
     ).toMatchSnapshot();
   });
 
   test(`should resolve external refs with type params'`, () => {
     expect(
-      Handlebars.helpers.type.call(
-        testApp.findReflection('externalReferenceInsideTypeParams').type,
+      helper(
+        (
+          bootstrap.project.findReflectionByName(
+            'externalReferenceInsideTypeParams',
+          ) as any
+        ).type,
       ),
     ).toMatchSnapshot();
   });

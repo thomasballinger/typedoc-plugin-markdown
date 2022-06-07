@@ -1,26 +1,23 @@
 import * as fs from 'fs';
-
 import {
-  ReflectionKind,
-  PageEvent,
-  RendererEvent,
-  Renderer,
+  BindOption,
   ContainerReflection,
+  PageEvent,
+  ReflectionKind,
+  Renderer,
+  RendererEvent,
 } from 'typedoc';
-import { MarkdownTheme } from 'typedoc-plugin-markdown';
-import { getKindPlural } from 'typedoc-plugin-markdown/dist/groups';
 import {
-  getPageTitle,
+  getKindPlural,
+  MarkdownTheme,
   prependYAML,
-} from 'typedoc-plugin-markdown/dist/utils/front-matter';
+} from 'typedoc-plugin-markdown';
 
 export class HugoTheme extends MarkdownTheme {
+  @BindOption('indexTitle')
+  indexTitle!: string;
   constructor(renderer: Renderer) {
     super(renderer);
-
-    this.entryDocument = '_index.md';
-    this.hideBreadcrumbs = true;
-    this.hidePageTitle = true;
 
     this.listenTo(this.owner, {
       [PageEvent.END]: this.onHugoPageEnd,
@@ -74,7 +71,9 @@ export class HugoTheme extends MarkdownTheme {
     if (page.url === 'modules.md' && this.indexTitle) {
       return this.indexTitle;
     }
-    return linkTitle ? page.model.name : getPageTitle(page);
+    return linkTitle
+      ? page.model.name
+      : this.getRenderContext().getPageTitle(page);
   }
 
   getSlug(page: PageEvent) {

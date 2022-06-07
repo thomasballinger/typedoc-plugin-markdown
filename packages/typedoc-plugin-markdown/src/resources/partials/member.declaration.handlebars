@@ -1,0 +1,65 @@
+{{> member.declaration.title}}
+
+{{> comment}}
+
+{{#if typeParameters}}
+
+#### Type parameters
+
+{{#withTypeParameterTable typeParameters}}
+{{> table }}
+{{/withTypeParameterTable}}
+
+{{/if}}
+
+{{#if type.declaration}}
+
+{{#if type.declaration.indexSignature}}
+
+{{#with type.declaration.indexSignature}}
+
+#### Index signature
+
+{{> index-signature}}
+
+{{/with}}
+
+{{/if}}
+
+{{#if type.declaration.signatures}}
+
+{{#if type.declaration.children}}
+
+#### Call signature
+
+{{else}}
+
+#### Type declaration
+
+{{/if}}
+
+{{#each type.declaration.signatures}}
+
+{{> member.signature showSources=false }}
+
+{{/each}}
+
+{{/if}}
+
+{{#if type.declaration.children}}
+
+{{#with type.declaration}}
+
+#### Type declaration
+
+{{/with}}
+
+{{#withPropertyTable type.declaration.children}}
+{{> table }}
+{{/withPropertyTable}}
+
+{{/if}}
+
+{{/if}}
+
+{{> member.sources}}

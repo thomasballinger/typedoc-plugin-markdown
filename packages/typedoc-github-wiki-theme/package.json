@@ -19,9 +19,9 @@
     "lint": "eslint ./src --ext .ts",
     "prepublishOnly": "yarn run lint && yarn run build && yarn run test",
     "build": "rm -rf ./dist && tsc",
-    "test": "jest --colors",
+    "test": "jest --colors --runInBand",
     "build-and-test": "yarn run build && yarn run test",
-    "demo": "rm -rf ./demo && yarn run build && typedoc --options ../typedoc-plugin-markdown/demo.options.json  --tsconfig ../typedoc-plugin-markdown/test/stubs/tsconfig.json --theme github-wiki --out ./demo"
+    "demo": "rm -rf ./demo && yarn run build && typedoc --plugin typedoc-plugin-markdown --plugin ./dist --options ../../test/typedoc-options.json --theme github-wiki --out ./demo"
   },
   "author": "Thomas Grey",
   "license": "MIT",

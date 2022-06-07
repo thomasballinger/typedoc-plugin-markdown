@@ -9,7 +9,7 @@ tmp
 html
 samples
 demo
-fixtures
+test/docs
 
 # dependencies
 node_modules

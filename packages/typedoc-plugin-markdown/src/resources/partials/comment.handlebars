@@ -1,0 +1,25 @@
+{{#with comment}}
+
+{{#if shortText}}
+
+{{{comment shortText}}}
+
+{{/if}}
+
+{{#if text}}
+
+{{{comment text}}}
+
+{{/if}}
+
+{{#if tags}}
+
+{{#each tags}}
+
+ **`{{tagName}}`** {{{comment text}}}
+
+{{/each}}
+
+{{/if}}
+
+{{/with}}

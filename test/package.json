@@ -1,0 +1,11 @@
+{
+  "name": "typedoc-plugin-markdown-test",
+  "version": "0.0.0",
+  "author": "Thomas Grey",
+  "license": "MIT",
+  "scripts": {
+    "docs": "typedoc --plugin typedoc-plugin-markdown --options ./typedoc-options.json --out ./docs/md",
+    "prelint": "yarn run docs",
+    "lint": "markdownlint ./docs"
+  }
+}

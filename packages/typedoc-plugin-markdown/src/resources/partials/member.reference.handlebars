@@ -1,0 +1,21 @@
+{{#withReferenced this}}
+
+{{#if referenced}}
+
+{{#if referenced.renamed}}
+
+Renames and re-exports [{{referenced.name}}]({{{relativeURL referenced.url}}})
+
+{{else}}
+
+Re-exports [{{referenced.name}}]({{{relativeURL referenced.url}}})
+
+{{/if}}
+
+{{else}}
+
+Re-exports {{name}}
+
+{{/if}}
+
+{{/withReferenced}}

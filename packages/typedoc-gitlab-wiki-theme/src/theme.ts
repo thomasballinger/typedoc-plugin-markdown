@@ -1,34 +1,31 @@
 import * as fs from 'fs';
-
-import { Renderer, DeclarationReflection, RendererEvent } from 'typedoc';
-import { MarkdownTheme } from 'typedoc-plugin-markdown';
+import { DeclarationReflection, Renderer, RendererEvent } from 'typedoc';
+import { MarkdownTheme, TemplateMapping } from 'typedoc-plugin-markdown';
+import { GitlabWikiThemeContext } from './theme.context';
 
 export class GitlabWikiTheme extends MarkdownTheme {
+  private _contextCache?: GitlabWikiThemeContext;
   constructor(renderer: Renderer) {
     super(renderer);
 
-    this.entryDocument = 'home.md';
-    this.hideBreadcrumbs = true;
-    this.hidePageTitle = true;
-
     this.listenTo(this.owner, {
-      [RendererEvent.END]: this.onGitLabRendererEnd,
+      [RendererEvent.END]: this.onRendererEnd,
     });
   }
 
-  getRelativeUrl(url: string) {
-    const relativeUrl = super
-      .getRelativeUrl(url)
-      .replace(/(.*).md/, '$1')
-      .replace(/ /g, '-');
-    return relativeUrl.startsWith('..') ? relativeUrl : './' + relativeUrl;
+  override getRenderContext() {
+    this._contextCache ||= new GitlabWikiThemeContext(
+      this,
+      this.application.options,
+    );
+    return this._contextCache;
   }
 
-  toUrl(mapping: any, reflection: DeclarationReflection) {
+  override toUrl(reflection: DeclarationReflection, mapping: TemplateMapping) {
     return `${mapping.directory}/${reflection.getFullName()}.md`;
   }
 
-  onGitLabRendererEnd(renderer: RendererEvent) {
+  onRendererEnd(renderer: RendererEvent) {
     const parseUrl = (url: string) => url.replace(/(.*).md/, '$1');
     const navigation = this.getNavigation(renderer.project);
     const navJson: string[] = [`## ${renderer.project.name}\n`];
@@ -52,9 +49,5 @@ export class GitlabWikiTheme extends MarkdownTheme {
       renderer.outputDirectory + '/_sidebar.md',
       navJson.join('\n'),
     );
-  }
-
-  get globalsFile() {
-    return this.entryPoints.length > 1 ? 'Modules.md' : 'Exports.md';
   }
 }

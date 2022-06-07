@@ -14,7 +14,7 @@ exports[`Reflections: (template) should compile Enum 1`] = `
 
 ## Table of contents
 
-### Enumeration members
+### Enumeration Members
 
 - [Down](../enums/EnumReflection.md#down)
 - [Left](../enums/EnumReflection.md#left)
@@ -73,7 +73,7 @@ exports[`Reflections: (template) should compile module with breadcrumbs and proj
 
 ## Table of contents
 
-### Enumeration members
+### Enumeration Members
 
 - [Down](../enums/EnumReflection.md#down)
 - [Left](../enums/EnumReflection.md#left)

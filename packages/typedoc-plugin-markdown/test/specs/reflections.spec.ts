@@ -1,87 +1,126 @@
-import * as Handlebars from 'handlebars';
-
-import { TestApp } from '../test-app';
+import * as Handlebars from 'handlebars/runtime';
+import { ProjectReflection } from 'typedoc';
 
 describe(`Reflections:`, () => {
   let reflectionTemplate: Handlebars.TemplateDelegate;
 
   describe(`(header)`, () => {
-    let testApp: TestApp;
-    beforeEach(async () => {
-      testApp = new TestApp(['reflections.ts']);
-      await testApp.bootstrap({
-        hideBreadcrumbs: false,
-        hidePageTitle: true,
+    let project: ProjectReflection;
+    beforeAll(async () => {
+      const bootstrap = global.bootstrap('reflections.ts', {
+        stubPartials: ['comment', 'member.signature', 'members'],
+        stubHelpers: ['toc', 'breadcrumbs', 'hierarchy'],
+        options: {
+          hideBreadcrumbs: false,
+          hidePageTitle: true,
+        },
       });
-      TestApp.stubPartials(['comment', 'member.signature', 'members']);
-      TestApp.stubHelpers(['toc', 'breadcrumbs', 'hierarchy']);
-      reflectionTemplate = TestApp.getTemplate('reflection');
+      project = bootstrap.project;
+      reflectionTemplate = global.getTemplate(
+        bootstrap.context,
+        'reflection',
+        false,
+      );
     });
     test(`should compile template with breadcrumbs and without title`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.project.children[0],
-          project: testApp.project,
-        }),
+        global.renderTemplate(
+          reflectionTemplate,
+          {
+            model: (project as any).children[0],
+            project: project,
+          },
+          {
+            hideBreadcrumbs: false,
+            hidePageTitle: true,
+          },
+        ),
       ).toMatchSnapshot();
     });
   });
 
   describe(`(template)`, () => {
-    let testApp: TestApp;
-    beforeEach(async () => {
-      testApp = new TestApp(['reflections.ts']);
-      await testApp.bootstrap({
-        hideBreadcrumbs: true,
-        hidePageTitle: false,
+    let project: ProjectReflection;
+    const options = {
+      hideBreadcrumbs: true,
+      hidePageTitle: false,
+    };
+    beforeAll(async () => {
+      const bootstrap = global.bootstrap('reflections.ts', {
+        stubPartials: ['index', 'comment', 'member.signature', 'members'],
+        stubHelpers: ['breadcrumbs', 'hierarchy'],
+        options,
       });
-      TestApp.stubPartials(['index', 'comment', 'member.signature', 'members']);
-      TestApp.stubHelpers(['breadcrumbs', 'hierarchy']);
-      reflectionTemplate = TestApp.getTemplate('reflection');
+      project = bootstrap.project;
+      reflectionTemplate = global.getTemplate(
+        bootstrap.context,
+        'reflection',
+        false,
+      );
     });
 
     test(`should compile module with breadcrumbs and project title`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.project.children[0],
-          project: testApp.project,
-        }),
+        global.renderTemplate(
+          reflectionTemplate,
+          {
+            model: (project as any).children[0],
+            project: project,
+          },
+          options,
+        ),
       ).toMatchSnapshot();
     });
 
     test(`should compile a callable reflection`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.findReflection('CallableReflection'),
-          project: testApp.project,
-        }),
+        global.renderTemplate(
+          reflectionTemplate,
+          {
+            model: project.findReflectionByName('CallableReflection'),
+            project: project,
+          },
+          options,
+        ),
       ).toMatchSnapshot();
     });
 
     test(`should compile an indexable reflection`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.findReflection('IndexableReflection'),
-          project: testApp.project,
-        }),
+        global.renderTemplate(
+          reflectionTemplate,
+          {
+            model: project.findReflectionByName('IndexableReflection'),
+            project: project,
+          },
+          options,
+        ),
       ).toMatchSnapshot();
     });
 
     test(`should compile implemented class`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.findReflection('ImplementedClass'),
-          project: testApp.project,
-        }),
+        global.renderTemplate(
+          reflectionTemplate,
+          {
+            model: project.findReflectionByName('ImplementedClass'),
+            project: project,
+          },
+          options,
+        ),
       ).toMatchSnapshot();
     });
 
     test(`should compile Enum`, () => {
       expect(
-        TestApp.compileTemplate(reflectionTemplate, {
-          model: testApp.findReflection('EnumReflection'),
-          project: testApp.project,
-        }),
+        global.renderTemplate(
+          reflectionTemplate,
+          {
+            model: project.findReflectionByName('EnumReflection'),
+            project: project,
+          },
+          options,
+        ),
       ).toMatchSnapshot();
     });
   });

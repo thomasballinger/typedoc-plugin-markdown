@@ -5,9 +5,16 @@ exports[`Members: (member) should compile a signature members' 1`] = `
 
 ▸ **signatureMember**(): \`void\`
 
-#### Returns
+[partial: member.sources]
 
-\`void\`
+___
+"
+`;
+
+exports[`Members: (member) should compile declaration member with named anchors' 1`] = `
+"### <a id=\\"declarationmember\\" name=\\"declarationmember\\"></a> declarationMember
+
+• **declarationMember**: \`string\`
 
 [partial: member.sources]
 
@@ -31,10 +38,6 @@ exports[`Members: (member) should compile members with getter' 1`] = `
 
 • \`get\` **getter**(): \`string\`
 
-#### Returns
-
-\`string\`
-
 [partial: member.sources]
 
 ___
@@ -51,10 +54,6 @@ exports[`Members: (member) should compile members with setter' 1`] = `
 | Name | Type |
 | :------ | :------ |
 | \`value\` | \`string\` |
-
-#### Returns
-
-\`void\`
 
 [partial: member.sources]
 
@@ -81,20 +80,5 @@ exports[`Members: (members) should compile class members' 1`] = `
 
 exports[`Members: (members) should compile module members' 1`] = `
 "
-"
-`;
-
-exports[`Members: (with hideMembersSymbol) should compile members without special symbols 1`] = `
-"### signatureMember
-
-**signatureMember**(): \`void\`
-
-#### Returns
-
-\`void\`
-
-[partial: member.sources]
-
-___
 "
 `;
