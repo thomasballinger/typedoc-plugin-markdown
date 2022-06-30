@@ -1,10 +1,21 @@
-import { Application, ParameterType } from 'typedoc';
-import { MarkdownThemeOptionsReader } from './options-reader';
+import { Application, Options, OptionsReader, ParameterType } from 'typedoc';
+
 import { MarkdownTheme } from './theme';
+import { MarkdownThemeRenderContext } from './theme-context';
 
 export function load(app: Application) {
   app.renderer.defineTheme('markdown', MarkdownTheme);
-  app.options.addReader(new MarkdownThemeOptionsReader());
+  app.options.addReader(
+    new (class implements OptionsReader {
+      priority = 1000;
+      name = 'markdown-theme-reader';
+      read(container: Options) {
+        if (container.getValue('theme') === 'default') {
+          container.setValue('theme', 'markdown');
+        }
+      }
+    })(),
+  );
 
   app.options.addDeclaration({
     help: '[Markdown Plugin] Do not render page title.',
@@ -82,4 +93,4 @@ export function load(app: Application) {
   });
 }
 
-export { MarkdownTheme };
+export { MarkdownTheme, MarkdownThemeRenderContext };

@@ -1,4 +1,3 @@
-export * as breadcrumbs from './breadcrumbs';
 export * as categories from './categories';
 export * as comments from './comments';
 export * as declarations from './declarations';

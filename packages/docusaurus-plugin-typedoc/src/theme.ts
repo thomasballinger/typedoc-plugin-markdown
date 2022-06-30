@@ -9,13 +9,13 @@ import {
   RendererEvent,
   UrlMapping,
 } from 'typedoc';
-import { getKindPlural } from 'typedoc-plugin-markdown/dist/groups';
-import { MarkdownTheme } from 'typedoc-plugin-markdown/dist/theme';
 import {
   FrontMatterVars,
+  getKindPlural,
   getPageTitle,
+  MarkdownTheme,
   prependYAML,
-} from 'typedoc-plugin-markdown/dist/utils/front-matter';
+} from 'typedoc-plugin-markdown';
 import { FrontMatter, SidebarOptions } from './types';
 
 const CATEGORY_POSITION = {
@@ -40,9 +40,6 @@ export class DocusaurusTheme extends MarkdownTheme {
   @BindOption('indexSlug')
   indexSlug!: string;
 
-  @BindOption('includeExtension')
-  includeExtension!: string;
-
   @BindOption('frontmatter')
   frontmatter!: FrontMatter;
 
@@ -53,16 +50,6 @@ export class DocusaurusTheme extends MarkdownTheme {
       [PageEvent.END]: this.onPageEnd,
       [RendererEvent.END]: this.onRendererEnd,
     });
-  }
-
-  getRelativeUrl(url: string) {
-    const re = new RegExp(this.includeExtension === 'true' ? '' : '.md', 'g');
-    const relativeUrl = super.getRelativeUrl(url).replace(re, '');
-    if (path.basename(relativeUrl).startsWith('index')) {
-      // always remove the extension for the index or else it creates weird paths like `../.md`
-      return relativeUrl.replace('index', '').replace('.md', '');
-    }
-    return relativeUrl;
   }
 
   onPageEnd(page: PageEvent<DeclarationReflection>) {
@@ -145,7 +132,7 @@ export class DocusaurusTheme extends MarkdownTheme {
         : this.sidebar.readmeLabel;
     }
 
-    if (page.url === this.globalsFile) {
+    if (page.url === this.getRenderContext().globalsFile) {
       return indexLabel;
     }
 
@@ -156,7 +143,7 @@ export class DocusaurusTheme extends MarkdownTheme {
     if (page.url === this.entryDocument) {
       return page.url === page.project.url ? '0.5' : '0';
     }
-    if (page.url === this.globalsFile) {
+    if (page.url === this.getRenderContext().globalsFile) {
       return '0.5';
     }
     if (page.model.getFullName().split('.').length === 1) {
@@ -187,10 +174,6 @@ export class DocusaurusTheme extends MarkdownTheme {
       }
       return mapping;
     });
-  }
-
-  get globalsFile() {
-    return 'modules.md';
   }
 }
 

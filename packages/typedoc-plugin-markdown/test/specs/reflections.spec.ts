@@ -1,16 +1,19 @@
 import * as Handlebars from 'handlebars';
-import { ProjectReflection } from 'typedoc';
+import { Application, ProjectReflection } from 'typedoc';
 
 describe(`Reflections:`, () => {
   let reflectionTemplate: Handlebars.TemplateDelegate;
 
   describe(`(header)`, () => {
+    let app: Application;
     let project: ProjectReflection;
     beforeEach(async () => {
-      project = await global.bootstrap(['reflections.ts'], {
+      const bootstrap = await global.bootstrap(['reflections.ts'], {
         hideBreadcrumbs: false,
         hidePageTitle: true,
       });
+      app = bootstrap.app;
+      project = bootstrap.project;
       global.stubPartials(['comment', 'member.signature', 'members']);
       global.stubHelpers(['toc', 'breadcrumbs', 'hierarchy']);
       reflectionTemplate = global.getTemplate('reflection');
@@ -26,13 +29,15 @@ describe(`Reflections:`, () => {
   });
 
   describe(`(template)`, () => {
+    let app: Application;
     let project: ProjectReflection;
     beforeEach(async () => {
-      project = await global.bootstrap(['reflections.ts'], {
+      const bootstrap = await global.bootstrap(['reflections.ts'], {
         hideBreadcrumbs: true,
         hidePageTitle: false,
       });
-
+      app = bootstrap.app;
+      project = bootstrap.project;
       global.stubPartials(['index', 'comment', 'member.signature', 'members']);
       global.stubHelpers(['breadcrumbs', 'hierarchy']);
       reflectionTemplate = global.getTemplate('reflection');

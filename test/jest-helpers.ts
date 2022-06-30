@@ -11,10 +11,20 @@ import {
   TypeDocReader,
   UrlMapping,
 } from 'typedoc';
+import { MarkdownTheme } from 'typedoc-plugin-markdown';
 import { formatContents } from 'typedoc-plugin-markdown/src/utils';
 
-global.bootstrap = async (entryPoints: string[] = [], options: any = {}) => {
+global.getTemplate = (name: string) => {
+  return Handlebars.templates[name];
+};
+
+global.bootstrap = async (
+  entryPoints: string[] = [],
+  params: { options: any; stubPartials: string[] },
+) => {
   const app = new Application();
+  const options = params?.options || {};
+  const stubPartials = params?.stubPartials || [];
   app.options.addReader(new TypeDocReader());
   app.options.addReader(new TSConfigReader());
   app.bootstrap({
@@ -43,12 +53,14 @@ global.bootstrap = async (entryPoints: string[] = [], options: any = {}) => {
   });
 
   const project = app.convert() as ProjectReflection;
-  const renderer = app.renderer;
-  //this.tmpobj = tmp.dirSync();
   app.renderer.render = render;
   await app.generateDocs(project, 'docs');
-  return project;
-  // const theme = this.app.renderer.theme as MarkdownTheme;
+  const context = (app.renderer.theme as MarkdownTheme).getRenderContext();
+  stubPartials.forEach((stubPartial) => {
+    context.partials[stubPartial] = () => `[partial: ${stubPartial}]`;
+  });
+
+  return { project, context };
 };
 
 global.stubPartials = (partials: string[]) => {
@@ -63,31 +75,17 @@ global.stubHelpers = (helpers: string[]) => {
   });
 };
 
-global.getTemplate = (name: string) => {
-  const templateDir = path.resolve(
-    __dirname,
-    '..',
-    'packages',
-    'typedoc-plugin-markdown',
-    'dist',
-    'resources',
-    'templates',
-  );
-  const hbs = fs.readFileSync(templateDir + '/' + name + '.hbs');
-  return Handlebars.compile(hbs.toString());
-};
-
 global.getPartial = (name: string) => {
   const partialDir = path.resolve(
     __dirname,
     '..',
     'packages',
     'typedoc-plugin-markdown',
-    'dist',
+    'src',
     'resources',
     'partials',
   );
-  const hbs = fs.readFileSync(partialDir + '/' + name + '.hbs');
+  const hbs = fs.readFileSync(partialDir + '/' + name + '.handlebars');
   return Handlebars.compile(hbs.toString());
 };
 
@@ -138,7 +136,6 @@ async function render(project: ProjectReflection, outputDirectory: string) {
     output?.urls?.forEach((mapping: UrlMapping) => {
       const page = output.createPageEvent(mapping);
       this.trigger(PageEvent.BEGIN, page);
-
       this.trigger(PageEvent.END, page);
     });
     this.trigger(RendererEvent.END, output);
